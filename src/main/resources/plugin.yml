@@ -1,0 +1,4 @@
+name: Ledger
+version: '${project.version}'
+main: jbs.ledger.Ledger
+api-version: '1.20'
