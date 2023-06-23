@@ -3,6 +3,7 @@ package jbs.ledger.state;
 import jbs.ledger.classes.Assetholder;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.io.types.accounts.AssetholderData;
+import jbs.ledger.types.config.LedgerConfig;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -32,9 +33,8 @@ public final class LedgerState {
         this.assetholders = new ArrayList<>();
     }
 
-    private final ArrayList<Assetholder> assetholders;
-
     // Assetholders
+    private final ArrayList<Assetholder> assetholders;
 
     /**
      * Gets all assetholders in existence.
