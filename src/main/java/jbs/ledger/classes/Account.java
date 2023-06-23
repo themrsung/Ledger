@@ -60,19 +60,22 @@ public class Account implements Economic {
         return ownerId;
     }
 
-    // Assets
+    // Basic assets
     private final CashPortfolio cash;
     private final CommodityPortfolio commodities;
     private final StockPortfolio stocks;
 
+    // Unique Notes
     private final UniqueNotePortfolio<Cash> notes;
     private final UniqueNotePortfolio<Commodity> commodityForwards;
     private final UniqueNotePortfolio<Stock> stockForwards;
 
+    // Stackable Notes
     private final StackableNotePortfolio<Cash> bonds;
     private final StackableNotePortfolio<Commodity> commodityFutures;
     private final StackableNotePortfolio<Stock> stockFutures;
 
+    // Conditional Notes
     private final ConditionalNotePortfolio<Cash> forexOptions;
     private final ConditionalNotePortfolio<Commodity> commodityOptions;
     private final ConditionalNotePortfolio<Stock> stockOptions;
