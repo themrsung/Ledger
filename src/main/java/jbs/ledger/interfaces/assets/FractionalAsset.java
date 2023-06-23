@@ -1,5 +1,9 @@
 package jbs.ledger.interfaces.assets;
 
+
+/**
+ * An asset that supports decimal places.
+ */
 public interface FractionalAsset extends Asset {
     double getBalance();
 

@@ -1,10 +1,11 @@
 package jbs.ledger.types.portfolios;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.types.assets.UniqueNote;
 
 import javax.annotation.Nullable;
 
-public final class UniqueNotePortfolio<D> extends AbstractPortfolio<UniqueNote<D>> {
+public final class UniqueNotePortfolio<D extends Asset> extends AbstractPortfolio<UniqueNote<D>> {
     public UniqueNotePortfolio(UniqueNotePortfolio<D> copy) {
         super(copy);
     }

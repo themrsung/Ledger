@@ -1,5 +1,8 @@
 package jbs.ledger.interfaces.assets;
 
+/**
+ * A non-dividable asset
+ */
 public interface IntegralAsset extends Asset {
     long getQuantity();
 

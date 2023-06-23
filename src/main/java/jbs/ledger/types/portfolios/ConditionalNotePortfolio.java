@@ -1,10 +1,11 @@
 package jbs.ledger.types.portfolios;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.types.assets.ConditionalNote;
 
 import javax.annotation.Nullable;
 
-public final class ConditionalNotePortfolio<D> extends AbstractPortfolio<ConditionalNote<D>> {
+public final class ConditionalNotePortfolio<D extends Asset> extends AbstractPortfolio<ConditionalNote<D>> {
     public ConditionalNotePortfolio(ConditionalNotePortfolio<D> copy) {
         super(copy);
     }

@@ -1,9 +1,14 @@
 package jbs.ledger.interfaces.conditions;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.types.conditions.PriceConditionType;
 
-public interface PriceCondition<A> extends Condition {
+/**
+ * A condition that is dependent on the fair value of an asset.
+ * @param <A> The asset to check the price of.
+ */
+public interface PriceCondition<A extends Asset> extends Condition {
     Market<A> getMarket();
     A getAsset();
     PriceConditionType getType();

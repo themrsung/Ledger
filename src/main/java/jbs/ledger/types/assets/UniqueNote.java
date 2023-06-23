@@ -10,7 +10,7 @@ import java.util.UUID;
  * A non-fungible note. Can be used to issue contracts.
  * @param <D> Type of asset to deliver.
  */
-public final class UniqueNote<D> extends Note<D> implements Unique {
+public final class UniqueNote<D extends Asset> extends Note<D> implements Unique {
     public UniqueNote(final UniqueNote<D> copy) {
         super(copy);
         uniqueId = copy.uniqueId;

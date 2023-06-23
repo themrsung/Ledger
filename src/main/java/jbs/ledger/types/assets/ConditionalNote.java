@@ -1,5 +1,6 @@
 package jbs.ledger.types.assets;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.conditions.Condition;
 
 /**
@@ -7,7 +8,7 @@ import jbs.ledger.interfaces.conditions.Condition;
  * Only gets exercised when condition is met. Usually used for options.
  * @param <D> Type of delivery.
  */
-public final class ConditionalNote<D> extends Note<D> {
+public final class ConditionalNote<D extends Asset> extends Note<D> {
     public ConditionalNote(ConditionalNote<D> copy) {
         super(copy);
 

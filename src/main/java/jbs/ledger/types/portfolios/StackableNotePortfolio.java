@@ -1,10 +1,11 @@
 package jbs.ledger.types.portfolios;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.types.assets.StackableNote;
 
 import javax.annotation.Nullable;
 
-public final class StackableNotePortfolio<D> extends AbstractPortfolio<StackableNote<D>> {
+public final class StackableNotePortfolio<D extends Asset> extends AbstractPortfolio<StackableNote<D>> {
     public StackableNotePortfolio(StackableNotePortfolio<D> copy) {
         super(copy);
     }

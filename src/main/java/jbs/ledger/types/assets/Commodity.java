@@ -1,7 +1,6 @@
 package jbs.ledger.types.assets;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
-import jbs.ledger.interfaces.common.Economic;
 import org.bukkit.Material;
 
 import javax.annotation.Nullable;
@@ -13,30 +12,17 @@ import javax.annotation.Nullable;
  */
 public final class Commodity implements IntegralAsset {
     public Commodity(final Commodity copy) {
-        this.holder = copy.holder;
         this.symbol = copy.symbol;
         this.quantity = copy.quantity;
     }
     public Commodity() {
-        this.holder = null;
         this.symbol = null;
         this.quantity = 0L;
     }
 
-    private Economic holder;
     private final String symbol;
     private long quantity;
 
-
-    @Override
-    public Economic getHolder() {
-        return holder;
-    }
-
-    @Override
-    public void setHolder(Economic holder) {
-        this.holder = holder;
-    }
 
     @Override
     public String getSymbol() {

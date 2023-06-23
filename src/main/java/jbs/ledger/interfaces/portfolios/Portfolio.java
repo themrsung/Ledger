@@ -1,11 +1,16 @@
 package jbs.ledger.interfaces.portfolios;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.common.Economic;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public interface Portfolio<A> {
+/**
+ * A portfolio of assets.
+ * @param <A> Type of asset to hold.
+ */
+public interface Portfolio<A extends Asset> {
     Economic getHolder();
     void setHolder(Economic holder);
 

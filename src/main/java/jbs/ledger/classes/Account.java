@@ -9,6 +9,51 @@ import jbs.ledger.types.portfolios.*;
 import java.util.UUID;
 
 public class Account implements Economic {
+    public Account(
+            UUID accountId,
+            UUID ownerId
+    ) {
+        this.uniqueId = accountId;
+        this.ownerId = ownerId;
+
+        this.cash = new CashPortfolio();
+        this.commodities = new CommodityPortfolio();
+        this.stocks = new StockPortfolio();
+
+        this.notes = new UniqueNotePortfolio<>();
+        this.commodityForwards = new UniqueNotePortfolio<>();
+        this.stockForwards = new UniqueNotePortfolio<>();
+
+        this.bonds = new StackableNotePortfolio<>();
+        this.commodityFutures = new StackableNotePortfolio<>();
+        this.stockFutures = new StackableNotePortfolio<>();
+
+        this.forexOptions = new ConditionalNotePortfolio<>();
+        this.commodityOptions = new ConditionalNotePortfolio<>();
+        this.stockOptions = new ConditionalNotePortfolio<>();
+    }
+
+    public Account(Account copy) {
+        this.uniqueId = copy.uniqueId;
+        this.ownerId = copy.ownerId;
+
+        this.cash = copy.cash;
+        this.commodities = copy.commodities;
+        this.stocks = copy.stocks;
+
+        this.notes = copy.notes;
+        this.commodityForwards = copy.commodityForwards;
+        this.stockForwards = copy.stockForwards;
+
+        this.bonds = copy.bonds;
+        this.commodityFutures = copy.commodityFutures;
+        this.stockFutures = copy.stockFutures;
+
+        this.forexOptions = copy .forexOptions;
+        this.commodityOptions = copy.commodityOptions;
+        this.stockOptions = copy.stockOptions;
+    }
+
     public Account() {
         this.uniqueId = null;
         this.ownerId = null;

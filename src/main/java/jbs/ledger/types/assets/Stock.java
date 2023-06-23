@@ -1,7 +1,6 @@
 package jbs.ledger.types.assets;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
-import jbs.ledger.interfaces.common.Economic;
 
 /**
  * Stock
@@ -9,29 +8,16 @@ import jbs.ledger.interfaces.common.Economic;
  */
 public final class Stock implements IntegralAsset {
     public Stock(final Stock copy) {
-        this.holder = copy.holder;
         this.symbol = copy.symbol;
         this.quantity = copy.quantity;
     }
     public Stock() {
-        this.holder = null;
         this.symbol = null;
         this.quantity = 0L;
     }
 
-    private Economic holder;
     private final String symbol;
     private long quantity;
-
-    @Override
-    public Economic getHolder() {
-        return holder;
-    }
-
-    @Override
-    public void setHolder(Economic holder) {
-        this.holder = holder;
-    }
 
     @Override
     public String getSymbol() {

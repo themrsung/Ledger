@@ -1,5 +1,6 @@
 package jbs.ledger.types.assets;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.assets.Delayed;
 import jbs.ledger.interfaces.assets.IntegralAsset;
 import jbs.ledger.interfaces.common.Economic;
@@ -7,9 +8,8 @@ import jbs.ledger.interfaces.common.Economic;
 import javax.annotation.Nullable;
 import java.util.Date;
 
-public abstract class Note<D> implements IntegralAsset, Delayed<D> {
+public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D> {
     public Note(final Note<D> copy) {
-        this.holder = copy.holder;
         this.symbol = copy.symbol;
         this.delivery = copy.delivery;
         this.deliverer = copy.deliverer;
@@ -17,7 +17,6 @@ public abstract class Note<D> implements IntegralAsset, Delayed<D> {
         this.quantity = copy.quantity;
     }
     public Note() {
-        this.holder = null;
         this.symbol = null;
         this.delivery = null;
         this.deliverer = null;
@@ -25,23 +24,12 @@ public abstract class Note<D> implements IntegralAsset, Delayed<D> {
         this.quantity = 0;
     }
 
-    private Economic holder;
     private final String symbol;
     private final D delivery;
     private final Economic deliverer;
     @Nullable
     private final Date expiration;
     private long quantity;
-
-    @Override
-    public Economic getHolder() {
-        return holder;
-    }
-
-    @Override
-    public void setHolder(Economic holder) {
-        this.holder = holder;
-    }
 
     @Override
     public String getSymbol() {

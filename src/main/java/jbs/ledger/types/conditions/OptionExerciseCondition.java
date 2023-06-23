@@ -1,10 +1,11 @@
 package jbs.ledger.types.conditions;
 
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.conditions.Condition;
 import jbs.ledger.interfaces.conditions.PriceCondition;
 import jbs.ledger.interfaces.markets.Market;
 
-public class OptionExerciseCondition<A> implements PriceCondition<A> {
+public class OptionExerciseCondition<A extends Asset> implements PriceCondition<A> {
     public OptionExerciseCondition(
             Market<A> market,
             A asset,
