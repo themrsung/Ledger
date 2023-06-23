@@ -6,7 +6,7 @@ import jbs.ledger.types.assets.basic.Cash;
 
 import javax.annotation.Nullable;
 
-public class CashTransferredEvent extends AssetTransferredEvent<Cash> {
+public final class CashTransferredEvent extends AssetTransferredEvent<Cash> {
     public CashTransferredEvent(
             Economic sender,
             Economic recipient,

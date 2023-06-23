@@ -7,7 +7,7 @@ import jbs.ledger.types.assets.synthetic.UniqueNote;
 
 import javax.annotation.Nullable;
 
-public class StockForwardTransferredEvent extends AssetTransferredEvent<UniqueNote<Stock>> {
+public final class StockForwardTransferredEvent extends AssetTransferredEvent<UniqueNote<Stock>> {
     public StockForwardTransferredEvent(
             Economic sender,
             Economic recipient,

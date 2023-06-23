@@ -3,35 +3,35 @@ package jbs.ledger.io.types.accounts;
 import jbs.ledger.io.types.assets.basic.CashData;
 import jbs.ledger.io.types.assets.basic.CommodityData;
 import jbs.ledger.io.types.assets.basic.StockData;
-import jbs.ledger.io.types.assets.synthetic.ConditionalNoteData;
-import jbs.ledger.io.types.assets.synthetic.StackableNoteData;
-import jbs.ledger.io.types.assets.synthetic.UniqueNoteData;
-import jbs.ledger.io.types.portfolios.PortfolioData;
+import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
+import jbs.ledger.io.types.assets.synthetic.stackable.CommodityFuturesData;
+import jbs.ledger.io.types.assets.synthetic.stackable.StockFuturesData;
+import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
+import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
+import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
-public class AssetholderData {
+public final class AssetholderData {
     public AssetholderData() {}
 
     public UUID uniqueId;
+    public String name;
 
     // BASIC
-    public PortfolioData<CashData> cash;
-    public PortfolioData<CommodityData> commodities;
-    public PortfolioData<StockData> stocks;
+    public ArrayList<CashData> cash = new ArrayList<>();
+    public ArrayList<CommodityData> commodities = new ArrayList<>();
+    public ArrayList<StockData> stocks = new ArrayList<>();
+    public ArrayList<BondData> bonds = new ArrayList<>();
 
     // UNIQUE NOTES
-    public PortfolioData<UniqueNoteData<CashData>> notes;
-    public PortfolioData<UniqueNoteData<CommodityData>> commodityForwards;
-    public PortfolioData<UniqueNoteData<StockData>> stockForwards;
+    public ArrayList<NoteData> notes = new ArrayList<>();
+    public ArrayList<CommodityForwardData> commodityForwards = new ArrayList<>();
+    public ArrayList<StockForwardData> stockForwards = new ArrayList<>();
 
-    // STACKABLE NOTES
-    public PortfolioData<StackableNoteData<CashData>> bonds;
-    public PortfolioData<StackableNoteData<CommodityData>> commodityFutures;
-    public PortfolioData<StackableNoteData<StockData>> stockFutures;
+    // FUTURES
+    public ArrayList<CommodityFuturesData> commodityFutures = new ArrayList<>();
+    public ArrayList<StockFuturesData> stockFutures = new ArrayList<>();
 
-    // CONDITIONAL NOTES
-    public PortfolioData<ConditionalNoteData<CashData>> forexOptions;
-    public PortfolioData<ConditionalNoteData<CommodityData>> commodityOptions;
-    public PortfolioData<ConditionalNoteData<StockData>> stockOptions;
 }

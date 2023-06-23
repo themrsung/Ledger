@@ -24,11 +24,4 @@ public interface FractionalAsset extends Asset {
         return copy;
     }
 
-    @Override
-    default FractionalAsset multiply(double modifier) {
-        FractionalAsset copy = copy();
-        copy.setBalance(getBalance() * modifier);
-
-        return copy;
-    }
 }

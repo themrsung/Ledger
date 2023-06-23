@@ -11,9 +11,6 @@ import java.util.ArrayList;
  * @param <A> Type of asset to hold.
  */
 public interface Portfolio<A extends Asset> {
-    Economic getHolder();
-    void setHolder(Economic holder);
-
     ArrayList<A> get();
     @Nullable
     A get(String symbol);

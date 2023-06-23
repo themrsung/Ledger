@@ -1,5 +1,7 @@
 package jbs.ledger.interfaces.assets;
 
+import jbs.ledger.types.assets.AssetType;
+
 /**
  * An asset
  */
@@ -12,5 +14,5 @@ public interface Asset {
 
     Asset copy();
 
-    Asset multiply(double modifier);
+    AssetType getType();
 }

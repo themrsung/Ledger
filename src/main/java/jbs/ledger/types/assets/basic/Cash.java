@@ -1,6 +1,8 @@
 package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.FractionalAsset;
+import jbs.ledger.io.types.assets.basic.CashData;
+import jbs.ledger.types.assets.AssetType;
 import org.bukkit.Bukkit;
 
 /**
@@ -58,4 +60,30 @@ public final class Cash implements FractionalAsset {
     public Cash negate() {
         return new Cash(symbol, -balance);
     }
+
+    @Override
+    public AssetType getType() {
+        return AssetType.CASH;
+    }
+
+    // IO
+    public static Cash fromData(CashData data) {
+        return new Cash(data);
+    }
+
+    private Cash(CashData data) {
+        this.symbol = data.symbol;
+        this.balance = data.balance;
+    }
+
+    public CashData toData() {
+        CashData data = new CashData();
+
+        data.type = AssetType.CASH;
+        data.symbol = symbol;
+        data.balance = balance;
+
+        return data;
+    }
+
 }

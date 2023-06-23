@@ -1,6 +1,8 @@
 package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
+import jbs.ledger.io.types.assets.basic.StockData;
+import jbs.ledger.types.assets.AssetType;
 
 /**
  * Stock
@@ -55,5 +57,30 @@ public final class Stock implements IntegralAsset {
     @Override
     public Stock negate() {
         return (Stock) IntegralAsset.super.negate();
+    }
+
+    @Override
+    public AssetType getType() {
+        return AssetType.STOCK;
+    }
+
+    // IO
+    public static Stock fromData(StockData data) {
+        return new Stock(data);
+    }
+
+    private Stock(StockData data) {
+        this.symbol = data.symbol;
+        this.quantity = data.quantity;
+    }
+
+    public StockData toData() {
+        StockData data = new StockData();
+
+        data.type = AssetType.STOCK;
+        data.symbol = symbol;
+        data.quantity = quantity;
+
+        return data;
     }
 }

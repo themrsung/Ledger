@@ -6,6 +6,12 @@ import jbs.ledger.interfaces.common.Economic;
 
 import javax.annotation.Nullable;
 
+/**
+ * Ledger uses events to handle asset transfers.
+ * All transactions require a valid sender and recipient.
+ * Do not use this event directly. There is a child class for every asset variant.
+ * @param <A> Type of asset to transfer
+ */
 public abstract class AssetTransferredEvent<A extends Asset> extends LedgerEvent {
     public AssetTransferredEvent(
             Economic sender,

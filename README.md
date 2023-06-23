@@ -5,7 +5,6 @@ The ultimate base plugin for economies in Minecraft servers.
 - Centralized assetholder management
 - Basic and synthetic assets
 - Automated delivery of notes
-- Automated exercising of options
 
 ## How to use
 1. Download this repository and build a JAR file.

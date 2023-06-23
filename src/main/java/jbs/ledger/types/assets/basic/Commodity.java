@@ -1,6 +1,8 @@
 package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
+import jbs.ledger.io.types.assets.basic.CommodityData;
+import jbs.ledger.types.assets.AssetType;
 import org.bukkit.Material;
 
 import javax.annotation.Nullable;
@@ -69,4 +71,30 @@ public final class Commodity implements IntegralAsset {
     public Commodity negate() {
         return (Commodity) IntegralAsset.super.negate();
     }
+
+    @Override
+    public AssetType getType() {
+        return AssetType.COMMODITY;
+    }
+
+    // IO
+    public static Commodity fromData(CommodityData data) {
+        return new Commodity(data);
+    }
+
+    private Commodity(CommodityData data) {
+        this.symbol = data.symbol;
+        this.quantity = data.quantity;
+    }
+
+    public CommodityData toData() {
+        CommodityData data = new CommodityData();
+
+        data.type = AssetType.COMMODITY;
+        data.symbol = symbol;
+        data.quantity = quantity;
+
+        return data;
+    }
+
 }

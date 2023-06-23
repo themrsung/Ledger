@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import java.util.Date;
 import java.util.UUID;
 
-public class LedgerEvent extends Event implements Unique {
+public abstract class LedgerEvent extends Event implements Unique {
     public LedgerEvent() {
         super();
 

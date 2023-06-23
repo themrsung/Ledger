@@ -6,7 +6,7 @@ import jbs.ledger.types.assets.basic.Commodity;
 
 import javax.annotation.Nullable;
 
-public class CommodityTransferredEvent extends AssetTransferredEvent<Commodity> {
+public final class CommodityTransferredEvent extends AssetTransferredEvent<Commodity> {
     public CommodityTransferredEvent(
             Economic sender,
             Economic recipient,

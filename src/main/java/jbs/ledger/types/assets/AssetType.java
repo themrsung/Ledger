@@ -6,22 +6,16 @@ public enum AssetType {
     CASH,
     COMMODITY,
     STOCK,
+    BOND,
 
-    // UNIQUE NOTES
+    // NOTES
 
     NOTE,
     COMMODITY_FORWARD,
     STOCK_FORWARD,
 
-    // STACKABLE_NOTES
+    // FUTURES
 
-    BOND,
     COMMODITY_FUTURES,
     STOCK_FUTURES,
-
-    // CONDITIONAL_NOTES
-
-    FOREX_OPTION,
-    COMMODITY_OPTION,
-    STOCK_OPTION;
 }

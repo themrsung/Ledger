@@ -1,9 +1,11 @@
 package jbs.ledger.types.portfolios.basic;
 
+import jbs.ledger.io.types.assets.basic.CashData;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.portfolios.AbstractPortfolio;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 
 public final class CashPortfolio extends AbstractPortfolio<Cash> {
     public CashPortfolio(CashPortfolio copy) {
@@ -58,5 +60,26 @@ public final class CashPortfolio extends AbstractPortfolio<Cash> {
     @Override
     public void clean() {
         getRaw().removeIf(e -> e.getBalance() == 0d);
+    }
+
+    // IO
+    public static CashPortfolio fromData(ArrayList<CashData> data) {
+        CashPortfolio portfolio = new CashPortfolio();
+
+        for (CashData cd : data) {
+            portfolio.add(Cash.fromData(cd));
+        }
+
+        return portfolio;
+    }
+
+    public ArrayList<CashData> toData() {
+        ArrayList<CashData> data = new ArrayList<>();
+
+        for (Cash c : get()) {
+            data.add(c.toData());
+        }
+
+        return data;
     }
 }

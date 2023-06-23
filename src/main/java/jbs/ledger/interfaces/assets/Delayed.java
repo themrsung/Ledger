@@ -15,4 +15,6 @@ public interface Delayed<D extends Asset> {
     @Nullable
     Date getExpiration();
     Economic getDeliverer();
+
+    void onExpired(Economic assetholder);
 }

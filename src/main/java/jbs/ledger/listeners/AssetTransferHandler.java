@@ -7,17 +7,13 @@ import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.events.transfers.forwards.CommodityForwardTransferredEvent;
 import jbs.ledger.events.transfers.forwards.NoteTransferredEvent;
 import jbs.ledger.events.transfers.forwards.StockForwardTransferredEvent;
-import jbs.ledger.events.transfers.futures.BondTransferredEvent;
+import jbs.ledger.events.transfers.basic.BondTransferredEvent;
 import jbs.ledger.events.transfers.futures.CommodityFuturesTransferredEvent;
 import jbs.ledger.events.transfers.futures.StockFuturesTransferredEvent;
-import jbs.ledger.events.transfers.options.CommodityOptionTransferredEvent;
-import jbs.ledger.events.transfers.options.ForexOptionTransferredEvent;
-import jbs.ledger.events.transfers.options.StockOptionTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
-import jbs.ledger.types.assets.synthetic.ConditionalNote;
 import jbs.ledger.types.assets.synthetic.StackableNote;
 import jbs.ledger.types.assets.synthetic.UniqueNote;
 import org.bukkit.event.EventHandler;
@@ -26,7 +22,7 @@ import org.bukkit.event.EventPriority;
 /**
  * A Listener that handles asset transfers
  */
-public class AssetTransferHandler extends LedgerListener {
+public final class AssetTransferHandler extends LedgerListener {
     public AssetTransferHandler(Ledger ledger) {
         super(ledger);
     }
@@ -163,52 +159,6 @@ public class AssetTransferHandler extends LedgerListener {
     private static void onStockFuturesTransfer(Economic s, Economic r, StackableNote<Stock> a) {
         s.getStockFutures().remove(a);
         r.getStockFutures().add(a);
-    }
-
-    //
-    // Conditional Notes
-    //
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onForexOptionTransferred(ForexOptionTransferredEvent e) {
-        Economic s = e.getSender();
-        Economic r = e.getRecipient();
-        ConditionalNote<Cash> a = e.getAsset();
-
-        onForexOptionTransfer(s, r, a);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommodityOptionTransferred(CommodityOptionTransferredEvent e) {
-        Economic s = e.getSender();
-        Economic r = e.getRecipient();
-        ConditionalNote<Commodity> a = e.getAsset();
-
-        onCommodityOptionTransfer(s, r, a);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onStockOptionTransferred(StockOptionTransferredEvent e) {
-        Economic s = e.getSender();
-        Economic r = e.getRecipient();
-        ConditionalNote<Stock> a = e.getAsset();
-
-        onStockOptionTransfer(s, r, a);
-    }
-
-    private static void onForexOptionTransfer(Economic s, Economic r, ConditionalNote<Cash> a) {
-        s.getForexOptions().remove(a);
-        r.getForexOptions().add(a);
-    }
-
-    private static void onCommodityOptionTransfer(Economic s, Economic r, ConditionalNote<Commodity> a) {
-        s.getCommodityOptions().remove(a);
-        r.getCommodityOptions().add(a);
-    }
-
-    private static void onStockOptionTransfer(Economic s, Economic r, ConditionalNote<Stock> a) {
-        s.getStockOptions().remove(a);
-        r.getStockOptions().add(a);
     }
 }
 

@@ -7,7 +7,7 @@ import jbs.ledger.types.assets.basic.Stock;
 
 import javax.annotation.Nullable;
 
-public class StockFuturesTransferredEvent extends AssetTransferredEvent<StackableNote<Stock>> {
+public final class StockFuturesTransferredEvent extends AssetTransferredEvent<StackableNote<Stock>> {
     public StockFuturesTransferredEvent(
             Economic sender,
             Economic recipient,

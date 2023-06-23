@@ -1,9 +1,16 @@
 package jbs.ledger.types.assets.synthetic;
 
+import jbs.ledger.events.transfers.basic.CashTransferredEvent;
+import jbs.ledger.events.transfers.basic.CommodityTransferredEvent;
+import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.assets.Delayed;
 import jbs.ledger.interfaces.assets.IntegralAsset;
 import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Commodity;
+import jbs.ledger.types.assets.basic.Stock;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nullable;
 import java.util.Date;
@@ -37,13 +44,6 @@ public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D>
         this.deliverer = copy.deliverer;
         this.expiration = copy.expiration;
         this.quantity = copy.quantity;
-    }
-    public Note() {
-        this.symbol = null;
-        this.delivery = null;
-        this.deliverer = null;
-        this.expiration = null;
-        this.quantity = 0;
     }
 
     private final String symbol;
@@ -82,5 +82,46 @@ public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D>
     @Override
     public void setQuantity(long quantity) {
         this.quantity = quantity;
+    }
+
+    // Expiration
+
+    @Override
+    public void onExpired(Economic assetholder) {
+        switch (getDelivery().getType()) {
+            case CASH:
+                Cash cash = (Cash) getDelivery();
+
+                Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                        getDeliverer(),
+                        assetholder,
+                        cash,
+                        "Note expired"
+                ));
+
+                break;
+            case COMMODITY:
+                Commodity item = (Commodity) getDelivery();
+
+                Bukkit.getPluginManager().callEvent(new CommodityTransferredEvent(
+                        getDeliverer(),
+                        assetholder,
+                        item,
+                        "Note expired"
+                ));
+
+                break;
+            case STOCK:
+                Stock stock = (Stock) getDelivery();
+
+                Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
+                        getDeliverer(),
+                        assetholder,
+                        stock,
+                        "Note expired"
+                ));
+
+                break;
+        }
     }
 }

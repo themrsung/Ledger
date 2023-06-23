@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 /**
  * Base class for Listeners
  */
-public class LedgerListener implements Listener {
+public abstract class LedgerListener implements Listener {
     public LedgerListener(Ledger ledger) {
         Bukkit.getPluginManager().registerEvents(this, ledger);
         this.ledger = ledger;

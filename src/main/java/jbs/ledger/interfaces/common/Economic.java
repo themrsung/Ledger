@@ -7,7 +7,6 @@ import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.portfolios.basic.CashPortfolio;
 import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
-import jbs.ledger.types.portfolios.synthetic.ConditionalNotePortfolio;
 import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
 import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 
@@ -19,6 +18,7 @@ public interface Economic extends Unique {
     CashPortfolio getCash();
     CommodityPortfolio getCommodities();
     StockPortfolio getStocks();
+    StackableNotePortfolio<Cash> getBonds();
 
     // Forwards
     UniqueNotePortfolio<Cash> getNotes();
@@ -26,14 +26,8 @@ public interface Economic extends Unique {
     UniqueNotePortfolio<Stock> getStockForwards();
 
     // Futures
-    StackableNotePortfolio<Cash> getBonds();
     StackableNotePortfolio<Commodity> getCommodityFutures();
     StackableNotePortfolio<Stock> getStockFutures();
-
-    // Options
-    ConditionalNotePortfolio<Cash> getForexOptions();
-    ConditionalNotePortfolio<Commodity> getCommodityOptions();
-    ConditionalNotePortfolio<Stock> getStockOptions();
 
     // Generic getters
     default ArrayList<Asset> getAssets() {
@@ -50,10 +44,6 @@ public interface Economic extends Unique {
         assets.addAll(getBonds().get());
         assets.addAll(getCommodityFutures().get());
         assets.addAll(getStockFutures().get());
-
-        assets.addAll(getForexOptions().get());
-        assets.addAll(getCommodityOptions().get());
-        assets.addAll(getStockOptions().get());
 
         return assets;
     }
