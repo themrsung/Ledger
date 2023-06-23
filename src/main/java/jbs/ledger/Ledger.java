@@ -32,44 +32,6 @@ public final class Ledger extends JavaPlugin {
 
         new AssetTransferHandler(this);
 
-        Assetholder test = new Assetholder(UUID.randomUUID(), "tesetdasdasd");
-        state.addAssetholder(test);
-
-        test.getCash().add(new Cash("TT", 120490d));
-
-        Assetholder test2 = new Assetholder(UUID.randomUUID(), "00000");
-
-        UniqueNote<Stock> test22 = new UniqueNote<>(
-                UUID.randomUUID(),
-                "TTioioi",
-                new Stock("ARC", 30902),
-                test2,
-                new Date(),
-                2
-        );
-
-
-        UniqueNote<Stock> test2222 = new UniqueNote<>(
-                UUID.randomUUID(),
-                "TTioioi",
-                new Stock("ARC", 30902),
-                test2,
-                DateUtils.addDays(new Date(), 10),
-                2
-        );
-        test.getStockForwards().add(test22);
-        test.getStockForwards().add(test2222);
-
-        Bukkit.getPluginManager().callEvent(new StockForwardTransferredEvent(
-                test,
-                test2,
-                test2222,
-                "JUs tbecause"
-        ));
-
-
-        state.addAssetholder(test2);
-
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerAutoSaver(this), 20, 1200);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerNoteExpirationHandler(this), 30, 360);
 
