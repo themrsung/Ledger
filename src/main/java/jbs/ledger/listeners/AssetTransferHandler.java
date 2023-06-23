@@ -1,7 +1,18 @@
 package jbs.ledger.listeners;
 
 import jbs.ledger.Ledger;
-import jbs.ledger.events.transfers.AssetTransferredEvent;
+import jbs.ledger.events.transfers.basic.CashTransferredEvent;
+import jbs.ledger.events.transfers.basic.CommodityTransferredEvent;
+import jbs.ledger.events.transfers.basic.StockTransferredEvent;
+import jbs.ledger.events.transfers.forwards.CommodityForwardTransferredEvent;
+import jbs.ledger.events.transfers.forwards.NoteTransferredEvent;
+import jbs.ledger.events.transfers.forwards.StockForwardTransferredEvent;
+import jbs.ledger.events.transfers.futures.BondTransferredEvent;
+import jbs.ledger.events.transfers.futures.CommodityFuturesTransferredEvent;
+import jbs.ledger.events.transfers.futures.StockFuturesTransferredEvent;
+import jbs.ledger.events.transfers.options.CommodityOptionTransferredEvent;
+import jbs.ledger.events.transfers.options.ForexOptionTransferredEvent;
+import jbs.ledger.events.transfers.options.StockOptionTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.*;
 import org.bukkit.event.EventHandler;
@@ -16,7 +27,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCashTransferred(AssetTransferredEvent<Cash> e) {
+    public void onCashTransferred(CashTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         Cash a = e.getAsset();
@@ -25,7 +36,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommodityTransferred(AssetTransferredEvent<Commodity> e) {
+    public void onCommodityTransferred(CommodityTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         Commodity a = e.getAsset();
@@ -34,7 +45,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onStockTransferred(AssetTransferredEvent<Stock> e) {
+    public void onStockTransferred(StockTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         Stock a = e.getAsset();
@@ -62,7 +73,7 @@ public class AssetTransferHandler extends LedgerListener {
     //
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onNoteTransferred(AssetTransferredEvent<UniqueNote<Cash>> e) {
+    public void onNoteTransferred(NoteTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         UniqueNote<Cash> a = e.getAsset();
@@ -71,7 +82,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommodityForwardTransferred(AssetTransferredEvent<UniqueNote<Commodity>> e) {
+    public void onCommodityForwardTransferred(CommodityForwardTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         UniqueNote<Commodity> a = e.getAsset();
@@ -80,7 +91,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onStockForwardTransferred(AssetTransferredEvent<UniqueNote<Stock>> e) {
+    public void onStockForwardTransferred(StockForwardTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         UniqueNote<Stock> a = e.getAsset();
@@ -108,7 +119,7 @@ public class AssetTransferHandler extends LedgerListener {
     //
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onBondTransferred(AssetTransferredEvent<StackableNote<Cash>> e) {
+    public void onBondTransferred(BondTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         StackableNote<Cash> a = e.getAsset();
@@ -117,7 +128,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommodityFuturesTransferred(AssetTransferredEvent<StackableNote<Commodity>> e) {
+    public void onCommodityFuturesTransferred(CommodityFuturesTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         StackableNote<Commodity> a = e.getAsset();
@@ -126,7 +137,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onStockFuturesTransferred(AssetTransferredEvent<StackableNote<Stock>> e) {
+    public void onStockFuturesTransferred(StockFuturesTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         StackableNote<Stock> a = e.getAsset();
@@ -154,7 +165,7 @@ public class AssetTransferHandler extends LedgerListener {
     //
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onForexOptionTransferred(AssetTransferredEvent<ConditionalNote<Cash>> e) {
+    public void onForexOptionTransferred(ForexOptionTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         ConditionalNote<Cash> a = e.getAsset();
@@ -163,7 +174,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onCommodityOptionTransferred(AssetTransferredEvent<ConditionalNote<Commodity>> e) {
+    public void onCommodityOptionTransferred(CommodityOptionTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         ConditionalNote<Commodity> a = e.getAsset();
@@ -172,7 +183,7 @@ public class AssetTransferHandler extends LedgerListener {
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onStockOptionTransferred(AssetTransferredEvent<ConditionalNote<Stock>> e) {
+    public void onStockOptionTransferred(StockOptionTransferredEvent e) {
         Economic s = e.getSender();
         Economic r = e.getRecipient();
         ConditionalNote<Stock> a = e.getAsset();

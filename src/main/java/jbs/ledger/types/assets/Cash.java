@@ -1,6 +1,7 @@
 package jbs.ledger.types.assets;
 
 import jbs.ledger.interfaces.assets.FractionalAsset;
+import org.bukkit.Bukkit;
 
 /**
  * Cash
@@ -39,6 +40,7 @@ public final class Cash implements FractionalAsset {
 
     @Override
     public void setBalance(double balance) {
+        Bukkit.getLogger().info("balance change" + getBalance() + " -> " + balance);
         this.balance = balance;
     }
 
@@ -49,6 +51,6 @@ public final class Cash implements FractionalAsset {
 
     @Override
     public Cash negate() {
-        return (Cash) FractionalAsset.super.negate();
+        return new Cash(symbol, -balance);
     }
 }

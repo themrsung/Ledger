@@ -27,7 +27,7 @@ public final class ConditionalNotePortfolio<D extends Asset> extends AbstractPor
 
     @Override
     public void add(ConditionalNote<D> asset) {
-        ConditionalNote<D> existing = get(asset.getSymbol());
+        ConditionalNote<D> existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addQuantity(asset.getQuantity());

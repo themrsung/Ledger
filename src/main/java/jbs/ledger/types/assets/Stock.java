@@ -7,6 +7,14 @@ import jbs.ledger.interfaces.assets.IntegralAsset;
  * Has a symbol(string) and quantity(long).
  */
 public final class Stock implements IntegralAsset {
+    public Stock(
+            String symbol,
+            long quantity
+    ) {
+        this.symbol = symbol;
+        this.quantity = quantity;
+    }
+
     public Stock(final Stock copy) {
         this.symbol = copy.symbol;
         this.quantity = copy.quantity;

@@ -54,6 +54,16 @@ public abstract class AbstractPortfolio<A extends Asset> implements Portfolio<A>
     protected ArrayList<A> getRaw() {
         return entries;
     }
+    @Nullable
+    protected A getRaw(String symbol) {
+        for (A a : getRaw()) {
+            if (a.getSymbol().equalsIgnoreCase(symbol)) {
+                return a;
+            }
+        }
+        
+        return null;
+    }
 
     @Override
     public void add(A asset) {

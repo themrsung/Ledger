@@ -27,7 +27,7 @@ public final class StockPortfolio extends AbstractPortfolio<Stock> {
 
     @Override
     public void add(Stock asset) {
-        Stock existing = get(asset.getSymbol());
+        Stock existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addQuantity(asset.getQuantity());

@@ -17,7 +17,7 @@ public final class CashPortfolio extends AbstractPortfolio<Cash> {
     public Cash get(String symbol) {
         for (Cash c : get()) {
             if (c.getSymbol().equalsIgnoreCase(symbol)) {
-                return c;
+                return c.copy();
             }
         }
 
@@ -26,7 +26,7 @@ public final class CashPortfolio extends AbstractPortfolio<Cash> {
 
     @Override
     public void add(Cash asset) {
-        Cash existing = get(asset.getSymbol());
+        Cash existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addBalance(asset.getBalance());

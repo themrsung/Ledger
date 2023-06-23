@@ -27,7 +27,7 @@ public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
 
     @Override
     public void add(Commodity asset) {
-        Commodity existing = get(asset.getSymbol());
+        Commodity existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addQuantity(asset.getQuantity());

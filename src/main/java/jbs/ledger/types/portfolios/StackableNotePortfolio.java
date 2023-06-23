@@ -27,7 +27,7 @@ public final class StackableNotePortfolio<D extends Asset> extends AbstractPortf
 
     @Override
     public void add(StackableNote<D> asset) {
-        StackableNote<D> existing = get(asset.getSymbol());
+        StackableNote<D> existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addQuantity(asset.getQuantity());
