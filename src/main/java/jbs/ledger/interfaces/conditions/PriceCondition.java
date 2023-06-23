@@ -17,7 +17,7 @@ public interface PriceCondition<A extends Asset> extends Condition {
     @Override
     default boolean isMet() {
         double p1 = getPrice();
-        double p2 = getMarket().getUnitPrice(getAsset());
+        double p2 = getMarket().getPrice();
 
         switch (getType()) {
             case EQUALS:
@@ -30,6 +30,8 @@ public interface PriceCondition<A extends Asset> extends Condition {
                 return p1 < p2;
             case LOWER_THAN_OR_EQUALS_TO:
                 return p1 <= p2;
+            case ALWAYS:
+                return true;
         }
 
         return false;

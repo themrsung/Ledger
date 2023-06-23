@@ -2,7 +2,7 @@ package jbs.ledger.events.transfers.basic;
 
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.types.assets.Commodity;
+import jbs.ledger.types.assets.basic.Commodity;
 
 import javax.annotation.Nullable;
 

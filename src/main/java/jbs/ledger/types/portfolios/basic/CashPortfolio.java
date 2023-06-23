@@ -1,6 +1,7 @@
-package jbs.ledger.types.portfolios;
+package jbs.ledger.types.portfolios.basic;
 
-import jbs.ledger.types.assets.Cash;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.portfolios.AbstractPortfolio;
 
 import javax.annotation.Nullable;
 

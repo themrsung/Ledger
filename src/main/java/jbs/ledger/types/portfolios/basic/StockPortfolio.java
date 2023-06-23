@@ -1,22 +1,22 @@
-package jbs.ledger.types.portfolios;
+package jbs.ledger.types.portfolios.basic;
 
-import jbs.ledger.types.assets.Commodity;
-import jbs.ledger.types.assets.Stock;
+import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.portfolios.AbstractPortfolio;
 
 import javax.annotation.Nullable;
 
-public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
-    public CommodityPortfolio(CommodityPortfolio copy) {
+public final class StockPortfolio extends AbstractPortfolio<Stock> {
+    public StockPortfolio(StockPortfolio copy) {
         super();
     }
-    public CommodityPortfolio() {
+    public StockPortfolio() {
         super();
     }
 
     @Nullable
     @Override
-    public Commodity get(String symbol) {
-        for (Commodity c : get()) {
+    public Stock get(String symbol) {
+        for (Stock c : get()) {
             if (c.getSymbol().equalsIgnoreCase(symbol)) {
                 return c;
             }
@@ -26,8 +26,8 @@ public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
     }
 
     @Override
-    public void add(Commodity asset) {
-        Commodity existing = getRaw(asset.getSymbol());
+    public void add(Stock asset) {
+        Stock existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
             existing.addQuantity(asset.getQuantity());
@@ -40,13 +40,13 @@ public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
     }
 
     @Override
-    public void remove(Commodity asset) {
+    public void remove(Stock asset) {
         add(asset.negate());
     }
 
     @Override
-    public boolean contains(Commodity asset) {
-        Commodity exiting = get(asset.getSymbol());
+    public boolean contains(Stock asset) {
+        Stock exiting = get(asset.getSymbol());
 
         if (exiting != null) {
             return exiting.getQuantity() >= asset.getQuantity();
@@ -57,6 +57,6 @@ public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
 
     @Override
     public void clean() {
-        getRaw().removeIf(e ->  e.getQuantity() == 0L);
+        getRaw().removeIf(e -> e.getQuantity() == 0L);
     }
 }

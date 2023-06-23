@@ -6,6 +6,13 @@ import jbs.ledger.interfaces.conditions.PriceCondition;
 import jbs.ledger.interfaces.markets.Market;
 
 public class OptionExerciseCondition<A extends Asset> implements PriceCondition<A> {
+    /**
+     * The exercise condition of an option
+     * @param market Market to get price data from
+     * @param asset Asset to check price of (quantity is ignored)
+     * @param type Condition operator
+     * @param price Exercise price of this option
+     */
     public OptionExerciseCondition(
             Market<A> market,
             A asset,

@@ -1,7 +1,8 @@
-package jbs.ledger.types.portfolios;
+package jbs.ledger.types.portfolios.synthetic;
 
 import jbs.ledger.interfaces.assets.Asset;
-import jbs.ledger.types.assets.UniqueNote;
+import jbs.ledger.types.assets.synthetic.UniqueNote;
+import jbs.ledger.types.portfolios.AbstractPortfolio;
 
 import javax.annotation.Nullable;
 

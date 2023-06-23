@@ -2,7 +2,7 @@
 The ultimate base plugin for economies in Minecraft servers.
 
 ## Features
-- Centralized account management
+- Centralized assetholder management
 - Basic and synthetic assets
 - Automated delivery of notes
 - Automated exercising of options

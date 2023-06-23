@@ -1,4 +1,4 @@
-package jbs.ledger.types.assets;
+package jbs.ledger.types.assets.synthetic;
 
 import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.assets.Delayed;
@@ -9,6 +9,28 @@ import javax.annotation.Nullable;
 import java.util.Date;
 
 public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D> {
+    /**
+     * Issues a note
+     * @param symbol Unique symbol of this note
+     * @param delivery Asset delivered on expiration
+     * @param deliverer Deliverer of the asset
+     * @param expiration Expiration date, set to null for a perpetual note
+     * @param quantity How many notes are issued (NOT the quantity of underlying to be delivered)
+     */
+    public Note(
+            String symbol,
+            D delivery,
+            Economic deliverer,
+            @Nullable Date expiration,
+            long quantity
+    ) {
+        this.symbol = symbol;
+        this.delivery = delivery;
+        this.deliverer = deliverer;
+        this.expiration = expiration;
+        this.quantity = quantity;
+    }
+
     public Note(final Note<D> copy) {
         this.symbol = copy.symbol;
         this.delivery = copy.delivery;

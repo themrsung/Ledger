@@ -1,4 +1,4 @@
-package jbs.ledger.types.assets;
+package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
 import org.bukkit.Material;
@@ -11,6 +11,18 @@ import javax.annotation.Nullable;
  * Non-Minecraft materials are supported, but cannot be delivered.
  */
 public final class Commodity implements IntegralAsset {
+    /**
+     * Constructs a new commodity instance
+     * @param symbol Identifier of this commodity
+     * @param quantity Quantity
+     */
+    public Commodity(
+            String symbol,
+            long quantity
+    ) {
+        this.symbol = symbol;
+        this.quantity = quantity;
+    }
     public Commodity(final Commodity copy) {
         this.symbol = copy.symbol;
         this.quantity = copy.quantity;

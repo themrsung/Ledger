@@ -1,20 +1,25 @@
 package jbs.ledger.classes;
 
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.types.assets.Cash;
-import jbs.ledger.types.assets.Commodity;
-import jbs.ledger.types.assets.Stock;
-import jbs.ledger.types.portfolios.*;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Commodity;
+import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.portfolios.basic.CashPortfolio;
+import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
+import jbs.ledger.types.portfolios.basic.StockPortfolio;
+import jbs.ledger.types.portfolios.synthetic.ConditionalNotePortfolio;
+import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
+import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 
 import java.util.UUID;
 
-public class Account implements Economic {
-    public Account(
-            UUID accountId,
-            UUID ownerId
-    ) {
-        this.uniqueId = accountId;
-        this.ownerId = ownerId;
+/**
+ * An entity capable of holding assets.
+ * Use the UUID to translate identities between Ledger and your plugin.
+ */
+public final class Assetholder implements Economic {
+    public Assetholder(UUID uniqueId) {
+        this.uniqueId = uniqueId;
 
         this.cash = new CashPortfolio();
         this.commodities = new CommodityPortfolio();
@@ -33,9 +38,8 @@ public class Account implements Economic {
         this.stockOptions = new ConditionalNotePortfolio<>();
     }
 
-    public Account(Account copy) {
+    public Assetholder(Assetholder copy) {
         this.uniqueId = copy.uniqueId;
-        this.ownerId = copy.ownerId;
 
         this.cash = copy.cash;
         this.commodities = copy.commodities;
@@ -54,9 +58,8 @@ public class Account implements Economic {
         this.stockOptions = copy.stockOptions;
     }
 
-    public Account() {
+    public Assetholder() {
         this.uniqueId = null;
-        this.ownerId = null;
 
         this.cash = new CashPortfolio();
         this.commodities = new CommodityPortfolio();
@@ -79,14 +82,9 @@ public class Account implements Economic {
     // Identification
 
     /**
-     * Unique ID of this account.
+     * Unique ID of this entity.
      */
     private final UUID uniqueId;
-
-    /**
-     * Unique ID of owner.
-     */
-    private UUID ownerId;
 
     /**
      * Gets Unique ID of this account.
@@ -95,14 +93,6 @@ public class Account implements Economic {
     @Override
     public UUID getUniqueId() {
         return null;
-    }
-
-    /**
-     * Gets Unique ID of owner.
-     * @return UUID of owner
-     */
-    public UUID getOwnerId() {
-        return ownerId;
     }
 
     // Basic assets

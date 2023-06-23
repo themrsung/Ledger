@@ -1,4 +1,4 @@
-package jbs.ledger.types.assets;
+package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.IntegralAsset;
 
@@ -7,6 +7,11 @@ import jbs.ledger.interfaces.assets.IntegralAsset;
  * Has a symbol(string) and quantity(long).
  */
 public final class Stock implements IntegralAsset {
+    /**
+     * Creates a new stock instance
+     * @param symbol Unique symbol of this stock
+     * @param quantity Quantity of this stock
+     */
     public Stock(
             String symbol,
             long quantity

@@ -1,10 +1,15 @@
 package jbs.ledger.interfaces.common;
 
 import jbs.ledger.interfaces.assets.Asset;
-import jbs.ledger.types.assets.Cash;
-import jbs.ledger.types.assets.Commodity;
-import jbs.ledger.types.assets.Stock;
-import jbs.ledger.types.portfolios.*;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Commodity;
+import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.portfolios.basic.CashPortfolio;
+import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
+import jbs.ledger.types.portfolios.basic.StockPortfolio;
+import jbs.ledger.types.portfolios.synthetic.ConditionalNotePortfolio;
+import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
+import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

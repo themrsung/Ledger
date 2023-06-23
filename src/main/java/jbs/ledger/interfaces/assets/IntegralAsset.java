@@ -23,4 +23,12 @@ public interface IntegralAsset extends Asset {
 
         return copy;
     }
+
+    @Override
+    default IntegralAsset multiply(double modifier) {
+        IntegralAsset copy = copy();
+        copy.setQuantity((long) (getQuantity() * modifier));
+
+        return copy;
+    }
 }

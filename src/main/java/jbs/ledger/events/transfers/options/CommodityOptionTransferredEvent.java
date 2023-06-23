@@ -2,8 +2,8 @@ package jbs.ledger.events.transfers.options;
 
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.types.assets.Commodity;
-import jbs.ledger.types.assets.ConditionalNote;
+import jbs.ledger.types.assets.basic.Commodity;
+import jbs.ledger.types.assets.synthetic.ConditionalNote;
 
 import javax.annotation.Nullable;
 

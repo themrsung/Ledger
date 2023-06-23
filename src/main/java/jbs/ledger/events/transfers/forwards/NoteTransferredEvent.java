@@ -2,8 +2,8 @@ package jbs.ledger.events.transfers.forwards;
 
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.types.assets.Cash;
-import jbs.ledger.types.assets.UniqueNote;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.synthetic.UniqueNote;
 
 import javax.annotation.Nullable;
 

@@ -1,4 +1,4 @@
-package jbs.ledger.types.assets;
+package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.FractionalAsset;
 import org.bukkit.Bukkit;
@@ -8,6 +8,11 @@ import org.bukkit.Bukkit;
  * Has a currency code(string) and balance(double).
  */
 public final class Cash implements FractionalAsset {
+    /**
+     * Constructs a new cash instance
+     * @param currency Currency code
+     * @param balance Amount
+     */
     public Cash(
             String currency,
             double balance

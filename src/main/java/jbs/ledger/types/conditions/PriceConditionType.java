@@ -1,11 +1,23 @@
 package jbs.ledger.types.conditions;
 
 public enum PriceConditionType {
-    EQUALS,
+    /**
+     * For call options
+     */
     HIGHER_THAN_OR_EQUALS_TO,
-    HIGHER_THAN,
+
+    /**
+     * For put options
+     */
     LOWER_THAN_OR_EQUALS_TO,
-    LOWER_THAN;
+
+    // Other
+
+    HIGHER_THAN,
+    LOWER_THAN,
+    EQUALS,
+    ALWAYS,
+    NEVER;
 
     PriceConditionType invert() {
         switch(this) {
@@ -19,6 +31,10 @@ public enum PriceConditionType {
                 return LOWER_THAN;
             case LOWER_THAN:
                 return HIGHER_THAN;
+            case ALWAYS:
+                return NEVER;
+            case NEVER:
+                return ALWAYS;
         }
 
         return null;

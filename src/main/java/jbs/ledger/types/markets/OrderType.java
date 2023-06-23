@@ -24,7 +24,7 @@ public enum OrderType {
      */
     SELL_MARKET;
 
-    boolean isBuy() {
+    public boolean isBuy() {
         switch (this) {
             case BUY_LIMIT:
             case BUY_MARKET:
@@ -34,7 +34,7 @@ public enum OrderType {
         return false;
     }
 
-    boolean isMarket() {
+    public boolean isMarket() {
         switch (this) {
             case BUY_MARKET:
             case SELL_MARKET:

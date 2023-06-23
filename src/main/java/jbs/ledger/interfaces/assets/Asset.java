@@ -11,4 +11,6 @@ public interface Asset {
     }
 
     Asset copy();
+
+    Asset multiply(double modifier);
 }
