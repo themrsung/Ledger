@@ -45,9 +45,9 @@ public final class LedgerState {
     }
 
     @Nullable
-    public Assetholder getAssetholder(UUID accountId) {
+    public Assetholder getAssetholder(UUID holderId) {
         for (Assetholder a : getAssetholders()) {
-            if (a.getUniqueId().equals(accountId)) {
+            if (a.getUniqueId().equals(holderId)) {
                 return a;
             }
         }
