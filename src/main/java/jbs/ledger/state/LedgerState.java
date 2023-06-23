@@ -1,7 +1,6 @@
 package jbs.ledger.state;
 
 import jbs.ledger.classes.Assetholder;
-import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.io.types.accounts.AssetholderData;
 
