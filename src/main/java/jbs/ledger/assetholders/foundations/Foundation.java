@@ -35,6 +35,11 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
     }
 
     @Override
+    public String getSearchTag() {
+        return getSymbol();
+    }
+
+    @Override
     public AssetholderType getType() {
         return AssetholderType.FOUNDATION;
     }

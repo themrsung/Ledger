@@ -2,6 +2,7 @@ package jbs.ledger.assetholders;
 
 import jbs.ledger.interfaces.address.Headquartered;
 import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.interfaces.common.Searchable;
 import jbs.ledger.io.types.assetholders.AssetholderData;
 import jbs.ledger.io.types.navigation.Address;
 import jbs.ledger.state.LedgerState;
@@ -24,7 +25,7 @@ import java.util.UUID;
 /**
  * An entity capable of holding assets.
  */
-public abstract class Assetholder implements Economic, Headquartered {
+public abstract class Assetholder implements Economic, Headquartered, Searchable {
     /**
      * Creates a blank instance
      * @param uniqueId Unique ID of this assetholder
@@ -100,6 +101,11 @@ public abstract class Assetholder implements Economic, Headquartered {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String getSearchTag() {
+        return getName();
     }
 
     // Basic assets

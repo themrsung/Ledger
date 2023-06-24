@@ -50,6 +50,11 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     }
 
     @Override
+    public String getSearchTag() {
+        return getSymbol();
+    }
+
+    @Override
     public String getPreferredCurrency() {
         return preferredCurrency;
     }

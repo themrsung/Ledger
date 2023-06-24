@@ -1,10 +1,5 @@
 package jbs.ledger.interfaces.common;
 
-public interface Symbolic extends Searchable {
+public interface Symbolic {
     String getSymbol();
-
-    @Override
-    default String getSearchTag() {
-        return getSymbol();
-    }
 }

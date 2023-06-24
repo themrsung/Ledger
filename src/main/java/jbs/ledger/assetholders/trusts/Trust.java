@@ -25,6 +25,11 @@ public abstract class Trust extends Assetholder implements Symbolic {
         return symbol;
     }
 
+    @Override
+    public String getSearchTag() {
+        return getSymbol();
+    }
+
     // IO
 
     @Override

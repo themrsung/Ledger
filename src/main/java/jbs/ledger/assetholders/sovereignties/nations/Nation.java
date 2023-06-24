@@ -39,6 +39,11 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         return symbol;
     }
 
+    @Override
+    public String getSearchTag() {
+        return getSymbol();
+    }
+
     private final ArrayList<NationMember> members;
     @Nullable
     private NationMember representative;

@@ -41,6 +41,11 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         return symbol;
     }
 
+    @Override
+    public String getSearchTag() {
+        return getSymbol();
+    }
+
     @Nullable
     private Nation capital;
 

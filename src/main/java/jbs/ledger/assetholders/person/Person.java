@@ -29,14 +29,6 @@ public final class Person extends Assetholder implements NationMember, Teleporta
         this.premium = copy.premium;
     }
 
-    // Search tag
-
-
-    @Override
-    public String getSearchTag() {
-        return getName();
-    }
-
     // Type
     @Override
     public AssetholderType getType() {
