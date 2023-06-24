@@ -2,26 +2,27 @@ package jbs.ledger.commands.actions;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.commands.LedgerCommandKeywords;
 import jbs.ledger.commands.LedgerPlayerCommand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * A contextual accept command. Can be used to accept any offer or request.
+ * A contextual cancel command. Can be used to cancel any offer or request.
  */
-public final class AcceptCommand extends LedgerPlayerCommand {
-    public AcceptCommand(Ledger ledger) {
+public final class CancelCommand extends LedgerPlayerCommand {
+    public CancelCommand(Ledger ledger) {
         super(ledger);
     }
-    public AcceptCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
+    public CancelCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
         HandleOffersCommand command = new HandleOffersCommand(this, getActor());
-        command.onAcceptCommand(mainArg, argsAfterMain);
+        command.onCancelCommand(mainArg, argsAfterMain);
     }
 }
 

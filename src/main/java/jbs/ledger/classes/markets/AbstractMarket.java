@@ -15,7 +15,7 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
             String symbol,
             Economic exchange,
             String currency,
-            Asset unitAsset,
+            A unitAsset,
             double tickSize
     ) {
         this.uniqueId = uniqueId;
@@ -47,7 +47,7 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
 
     private final Economic exchange;
     private final String currency;
-    private final Asset unitAsset;
+    private final A unitAsset;
     private final ArrayList<Order<A>> orders;
 
     private double price;
@@ -88,7 +88,7 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
     }
 
     @Override
-    public Asset getUnitAsset() {
+    public A getUnitAsset() {
         return unitAsset;
     }
 

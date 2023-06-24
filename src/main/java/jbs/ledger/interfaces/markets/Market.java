@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public interface Market<A extends Asset> extends Symbolic, Unique {
     Economic getExchange();
     String getCurrency();
-    Asset getUnitAsset();
+    A getUnitAsset();
 
     /**
      * Gets all orders submitted to this market.

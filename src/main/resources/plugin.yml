@@ -6,7 +6,7 @@ commands:
   create:
     description: 무언가를 생성합니다.
     usage: /create
-    aliases: [new, c, 신규, 추가, 생성]
+    aliases: [new, 신규, 추가, 생성]
   gps:
     description: GPS 시스템을 이용합니다. 프리미엄 유저만 이용 가능합니다.
     usage: /gps
@@ -26,7 +26,7 @@ commands:
   deny:
     description: 제안 또는 거래를 거절합니다.
     usage: /deny
-    aliases: [n, d, no, decline, 거부, 거절, 아니오]
+    aliases: [n, d, non, nay, decline, 거부, 거절, 아니오]
   punish:
     description: 대상에게 재제를 가합니다.
     usage: /punish
@@ -46,7 +46,7 @@ commands:
   teleporthererequest:
     description: 상대방에게 역텔레포트 요청을 보냅니다.
     usage: /teleporthererequest 상대
-    aliases: [tpahere, teleportaskhere, tpaskhere, 역텔포, 역텔레포트]
+    aliases: [tpahere, tpaskhere, teleportaskhere, tpaskhere, 역텔포, 역텔레포트]
   teleportrequest:
     description: 상대방에게 텔레포트 요청을 보냅니다. 상대가 법인인 경우 즉시 텔레포트됩니다.
     usage: /teleportrequest 상대
@@ -58,7 +58,7 @@ commands:
   accept:
     description: 제안 또는 거래를 수락합니다.
     usage: /accept
-    aliases: [y, a, yes, agree, 동의, 수락, 예]
+    aliases: [y, a, yay, agree, 동의, 수락, 예]
   directors:
     description: 이사회에 참여하거나 이사회를 관리합니다.
     usage: /directors
@@ -66,7 +66,7 @@ commands:
   manage:
     description: 조직이나 기관을 관리합니다.
     usage: /manage
-    aliases: [mg, mgm, manaage, modity, setting, settings, 설정, 관리]
+    aliases: [mg, mgm, manage, modity, setting, settings, 설정, 관리]
   members:
     description: 조직이나 기관의 회원(직원)을 관리합니다.
     usage: /members
@@ -135,6 +135,22 @@ commands:
     description: 스폰 지점을 설정합니다.
     usage: /setspawn
     aliases: ss
+  pardon:
+    description: 유저에 대한 모드 재제를 취소합니다.
+    usage: /pardon 유저
+    aliases: [pr, prd, pardon]
+  cancel:
+    description: 취소 가능한 행동을 취소합니다.
+    usage: /cancel
+    aliases: [c, cn, can, 취소]
+  buy:
+    description: 자산을 시장가로 매수합니다. 매도호가가 가장 낮은 거래소에 주문이 접수됩니다. 수량 미입력시 전액매수로 간주합니다.
+    usage: /buy 종목코드 [수량]
+    aliases: [purchase, 구매, 매수]
+  sell:
+    description: 자산을 시장가로 매도합니다. 매수호가가 가장 높은 거래소에 주문이 접수됩니다. 수량 미입력시 전량매도로 간주합니다.
+    usage: /sell 종목코드 [수량]
+    aliases: [dump, 판매, 매도]
 
 
 

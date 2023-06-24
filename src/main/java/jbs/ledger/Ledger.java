@@ -60,6 +60,7 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
         Objects.requireNonNull(getCommand("invite")).setExecutor(new InviteCommand(this));
         Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
+        Objects.requireNonNull(getCommand("pardon")).setExecutor(new PardonCommand(this));
         Objects.requireNonNull(getCommand("vote")).setExecutor(new VoteCommand(this));
         Objects.requireNonNull(getCommand("kick")).setExecutor(new KickCommand(this));
 
@@ -88,6 +89,8 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("futures")).setExecutor(new FuturesCommand(this));
         Objects.requireNonNull(getCommand("networth")).setExecutor(new NetWorthCommand(this));
         Objects.requireNonNull(getCommand("stocks")).setExecutor(new StocksCommand(this));
+        Objects.requireNonNull(getCommand("buy")).setExecutor(new BuyCommand(this));
+        Objects.requireNonNull(getCommand("sell")).setExecutor(new SellCommand(this));
 
         Objects.requireNonNull(getCommand("pay")).setExecutor(new PayCommand(this));
 

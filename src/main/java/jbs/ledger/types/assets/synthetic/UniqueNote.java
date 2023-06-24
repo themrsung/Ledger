@@ -48,7 +48,7 @@ public final class UniqueNote<D extends Asset> extends Note<D> implements Unique
             long quantity
     ) {
         super(symbol, delivery, deliverer, expiration, quantity);
-
+        
         this.uniqueId = uniqueId;
     }
 

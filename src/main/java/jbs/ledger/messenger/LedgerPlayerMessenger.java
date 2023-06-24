@@ -55,6 +55,22 @@ public final class LedgerPlayerMessenger {
         s("텔레포트 요청을 보냈습니다.");
     }
     public void teleportRequestReceived(Person sender) {
-        s(sender.getName() + "에게 텔레포트 요청을 받았습니다. 수락하시려면 /tpyes, 거절하시려면 /tpno를 입력해주세요.");
+        s(sender.getName() + "에게 텔레포트 요청을 받았습니다. 수락하시려면 /y, 거절하시려면 /n을 입력해주세요.");
+    }
+    public void teleportRequestDeclined(Person sender) {
+        s(sender.getName() + "에게 수신한 텔레포트 요청을 거부했습니다.");
+    }
+    public void noTeleportRequestsReceived() {
+        s("수신한 텔레포트 요청이 없습니다.");
+    }
+    public void noTeleportRequestsSent() {
+        s("발신한 텔레포트 요청이 없습니다.");
+    }
+
+    public void noAcceptableOfferReceived() {
+        s("수신한 제안이 없습니다.");
+    }
+    public void commandOnlyExecutableByOneself() {
+        s("본인 명의로만 실행 가능한 명령어입니다.");
     }
 }

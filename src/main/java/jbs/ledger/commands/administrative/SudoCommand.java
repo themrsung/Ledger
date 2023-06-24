@@ -16,6 +16,7 @@ public final class SudoCommand extends LedgerPlayerCommand {
     public SudoCommand(Ledger ledger) {
         super(ledger);
     }
+
     public SudoCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
@@ -33,155 +34,171 @@ public final class SudoCommand extends LedgerPlayerCommand {
             return;
         }
 
-        String main = argsAfterMain[0].toLowerCase();
-        String[] argsAfter = argsAfterMain.length > 1 ? Arrays.copyOfRange(argsAfterMain, 1, argsAfterMain.length) : new String[] {};
+        String sudoAction = argsAfterMain[0].toLowerCase();
+        String main = argsAfterMain.length >= 2 ? argsAfterMain[1].toLowerCase() : null;
+        String[] argsAfter = argsAfterMain.length > 2 ? Arrays.copyOfRange(argsAfterMain, 2, argsAfterMain.length) : new String[]{};
 
-        if (LedgerCommandKeywords.PAY.contains(mainArg)) {
+        if (LedgerCommandKeywords.PAY.contains(sudoAction)) {
             PayCommand pay = new PayCommand(this, actor);
             pay.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.CREATE.contains(mainArg)) {
+        if (LedgerCommandKeywords.CREATE.contains(sudoAction)) {
             CreateCommand create = new CreateCommand(this, actor);
             create.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.BALANCE.contains(mainArg)) {
+        if (LedgerCommandKeywords.BALANCE.contains(sudoAction)) {
             BalanceCommand balance = new BalanceCommand(this, actor);
             balance.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.STOCKS.contains(mainArg)) {
+        if (LedgerCommandKeywords.STOCKS.contains(sudoAction)) {
             StocksCommand stocks = new StocksCommand(this, actor);
             stocks.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.BONDS.contains(mainArg)) {
+        if (LedgerCommandKeywords.BONDS.contains(sudoAction)) {
             BondsCommand bonds = new BondsCommand(this, actor);
             bonds.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.FUTURES.contains(mainArg)) {
+        if (LedgerCommandKeywords.FUTURES.contains(sudoAction)) {
             FuturesCommand futures = new FuturesCommand(this, actor);
             futures.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.FORWARDS.contains(mainArg)) {
+        if (LedgerCommandKeywords.FORWARDS.contains(sudoAction)) {
             ForwardsCommand forwards = new ForwardsCommand(this, actor);
             forwards.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.INVITE.contains(mainArg)) {
+        if (LedgerCommandKeywords.INVITE.contains(sudoAction)) {
             InviteCommand invite = new InviteCommand(this, actor);
             invite.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.KICK.contains(mainArg)) {
+        if (LedgerCommandKeywords.KICK.contains(sudoAction)) {
             KickCommand kick = new KickCommand(this, actor);
             kick.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.PUNISH.contains(mainArg)) {
+        if (LedgerCommandKeywords.PUNISH.contains(sudoAction)) {
             PunishCommand punish = new PunishCommand(this, actor);
             punish.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.YES.contains(mainArg)) {
+        if (LedgerCommandKeywords.YES.contains(sudoAction)) {
             AcceptCommand yes = new AcceptCommand(this, actor);
             yes.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.NO.contains(mainArg)) {
+        if (LedgerCommandKeywords.NO.contains(sudoAction)) {
             DenyCommand no = new DenyCommand(this, actor);
             no.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.LIST.contains(mainArg)) {
+        if (LedgerCommandKeywords.LIST.contains(sudoAction)) {
             ListCommand list = new ListCommand(this, actor);
             list.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.MEMBERS.contains(mainArg)) {
+        if (LedgerCommandKeywords.MEMBERS.contains(sudoAction)) {
             MembersCommand members = new MembersCommand(this, actor);
             members.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.DIRECTORS.contains(mainArg)) {
+        if (LedgerCommandKeywords.DIRECTORS.contains(sudoAction)) {
             DirectorsCommand directors = new DirectorsCommand(this, actor);
             directors.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.NET_WORTH.contains(mainArg)) {
+        if (LedgerCommandKeywords.NET_WORTH.contains(sudoAction)) {
             NetWorthCommand netWorth = new NetWorthCommand(this, actor);
             netWorth.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.ASSETS.contains(mainArg)) {
+        if (LedgerCommandKeywords.ASSETS.contains(sudoAction)) {
             AssetsCommand assets = new AssetsCommand(this, actor);
             assets.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.LIABILITIES.contains(mainArg)) {
+        if (LedgerCommandKeywords.LIABILITIES.contains(sudoAction)) {
             LiabilitiesCommand liabilities = new LiabilitiesCommand(this, actor);
             liabilities.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.CARDS.contains(mainArg)) {
+        if (LedgerCommandKeywords.CARDS.contains(sudoAction)) {
             CardsCommand cards = new CardsCommand(this, actor);
             cards.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.VOTE.contains(mainArg)) {
+        if (LedgerCommandKeywords.VOTE.contains(sudoAction)) {
             VoteCommand vote = new VoteCommand(this, actor);
             vote.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.HOME.contains(mainArg)) {
+        if (LedgerCommandKeywords.HOME.contains(sudoAction)) {
             HomeCommand home = new HomeCommand(this, actor);
             home.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.SET_HOME.contains(mainArg)) {
+        if (LedgerCommandKeywords.SET_HOME.contains(sudoAction)) {
             SetHomeCommand setHome = new SetHomeCommand(this, actor);
             setHome.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.DELETE_HOME.contains(mainArg)) {
+        if (LedgerCommandKeywords.DELETE_HOME.contains(sudoAction)) {
             DeleteHomeCommand deleteHome = new DeleteHomeCommand(this, actor);
             deleteHome.onSudoCommand(main, argsAfter);
             return;
         }
 
-        if (LedgerCommandKeywords.MANAGE.contains(mainArg)) {
+        if (LedgerCommandKeywords.MANAGE.contains(sudoAction)) {
             ManageCommand manage = new ManageCommand(this, actor);
             manage.onSudoCommand(main, argsAfter);
+            return;
         }
 
-        if (LedgerCommandKeywords.BANK.contains(mainArg)) {
+        if (LedgerCommandKeywords.BANK.contains(sudoAction)) {
             BankCommand bank = new BankCommand(this, actor);
             bank.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.CANCEL.contains(sudoAction)) {
+            CancelCommand cancel = new CancelCommand(this, actor);
+            cancel.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.SUDO.contains(sudoAction)) {
+            SudoCommand sudo = new SudoCommand(this, actor);
+            sudo.onSudoCommand(main, argsAfter);
+            return;
+
         }
 
         getMessenger().invalidKeyword();

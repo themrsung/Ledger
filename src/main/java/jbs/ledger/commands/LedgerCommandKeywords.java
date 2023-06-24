@@ -1,11 +1,12 @@
 package jbs.ledger.commands;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
 public abstract class LedgerCommandKeywords {
     public static List<String> PAY = Arrays.asList("p", "pay", "송금", "이체");
-    public static  List<String> CREATE = Arrays.asList("new", "c", "create", "신규", "추가", "생성");
+    public static  List<String> CREATE = Arrays.asList("new", "create", "신규", "추가", "생성");
     public static  List<String> BALANCE = Arrays.asList("bal", "balance", "m", "money", "cash", "잔고", "현금");
     public static List<String> STOCKS = Arrays.asList("s", "stock", "stocks", "share", "shares", "주식");
     public static List<String> BONDS = Arrays.asList("bond", "bonds", "채권");
@@ -29,5 +30,40 @@ public abstract class LedgerCommandKeywords {
     public static List<String> DELETE_HOME = Arrays.asList("dh", "delhome", "deletehome", "deladdress", "deleteaddress", "집삭제", "주소지삭제");
     public static List<String> MANAGE = Arrays.asList("mg", "mgm", "manage", "modify", "setting", "settings", "설정", "관리");
     public static List<String> BANK = Arrays.asList("bn", "bk", "bnk", "bank", "banks", "banking", "은행");
+    public static List<String> CANCEL = Arrays.asList("c", "cn", "can", "cancel", "취소");
+    public static List<String> SUDO = Arrays.asList("d", "deputy", "su", "sud", "sudo", "as", "ex", "exe", "execute", "대변", "대신");
 
+    public enum AcceptableAction {
+        TELEPORT,
+        MEMBERSHIP_OFFER,
+        DIRECTOR_OFFER,
+        REPRESENTATIVE_OFFER,
+        CONTRACT_OFFER;
+
+        @Nullable
+        public static AcceptableAction get(String action) {
+            if (LedgerCommandKeywords.TELEPORT.contains(action)) return TELEPORT;
+            else if (LedgerCommandKeywords.MEMBERSHIP.contains(action)) return MEMBERSHIP_OFFER;
+            else if (LedgerCommandKeywords.DIRECTOR.contains(action)) return DIRECTOR_OFFER;
+            else if (LedgerCommandKeywords.REPRESENTATIVE.contains(action)) return REPRESENTATIVE_OFFER;
+            else if (LedgerCommandKeywords.CONTRACT.contains(action)) return CONTRACT_OFFER;
+            return null;
+        }
+
+        public boolean isCancellable() {
+            switch (this) {
+                case REPRESENTATIVE_OFFER:
+                    return false;
+            }
+
+            return true;
+        }
+    }
+
+
+    public static List<String> TELEPORT = Arrays.asList("tp", "tpa", "tpask", "tpr", "tprequest", "teleport", "teleportrequest", "티피", "티피에이", "티피요청", "텔레포트요청", "텔레포트");
+    public static List<String> MEMBERSHIP = Arrays.asList("m", "mem", "member", "membership", "e", "em", "employ", "employment", "employer", "employee", "w", "work", "j", "job", "c", "cit", "citizen", "citizenship", "회원", "회원권", "시민", "시민권", "직원", "구인", "구직");
+    public static List<String> DIRECTOR = Arrays.asList("d", "dr", "dir", "director", "directors", "b", "brd", "board", "이사", "이사회", "임원");
+    public static List<String> REPRESENTATIVE = Arrays.asList("r", "rep", "representative", "p", "pr", "president", "ceo", "pm", "primeminister", "chancellor" ,"대표", "대표이사", "대통령", "총리", "총통");
+    public static List<String> CONTRACT = Arrays.asList("con", "contract", "contracts", "n", "note", "f", "forward", "future", "futures", "bond", "debt", "trade", "transaction", "계약", "선도", "선물", "선도계약", "선물계약", "거래");
 }

@@ -29,6 +29,13 @@ public final class BondOrder extends AbstractOrder<StackableNote<Cash>> {
         super(copy);
     }
 
+    @Override
+    public void onFulfilled(Market<StackableNote<Cash>> market, double price, long quantity) {
+        super.onFulfilled(market, price, quantity);
+
+        // FIXME NO SETTLEMENT IN ALL ORDER TYPEs
+    }
+
     /**
      * Does nothing; Bond orders have no collateral.
      * @param market Does nothing.
