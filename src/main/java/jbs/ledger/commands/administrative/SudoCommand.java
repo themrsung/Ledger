@@ -17,7 +17,7 @@ public final class SudoCommand extends LedgerPlayerCommand {
     public SudoCommand(Ledger ledger) {
         super(ledger);
     }
-    public SudoCommand(LedgerPlayerCommand originalCommand, Economic actor) {
+    public SudoCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 

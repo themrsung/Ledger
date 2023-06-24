@@ -1,6 +1,7 @@
 package jbs.ledger.commands.actions;
 
 import jbs.ledger.Ledger;
+import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerPlayerCommand;
 import jbs.ledger.interfaces.common.Economic;
 
@@ -11,7 +12,7 @@ public final class TeleportAcceptCommand extends LedgerPlayerCommand {
     public TeleportAcceptCommand(Ledger ledger) {
         super(ledger);
     }
-    public TeleportAcceptCommand(LedgerPlayerCommand originalCommand, Economic actor) {
+    public TeleportAcceptCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 

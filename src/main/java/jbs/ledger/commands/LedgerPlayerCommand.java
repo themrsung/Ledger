@@ -1,7 +1,7 @@
 package jbs.ledger.commands;
 
 import jbs.ledger.Ledger;
-import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.assetholders.Assetholder;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -13,7 +13,7 @@ public abstract class LedgerPlayerCommand extends LedgerCommand {
     public LedgerPlayerCommand(Ledger ledger) {
         super(ledger);
     }
-    protected LedgerPlayerCommand(LedgerPlayerCommand command, Economic actor) {
+    protected LedgerPlayerCommand(LedgerPlayerCommand command, Assetholder actor) {
         super(command, actor);
     }
 

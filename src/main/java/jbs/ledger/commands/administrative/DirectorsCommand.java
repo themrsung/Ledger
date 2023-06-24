@@ -1,6 +1,7 @@
 package jbs.ledger.commands.administrative;
 
 import jbs.ledger.Ledger;
+import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerPlayerCommand;
 import jbs.ledger.interfaces.common.Economic;
 
@@ -11,7 +12,7 @@ public final class DirectorsCommand extends LedgerPlayerCommand {
     public DirectorsCommand(Ledger ledger) {
         super(ledger);
     }
-    public DirectorsCommand(LedgerPlayerCommand originalCommand, Economic actor) {
+    public DirectorsCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 
