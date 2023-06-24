@@ -2,10 +2,15 @@ package jbs.ledger.assetholders.corporations.general;
 
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.corporations.Corporation;
+import jbs.ledger.io.types.assetholders.corporations.general.ManufacturerData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 
 import java.util.UUID;
 
+/**
+ * Manufacturers have the ability to craft credit card terminals (Command blocks)
+ */
 public final class Manufacturer extends Corporation {
     public Manufacturer(
             UUID uniqueId,
@@ -24,5 +29,22 @@ public final class Manufacturer extends Corporation {
     @Override
     public AssetholderType getType() {
         return AssetholderType.MANUFACTURER;
+    }
+
+    // IO
+    public ManufacturerData toData() {
+        return new ManufacturerData();
+    }
+
+    private Manufacturer(UUID uniqueId) {
+        super(uniqueId);
+    }
+
+    public static Manufacturer getEmptyInstance(UUID uniqueId) {
+        return new Manufacturer(uniqueId);
+    }
+
+    public void load(ManufacturerData data, LedgerState state) {
+        super.load(data, state);
     }
 }

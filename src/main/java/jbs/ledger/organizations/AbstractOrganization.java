@@ -2,6 +2,7 @@ package jbs.ledger.organizations;
 
 import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.interfaces.organization.Organization;
+import jbs.ledger.io.types.organizations.OrganizationData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -60,5 +61,16 @@ public class AbstractOrganization<M extends Unique> implements Organization<M> {
     @Override
     public void setRepresentative(@Nullable M representative) {
         this.representative = representative;
+    }
+
+    // IO
+    public OrganizationData toData() {
+        OrganizationData data = new OrganizationData();
+
+        for (M member : members) {
+            data.members.add(member.getUniqueId());
+        }
+
+        return data;
     }
 }

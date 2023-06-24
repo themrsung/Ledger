@@ -4,6 +4,9 @@ import jbs.ledger.classes.orders.AbstractOrder;
 import jbs.ledger.classes.orders.OrderType;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
+import jbs.ledger.io.types.orders.basic.StockOrderData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.assets.synthetic.UniqueNote;
@@ -33,5 +36,29 @@ public final class StockOrder extends AbstractOrder<Stock> {
     @Override
     public void unregisterAssetCollateral(Market<Stock> market) {
         market.getExchange().getStockForwards().remove(getAssetCollateral());
+    }
+
+    // IO
+    public StockOrderData toData() {
+        StockOrderData data = new StockOrderData(super.toData());
+
+        if (getAssetCollateral() != null) {
+            data.assetCollateral = (StockForwardData) getAssetCollateral().toData();
+        }
+
+        return data;
+    }
+
+    public static StockOrder fromData(StockOrderData data, LedgerState state) {
+        return new StockOrder(
+                data.uniqueId,
+                data.type,
+                state.getAssetholder(data.sender),
+                data.date,
+                data.price,
+                data.quantity,
+                data.cashCollateral != null ? UniqueNote.fromData(data.cashCollateral, state) : null,
+                data.assetCollateral != null ?UniqueNote.fromData(data.assetCollateral, state) : null
+        );
     }
 }

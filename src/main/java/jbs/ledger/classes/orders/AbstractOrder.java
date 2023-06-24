@@ -3,6 +3,8 @@ package jbs.ledger.classes.orders;
 import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.orders.Order;
+import jbs.ledger.io.types.orders.OrderData;
+import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.synthetic.UniqueNote;
 
@@ -105,5 +107,21 @@ public abstract class AbstractOrder<A extends Asset> implements Order<A> {
     @Nullable
     public UniqueNote<A> getAssetCollateral() {
         return assetCollateral;
+    }
+
+    // IO
+    public OrderData<?> toData() {
+        OrderData<?> data = new OrderData<>();
+
+        data.uniqueId = uniqueId;
+        data.type = type;
+        data.sender = sender.getUniqueId();
+        data.date = date;
+        data.price = price;
+        data.quantity = quantity;
+
+        if (cashCollateral != null) data.cashCollateral = (NoteData) cashCollateral.toData();
+
+        return data;
     }
 }

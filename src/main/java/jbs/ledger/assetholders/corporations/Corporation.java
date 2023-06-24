@@ -6,7 +6,10 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
+import jbs.ledger.io.types.assetholders.corporations.CorporationData;
+import jbs.ledger.io.types.organizations.OrganizationData;
 import jbs.ledger.organizations.Board;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 
 import javax.annotation.Nullable;
@@ -36,10 +39,10 @@ public abstract class Corporation extends Assetholder implements Corporate {
         this.representative = copy.representative;
     }
 
-    private final String symbol;
-    private final String preferredCurrency;
-    private final Organization<Person> board;
-    private final Cash capital;
+    private String symbol;
+    private String preferredCurrency;
+    private Board board;
+    private Cash capital;
     private final ArrayList<Person> members;
     @Nullable
     private Person representative;
@@ -62,6 +65,11 @@ public abstract class Corporation extends Assetholder implements Corporate {
     @Override
     public Cash getCapital() {
         return capital;
+    }
+
+    @Override
+    public void setCapital(Cash capital) {
+        this.capital = capital;
     }
 
     @Override
@@ -88,5 +96,49 @@ public abstract class Corporation extends Assetholder implements Corporate {
     @Override
     public void setRepresentative(@Nullable Person representative) {
         this.representative = representative;
+    }
+
+    // IO
+    protected Corporation(UUID uniqueId) {
+        super(uniqueId);
+
+        this.symbol = null;
+        this.preferredCurrency = null;
+        this.board = null;
+        this.members = new ArrayList<>();
+    }
+
+    @Override
+    public CorporationData toData() {
+        CorporationData data = new CorporationData(super.toData());
+
+        data.symbol = symbol;
+        data.preferredCurrency = preferredCurrency;
+        data.board = board.toData();
+        data.capital = capital.toData();
+
+        for (Person m : members) {
+            data.members.add(m.getUniqueId());
+        }
+
+        if (representative != null) data.representative = representative.getUniqueId();
+
+        return data;
+    }
+
+    public void load(CorporationData data, LedgerState state) {
+        super.load(data, state);
+
+        this.symbol = data.symbol;
+        this.preferredCurrency = data.preferredCurrency;
+        this.board = Board.fromData(data.board, state);
+
+        this.capital = Cash.fromData(data.capital);
+
+        for (UUID m : data.members) {
+            this.members.add(state.getPerson(m));
+        }
+
+        if (data.representative != null) this.representative = state.getPerson(data.representative);
     }
 }

@@ -4,6 +4,7 @@ import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.interfaces.orders.Order;
+import jbs.ledger.io.types.markets.MarketData;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -50,7 +51,7 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
     private final ArrayList<Order<A>> orders;
 
     private double price;
-    private long volume;
+    private transient long volume;
     private double tickSize;
 
     @Override

@@ -6,7 +6,9 @@ import jbs.ledger.classes.banking.BankAccount;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.banking.Account;
 import jbs.ledger.interfaces.banking.Banking;
-import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.io.types.assetholders.corporations.finance.BankData;
+import jbs.ledger.io.types.banking.BankAccountData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import org.bukkit.Bukkit;
 
@@ -15,6 +17,7 @@ import java.util.UUID;
 
 /**
  * A bank holds cash on their clients' behalf and pays interest.
+ * Banks can also issue debit cards.
  * Interest rates can be negative.
  * Line of credit can be offered via negative account balances.
  */
@@ -92,5 +95,41 @@ public final class Bank extends Corporation implements Banking<Cash> {
     @Override
     public AssetholderType getType() {
         return AssetholderType.BANK;
+    }
+
+    // IO
+
+    @Override
+    public BankData toData() {
+        BankData data = new BankData(super.toData());
+
+        for (Account<Cash> a : getAccounts()) {
+            BankAccount ba = (BankAccount) a;
+            data.accounts.add(ba.toData());
+        }
+
+        data.interestRate = interestRate;
+
+        return data;
+    }
+
+    public static Bank getEmptyInstance(UUID uniqueId) {
+        return new Bank(uniqueId);
+    }
+
+    private Bank(UUID uniqueId) {
+        super(uniqueId);
+
+        this.accounts = new ArrayList<>();
+    }
+
+    public void load(BankData data, LedgerState state) {
+        super.load(data, state);
+
+        for (BankAccountData bad : data.accounts) {
+            this.accounts.add(BankAccount.fromData(bad, state));
+        }
+
+        this.interestRate = data.interestRate;
     }
 }

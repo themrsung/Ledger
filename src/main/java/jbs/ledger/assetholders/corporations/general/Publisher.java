@@ -6,6 +6,9 @@ import jbs.ledger.types.assets.basic.Cash;
 
 import java.util.UUID;
 
+/**
+ * Publishers have the ability to copy books via commands.
+ */
 public final class Publisher extends Corporation {
     public Publisher(
             UUID uniqueId,

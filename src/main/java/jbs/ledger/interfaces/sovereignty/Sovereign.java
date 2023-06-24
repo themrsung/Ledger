@@ -1,8 +1,12 @@
 package jbs.ledger.interfaces.sovereignty;
 
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.organization.Organization;
 
-public interface Sovereign extends Economic, Organization<SovereignMember> {
+import java.util.ArrayList;
+
+public interface Sovereign extends Economic {
+
 
 }

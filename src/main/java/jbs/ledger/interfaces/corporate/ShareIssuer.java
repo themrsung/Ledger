@@ -21,4 +21,5 @@ public interface ShareIssuer extends Symbolic {
     }
 
     Cash getCapital();
+    void setCapital(Cash capital);
 }

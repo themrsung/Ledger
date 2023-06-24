@@ -4,6 +4,9 @@ import jbs.ledger.classes.orders.AbstractOrder;
 import jbs.ledger.classes.orders.OrderType;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
+import jbs.ledger.io.types.orders.basic.BondOrderData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.synthetic.StackableNote;
 
@@ -42,5 +45,21 @@ public final class BondOrder extends AbstractOrder<StackableNote<Cash>> {
     @Override
     public void unregisterAssetCollateral(Market<StackableNote<Cash>> market) {
 
+    }
+
+    // IO
+    public BondOrderData toData() {
+        return new BondOrderData(super.toData());
+    }
+
+    public static BondOrder fromData(BondOrderData data, LedgerState state) {
+        return new BondOrder(
+                data.uniqueId,
+                data.type,
+                state.getAssetholder(data.sender),
+                data.date,
+                data.price,
+                data.quantity
+        );
     }
 }

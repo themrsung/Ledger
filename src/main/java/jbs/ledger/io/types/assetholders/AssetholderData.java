@@ -14,7 +14,22 @@ import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public final class AssetholderData {
+public class AssetholderData {
+    public AssetholderData(AssetholderData copy) {
+        this.uniqueId = copy.uniqueId;
+        this.name = copy.name;
+        this.cash = copy.cash;
+        this.commodities = copy.commodities;
+        this.stocks = copy.stocks;
+        this.bonds = copy.bonds;
+        this.notes = copy.notes;
+        this.commodityForwards = copy.commodityForwards;
+        this.stockForwards = copy.stockForwards;
+        this.bondForwards = copy.bondForwards;
+        this.commodityFutures = copy.commodityFutures;
+        this.stockFutures = copy.stockFutures;
+    }
+
     public AssetholderData() {}
 
     public UUID uniqueId;

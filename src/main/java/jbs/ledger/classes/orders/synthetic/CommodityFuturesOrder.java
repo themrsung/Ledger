@@ -4,6 +4,8 @@ import jbs.ledger.classes.orders.AbstractOrder;
 import jbs.ledger.classes.orders.OrderType;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.io.types.orders.synthetic.CommodityFuturesOrderData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.synthetic.StackableNote;
 
@@ -42,5 +44,21 @@ public final class CommodityFuturesOrder extends AbstractOrder<StackableNote<Com
     @Override
     public void unregisterAssetCollateral(Market<StackableNote<Commodity>> market) {
 
+    }
+
+    // IO
+    public CommodityFuturesOrderData toData() {
+        return new CommodityFuturesOrderData(super.toData());
+    }
+
+    public static CommodityFuturesOrder fromData(CommodityFuturesOrderData data, LedgerState state) {
+        return new CommodityFuturesOrder(
+                data.uniqueId,
+                data.type,
+                state.getAssetholder(data.sender),
+                data.date,
+                data.price,
+                data.quantity
+        );
     }
 }
