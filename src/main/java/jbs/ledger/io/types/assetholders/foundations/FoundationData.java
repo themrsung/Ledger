@@ -10,4 +10,6 @@ public final class FoundationData extends AssetholderData {
     public FoundationData() {
         super();
     }
+
+    public String symbol;
 }

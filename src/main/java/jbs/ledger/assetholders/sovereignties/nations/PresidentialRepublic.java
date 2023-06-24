@@ -10,8 +10,8 @@ import java.util.UUID;
  * Presidential Republics have a president and vice president.
  */
 public final class PresidentialRepublic extends Nation {
-    public PresidentialRepublic(UUID uniqueId, String name) {
-        super(uniqueId, name);
+    public PresidentialRepublic(UUID uniqueId, String name, String symbol) {
+        super(uniqueId, name, name);
     }
 
     public PresidentialRepublic(PresidentialRepublic copy) {

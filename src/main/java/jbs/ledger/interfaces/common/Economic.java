@@ -14,7 +14,7 @@ import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public interface Economic extends Unique {
+public interface Economic extends Searchable {
     // Basic assets
     CashPortfolio getCash();
     CommodityPortfolio getCommodities();

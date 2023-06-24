@@ -1,7 +1,9 @@
 package jbs.ledger.assetholders;
 
+import jbs.ledger.interfaces.address.Headquartered;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.io.types.assetholders.AssetholderData;
+import jbs.ledger.io.types.navigation.Address;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
@@ -12,13 +14,17 @@ import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
 import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
 import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
+import jbs.ledger.utils.TypeUtils;
+import org.bukkit.Location;
+import org.checkerframework.checker.units.qual.A;
 
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
  * An entity capable of holding assets.
  */
-public abstract class Assetholder implements Economic {
+public abstract class Assetholder implements Economic, Headquartered {
     /**
      * Creates a blank instance
      * @param uniqueId Unique ID of this assetholder
@@ -40,6 +46,9 @@ public abstract class Assetholder implements Economic {
 
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
+
+        this.address = null;
+        this.previousLocation = null;
     }
 
     public Assetholder(Assetholder copy) {
@@ -58,6 +67,9 @@ public abstract class Assetholder implements Economic {
 
         this.commodityFutures = copy.commodityFutures;
         this.stockFutures = copy.stockFutures;
+
+        this.address = copy.address;
+        this.previousLocation = copy.previousLocation;
     }
 
 
@@ -154,6 +166,39 @@ public abstract class Assetholder implements Economic {
         return stockFutures;
     }
 
+    // Address
+    @Nullable
+    private Location address;
+    @Nullable
+    private transient Location previousLocation;
+
+    @Override
+    @Nullable
+    public Location getAddress() {
+        return address;
+    }
+
+    @Override
+    public void setAddress(@Nullable Location address) {
+        this.address = address;
+    }
+
+    @Override
+    @Nullable
+    public Location getPreviousLocation() {
+        return previousLocation;
+    }
+
+    @Override
+    public void setPreviousLocation(@Nullable Location address) {
+        this.previousLocation = address;
+    }
+
+    @Override
+    public long getProtectionRadius() {
+        return 0;
+    }
+
     // Type
     public abstract AssetholderType getType();
 
@@ -174,6 +219,9 @@ public abstract class Assetholder implements Economic {
 
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
+
+        this.address = null;
+        this.previousLocation = null;
     }
 
     public void load(AssetholderData data, LedgerState state) {
@@ -190,6 +238,8 @@ public abstract class Assetholder implements Economic {
 
         this.commodityFutures.add(StackableNotePortfolio.fromCommodityFuturesData(data.commodityFutures, state));
         this.stockFutures.add(StackableNotePortfolio.fromStockFuturesData(data.stockFutures, state));
+
+        if (data.address != null) this.address = TypeUtils.addressToLocation(data.address);
     }
 
     public AssetholderData toData() {
@@ -211,6 +261,8 @@ public abstract class Assetholder implements Economic {
 
         data.commodityFutures = commodityFutures.toCommodityFuturesData();
         data.stockFutures = stockFutures.toStockFuturesData();
+
+        if (address != null) data.address = new Address(address);
 
         return data;
     }

@@ -66,6 +66,52 @@ public final class LedgerState {
         return null;
     }
 
+    /**
+     * Searches for an assetholder. Searches in the following order.
+     * Search is not case-sensitive.
+     * Searches in the following order: tag exact -> tag contains -> name exact -> name contains
+     * @param tag Tag to search for
+     * @param checkContains Will do a contains() check if true
+     * @param checkName Will check names if true
+     * @return Returns the search result
+     */
+    @Nullable
+    public Assetholder getAssetholder(String tag, boolean checkContains, boolean checkName) {
+        ArrayList<Assetholder> holders = getAssetholders();
+
+        for (Assetholder h : holders) {
+            if (h.getSearchTag().equalsIgnoreCase(tag)) {
+                return h;
+            }
+        }
+
+        if (checkContains) {
+            for (Assetholder h : holders) {
+                if (h.getSearchTag().toLowerCase().contains(tag.toLowerCase())) {
+                    return h;
+                }
+            }
+        }
+
+        if (checkName) {
+            for (Assetholder h : holders) {
+                if (h.getName().equalsIgnoreCase(tag)) {
+                    return h;
+                }
+            }
+
+            if (checkContains) {
+                for (Assetholder h : holders) {
+                    if (h.getName().toLowerCase().contains(tag.toLowerCase())) {
+                        return h;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
     public void addAssetholder(Assetholder assetholder) {
         this.assetholders.add(assetholder);
     }

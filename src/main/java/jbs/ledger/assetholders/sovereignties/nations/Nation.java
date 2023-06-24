@@ -4,6 +4,7 @@ import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.NationMember;
@@ -14,10 +15,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember> {
-    public Nation(UUID uniqueId, String name) {
+public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember>, Symbolic {
+    public Nation(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name);
 
+        this.symbol = symbol;
         this.members = new ArrayList<>();
         this.representative = null;
     }
@@ -25,8 +27,16 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
     public Nation(Nation copy) {
         super(copy);
 
+        this.symbol = copy.symbol;
         this.members = copy.members;
         this.representative = copy.representative;
+    }
+
+    private String symbol;
+
+    @Override
+    public String getSymbol() {
+        return symbol;
     }
 
     private final ArrayList<NationMember> members;
@@ -77,6 +87,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
     public NationData toData() {
         NationData data = new NationData(super.toData());
 
+        data.symbol = symbol;
+
         for (NationMember m : getMembers()) {
             if (m instanceof Person) {
                 data.citizens.add(m.getUniqueId());
@@ -95,12 +107,15 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
     public Nation(UUID uniqueId) {
         super(uniqueId);
 
+        this.symbol = null;
         this.members = new ArrayList<>();
         this.representative = null;
     }
 
     public void load(NationData data, LedgerState state) {
         super.load(data, state);
+
+        this.symbol = data.symbol;
 
         for (UUID p : data.citizens) {
             members.add(state.getPerson(p));

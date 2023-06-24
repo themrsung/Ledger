@@ -11,7 +11,9 @@ import jbs.ledger.io.types.assets.synthetic.unique.BondForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
 import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
+import jbs.ledger.io.types.navigation.Address;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -30,6 +32,7 @@ public class AssetholderData {
         this.bondForwards = copy.bondForwards;
         this.commodityFutures = copy.commodityFutures;
         this.stockFutures = copy.stockFutures;
+        this.address = copy.address;
     }
 
     public AssetholderData() {}
@@ -55,4 +58,7 @@ public class AssetholderData {
     public ArrayList<CommodityFuturesData> commodityFutures = new ArrayList<>();
     public ArrayList<StockFuturesData> stockFutures = new ArrayList<>();
 
+    // Address
+    @Nullable
+    public Address address = null;
 }

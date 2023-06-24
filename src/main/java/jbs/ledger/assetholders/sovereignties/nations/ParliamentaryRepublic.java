@@ -10,8 +10,8 @@ import java.util.UUID;
  * Parliamentary Republics have a prime minister.
  */
 public final class ParliamentaryRepublic extends Nation {
-    public ParliamentaryRepublic(UUID uniqueId, String name) {
-        super(uniqueId, name);
+    public ParliamentaryRepublic(UUID uniqueId, String name, String symbol) {
+        super(uniqueId, name, symbol);
     }
 
     public ParliamentaryRepublic(ParliamentaryRepublic copy) {

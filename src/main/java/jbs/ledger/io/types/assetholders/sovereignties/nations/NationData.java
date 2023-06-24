@@ -13,6 +13,7 @@ public class NationData extends AssetholderData {
     public NationData(NationData copy) {
         super(copy);
 
+        this.symbol = copy.symbol;
         this.citizens = copy.citizens;
         this.corporations = copy.corporations;
         this.foundations = copy.foundations;
@@ -22,6 +23,8 @@ public class NationData extends AssetholderData {
     public NationData() {
         super();
     }
+
+    public String symbol;
 
     public ArrayList<UUID> citizens = new ArrayList<>();
     public ArrayList<UUID> corporations = new ArrayList<>();

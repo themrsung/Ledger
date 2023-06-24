@@ -7,8 +7,8 @@ import jbs.ledger.state.LedgerState;
 import java.util.UUID;
 
 public final class InvestmentTrust extends Trust {
-    public InvestmentTrust(UUID uniqueId, String name) {
-        super(uniqueId, name);
+    public InvestmentTrust(UUID uniqueId, String name, String symbol) {
+        super(uniqueId, name, symbol);
     }
 
     public InvestmentTrust(InvestmentTrust copy) {

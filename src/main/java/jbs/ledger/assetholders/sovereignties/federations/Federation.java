@@ -3,6 +3,7 @@ package jbs.ledger.assetholders.sovereignties.federations;
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
+import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.types.assetholders.AssetholderData;
@@ -13,22 +14,33 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public final class Federation extends Assetholder implements Sovereign, Organization<Nation> {
-    public Federation(UUID uniqueId, String name) {
+public final class Federation extends Assetholder implements Sovereign, Organization<Nation>, Symbolic {
+    public Federation(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name);
+
+        this.symbol = symbol;
 
         this.members = new ArrayList<>();
         this.capital = null;
     }
 
-    public Federation(Assetholder copy) {
+    public Federation(Federation copy) {
         super(copy);
+        this.symbol = copy.symbol;
 
-        this.members = new ArrayList<>();
-        this.capital = null;
+        this.members = copy.members;
+        this.capital = copy.capital;
     }
 
     private final ArrayList<Nation> members;
+
+    private String symbol;
+
+    @Override
+    public String getSymbol() {
+        return symbol;
+    }
+
     @Nullable
     private Nation capital;
 
@@ -68,6 +80,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
     public FederationData toData() {
         FederationData data = new FederationData(super.toData());
 
+        data.symbol = symbol;
+
         return data;
     }
 
@@ -83,6 +97,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
 
     public void load(FederationData data, LedgerState state) {
         super.load(data, state);
+
+        this.symbol = data.symbol;
 
         for (UUID n : data.members) {
             members.add(state.getNation(n));

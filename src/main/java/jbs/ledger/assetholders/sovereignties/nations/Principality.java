@@ -11,8 +11,8 @@ import java.util.UUID;
  * Principalities have a monarch.
  */
 public final class Principality extends Nation {
-    public Principality(UUID uniqueId, String name) {
-        super(uniqueId, name);
+    public Principality(UUID uniqueId, String name, String symbol) {
+        super(uniqueId, name, symbol);
     }
 
     public Principality(Principality copy) {

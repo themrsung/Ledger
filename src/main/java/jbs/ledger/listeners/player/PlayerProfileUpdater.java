@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-public class PlayerProfileUpdater extends LedgerListener {
+public final class PlayerProfileUpdater extends LedgerListener {
     public PlayerProfileUpdater(Ledger ledger) {
         super(ledger);
     }

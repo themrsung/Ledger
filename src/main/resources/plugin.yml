@@ -2,3 +2,130 @@ name: Ledger
 version: '${project.version}'
 main: jbs.ledger.Ledger
 api-version: '1.20'
+commands:
+  create:
+    description: 무언가를 생성합니다.
+    usage: /create
+    aliases: [new, c, 신규, 추가, 생성]
+  gps:
+    description: GPS 시스템을 이용합니다. 프리미엄 유저만 이용 가능합니다.
+    usage: /gps
+    aliases: [g, nav, navi, navigation, 네비, 네비게이션]
+  invite:
+    description: 조직으로 초대를 보냅니다.
+    usage: /invite
+    aliases: [invite, h, hire, 초대, 고용]
+  kick:
+    description: 구성원을 조직에서 추방합니다.
+    usage: /kick
+    aliases: [k, f, fire, 해고, 해임, 추방]
+  message:
+    description: 메시지를 발송합니다.
+    usage: /message 수신인 내용
+    aliases: [m, w, t, msg, dm, 메시지, 디엠]
+  no:
+    description: 제안 또는 거래를 거절합니다.
+    usage: /no
+    aliases: [n, d, deny, decline, 거부, 거절, 아니오]
+  punish:
+    description: 대상에게 재제를 가합니다.
+    usage: /punish
+    aliases: [재제, 형벌, 선고]
+  reply:
+    description: 수신한 메시지에 답장합니다.
+    usage: /reply [수신인] 내용
+    aliases: [r, re, 답변 답장]
+  teleportaccept:
+    description: 텔레포트 요청을 수락합니다.
+    usage: /teleportaccept [상대]
+    aliases: [tpaccept, tpyes, teleportyes]
+  teleportdeny:
+    description: 텔레포트 요청을 거절합니다.
+    usage: /teleportdeny [상대]
+    aliases: [tpdeny, tpno, teleportno]
+  teleporthererequest:
+    description: 상대방에게 역텔레포트 요청을 보냅니다.
+    usage: /teleporthererequest 상대
+    aliases: [tpahere, teleportaskhere, tpaskhere, 역텔포, 역텔레포트]
+  teleportrequest:
+    description: 상대방에게 텔레포트 요청을 보냅니다.
+    usage: /teleportrequest 상대
+    aliases: [tpr, tpa, tpask, tprequest, teleportask, 텡포, 텔레포트]
+  vote:
+    description: 주주통회 또는 선거에 참여하거나 안건을 상정합니다.
+    usage: /vote
+    aliases: [v, votes, voting, elect, election, elections, meeting, 투표, 선거, 의결, 주총, 주주총회, 총회]
+  yes:
+    description: 제안 또는 거래를 수락합니다.
+    usage: /yes
+    aliases: [y, a, accept, agree, 동의, 수락, 예]
+  directors:
+    description: 이사회에 참여하거나 이사회를 관리합니다.
+    usage: /directors
+    aliases: [d, director, board, 이사, 이사회]
+  manage:
+    description: 조직이나 기관을 관리합니다.
+    usage: /manage
+    aliases: [mg, mgm, manaage, modity, setting, settings, 설정, 관리]
+  members:
+    description: 조직이나 기관의 회원(직원)을 관리합니다.
+    usage: /members
+    aliases: [e, em, employ, employment, m, member, membership, citizen, citizenship, 고용, 직원, 멤버, 시민, 시민권]
+  sudo:
+    description: 조직이나 기관의 명의로 명령어를 실행합니다.
+    usage: /sudo 법인코드 명령어
+    aliases: [d, deputy, su, sud, as, ex, exe, execute, 대변, 대신]
+  assets:
+    description: 자산을 조회합니다.
+    usage: /assets
+    aliases: [ast, asset, assets, 자산]
+  liabilities:
+    description: 부채를 조회합니다.
+    usage: /liabilities
+    aliases: [debt, liability, 부채, 빚]
+  cards:
+    description: 신용카드/체크카드를 조회 및 관리합니다.
+    usage: /cards
+    aliases: [card, ccard, dcard, ccards, dcards, creditcard, debitcard, creditcards, debitcards, 카드, 신용카드, 체크카드]
+  forwards:
+    description: 선도계약을 체결 및 관리합니다.
+    usage: /forwards
+    aliases: [contract, contracts, forward, 선도, 계약]
+  futures:
+    description: 선물계약을 체결, 관리, 및 매매합니다.
+    usage: /futures
+    aliases: [future, 선물]
+  networth:
+    description: 순자산을 조회합니다.
+    usage: /networth
+    aliases: [nw, worth, 순자산, equity, 자본, capital, 자기자본]
+  pay:
+    description: 현금을 송금합니다.
+    usage: /pay 수신인 금액 [통화코드]
+    aliases: [p, pay, 송금, 이체]
+  stocks:
+    description: 주식을 관리 및 매매합니다.
+    usage: /stocks
+    aliases: [s, stock, stocks, share, shares, 주식]
+  information:
+    description: 대상에 관한 정보를 조회합니다.
+    usage: /information 대상
+    aliases: [i, inf, info, 정보, 조회]
+  list:
+    description: 특정 유형에 해당하는 검색결과를 전부 조회합니다.
+    usage: /list
+    aliases: []l, li, ls, list, search, 목록, 검색]
+  networthleaderboard:
+    description: 순자산 상위 목록을 조회합니다.
+    usage: /networthleaderboard
+    aliases: [nwl, baltop, bt, balancetop, btop, networthleaderboards, rank, ranking, 순자산상위, 순자산상위목록, 순자산순위]
+  premium:
+    description: 프리미엄 상태를 확인합니다.
+    usage: /premium
+    aliases: [프리미엄]
+  back:
+    description: 이전 위치로 이동합니다.
+    usage: /back
+    aliases: [b, bk, bck, back, 백, 뒤로]
+
+
