@@ -27,6 +27,8 @@ public final class Person extends Assetholder implements NationMember, Teleporta
         super(copy);
 
         this.premium = copy.premium;
+        this.premiumExpiration = copy.premiumExpiration;
+
     }
 
     // Type

@@ -5,6 +5,7 @@ import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.messenger.LedgerPlayerMessenger;
 import jbs.ledger.state.LedgerState;
+import jbs.ledger.types.config.LedgerConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,7 +16,6 @@ import org.bukkit.entity.Player;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * A better command executor
@@ -74,6 +74,10 @@ public abstract class LedgerCommand implements CommandExecutor {
 
     protected LedgerPlayerMessenger getMessenger() {
         return messenger;
+    }
+
+    protected LedgerConfig getConfig() {
+        return getState().getConfig();
     }
 
     /**

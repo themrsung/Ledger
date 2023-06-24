@@ -2,31 +2,37 @@ package jbs.ledger.commands.actions;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
-import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.commands.LedgerPlayerCommand;
-import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.io.types.navigation.Address;
+import jbs.ledger.utils.TypeUtils;
 import org.bukkit.Location;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class BackCommand extends LedgerPlayerCommand {
-    public BackCommand(Ledger ledger) {
+public final class SpawnCommand extends LedgerPlayerCommand {
+    public SpawnCommand(Ledger ledger) {
         super(ledger);
     }
-    public BackCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
+    public SpawnCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
-        Location previous = getPerson().getPreviousLocation();
-        if (previous == null) {
+        Address spawnAddress = getConfig().serverSpawn;
+        if (spawnAddress == null) {
+            return;
+        }
+
+        Location spawn = TypeUtils.addressToLocation(getConfig().serverSpawn);
+        if (spawn == null) {
             getMessenger().invalidTeleportDestination();
             return;
         }
 
-        getPlayer().teleport(previous);
+
+        getPlayer().teleport(spawn);
         getMessenger().teleportSucceeded();
     }
 }

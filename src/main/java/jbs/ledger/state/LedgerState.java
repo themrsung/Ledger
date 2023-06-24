@@ -14,6 +14,7 @@ import jbs.ledger.assetholders.sovereignties.nations.PresidentialRepublic;
 import jbs.ledger.assetholders.sovereignties.nations.Principality;
 import jbs.ledger.assetholders.trusts.InvestmentTrust;
 import jbs.ledger.assetholders.trusts.RealEstateTrust;
+import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
@@ -31,6 +32,7 @@ import jbs.ledger.io.types.assetholders.sovereignties.nations.PresidentialRepubl
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PrincipalityData;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
+import jbs.ledger.types.config.LedgerConfig;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -42,10 +44,53 @@ import java.util.UUID;
 public final class LedgerState {
     public LedgerState() {
         this.assetholders = new ArrayList<>();
+        config = new LedgerConfig();
     }
 
-    // Assetholders
     private final ArrayList<Assetholder> assetholders;
+    private final LedgerConfig config;
+
+    // Transient variables
+    private transient final ArrayList<DirectMessage> messages = new ArrayList<>();
+
+    public ArrayList<DirectMessage> getMessages() {
+        return new ArrayList<>(messages);
+    }
+
+    /**
+     * Gets messages by recipient.
+     * @param recipient Recipient filter.
+     * @return Returns list of messages sorted by time descending.
+     */
+    public ArrayList<DirectMessage> getMessagesByRecipient(Person recipient) {
+        ArrayList<DirectMessage> messages = new ArrayList<>();
+
+        for (DirectMessage dm : getMessages()) {
+            if (dm.recipient.equals(recipient)) {
+                messages.add(dm);
+            }
+        }
+
+        messages.sort((m1, m2) -> m2.date.compareTo(m1.date));
+
+        return messages;
+    }
+
+    public void addMessage(DirectMessage message) {
+        messages.add(message);
+    }
+
+    public boolean removeMessage(DirectMessage message) {
+        return messages.remove(message);
+    }
+
+    /**
+     * Gets current configuration.
+     * @return Config
+     */
+    public LedgerConfig getConfig() {
+        return config;
+    }
 
     /**
      * Gets all assetholders in existence.
@@ -265,6 +310,7 @@ public final class LedgerState {
 
     // IO
     public LedgerState(LedgerSaveState saveState) {
+        config = saveState.config != null ? saveState.config : new LedgerConfig();
         assetholders = new ArrayList<>();
 
         for (AssetholderData data : saveState.assetholders) {

@@ -16,11 +16,18 @@ public final class LedgerPlayerMessenger {
         player.sendRawMessage(msg.replaceAll("&", "§"));
     }
 
+    public void custom(String msg) {
+        s(msg);
+    }
+
     public void unknownError() {
         s("알 수 없는 오류가 발생했습니다.");
     }
     public void insufficientArgs() {
         s("입력하신 항목이 부족합니다.");
+    }
+    public void insufficientPermissions() {
+        s("권한이 부족합니다. 명령어를 실행한 명의자를 확인해주세요.");
     }
     public void invalidKeyword() {
         s("유효하지 않은 키워드입니다.");
@@ -32,5 +39,14 @@ public final class LedgerPlayerMessenger {
 
     public void assetholderNotFound() {
         s("경제주체를 찾을 수 없습니다.");
+    }
+    public void invalidTeleportDestination() {
+        s("유효하지 않은 도착지입니다.");
+    }
+    public void teleportSucceeded() {
+        s("텔레포트가 성공적으로 실행되었습니다.");
+    }
+    public void noMessagesReceived() {
+        s("수신한 메시지가 없습니다.");
     }
 }

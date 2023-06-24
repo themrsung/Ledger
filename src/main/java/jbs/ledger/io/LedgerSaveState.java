@@ -18,6 +18,7 @@ import jbs.ledger.io.types.assetholders.sovereignties.nations.PrincipalityData;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
 import jbs.ledger.state.LedgerState;
+import jbs.ledger.types.config.LedgerConfig;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 
@@ -39,6 +40,15 @@ public final class LedgerSaveState {
             Bukkit.getLogger().info("[Ledger] Error creating plugin directory");
         }
 
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+        File configFile = new File(PATH + "/config.yml");
+        try {
+            mapper.writeValue(configFile, config);
+        } catch (IOException e) {
+            Bukkit.getLogger().info("[Ledger] Error saving config file.");
+        }
+
         File assetholderFiles = new File(PATH + "/assetholders");
         if (!assetholderFiles.mkdirs() && !assetholderFiles.exists()) {
             Bukkit.getLogger().info("[Ledger] Error creating assetholder directory");
@@ -49,8 +59,6 @@ public final class LedgerSaveState {
         } catch (IOException e) {
             Bukkit.getLogger().info("[Ledger] Error cleaning assetholder directory");
         }
-
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
         for (AssetholderData data : assetholders) {
             try {
@@ -68,8 +76,11 @@ public final class LedgerSaveState {
         for (Assetholder holder : state.getAssetholders()) {
             assetholders.add(holder.toData());
         }
+
+        this.config = state.getConfig();
     }
     public ArrayList<AssetholderData> assetholders;
+    public LedgerConfig config;
 
     // Loading
     @Nullable
@@ -80,6 +91,18 @@ public final class LedgerSaveState {
         if (!path.exists()) {
             return null;
         }
+
+        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+        File configFile = new File(PATH + "/config.yml");
+        if (configFile.exists()) {
+            try {
+                state.config = mapper.readValue(configFile, LedgerConfig.class);
+            } catch (IOException e) {
+                Bukkit.getLogger().info("[Ledger] Error loading config file.");
+            }
+        }
+
 
         File assetholderFiles = new File(PATH + "/assetholders");
         if (!assetholderFiles.exists()) {
@@ -92,14 +115,11 @@ public final class LedgerSaveState {
         }
 
 
-        ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
+
+
 
         for (File f : files) {
             try {
-//                AssetholderData data = mapper.readValue(f, AssetholderData.class);
-//                if (data != null) {
-//                    state.assetholders.add(data);
-//                }
                 String[] nameSplit = f.getName().split("\\.");
 
                 if (nameSplit.length != 3) {

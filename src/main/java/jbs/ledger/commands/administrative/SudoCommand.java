@@ -7,7 +7,6 @@ import jbs.ledger.commands.LedgerPlayerCommand;
 import jbs.ledger.commands.actions.*;
 import jbs.ledger.commands.economy.*;
 import jbs.ledger.commands.informative.ListCommand;
-import jbs.ledger.interfaces.common.Economic;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -98,13 +97,13 @@ public final class SudoCommand extends LedgerPlayerCommand {
         }
 
         if (LedgerCommandKeywords.YES.contains(mainArg)) {
-            YesCommand yes = new YesCommand(this, actor);
+            AcceptCommand yes = new AcceptCommand(this, actor);
             yes.onSudoCommand(main, argsAfter);
             return;
         }
 
         if (LedgerCommandKeywords.NO.contains(mainArg)) {
-            NoCommand no = new NoCommand(this, actor);
+            DenyCommand no = new DenyCommand(this, actor);
             no.onSudoCommand(main, argsAfter);
             return;
         }

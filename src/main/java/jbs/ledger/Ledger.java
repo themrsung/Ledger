@@ -1,6 +1,8 @@
 package jbs.ledger;
 
+import jbs.ledger.classes.messages.DirectMessageProcessor;
 import jbs.ledger.commands.actions.*;
+import jbs.ledger.commands.admin.SetSpawnCommand;
 import jbs.ledger.commands.administrative.DirectorsCommand;
 import jbs.ledger.commands.administrative.ManageCommand;
 import jbs.ledger.commands.administrative.MembersCommand;
@@ -12,6 +14,7 @@ import jbs.ledger.commands.informative.NetWorthLeaderboardCommand;
 import jbs.ledger.commands.informative.PremiumCommand;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.listeners.bookkeeping.AssetTransferHandler;
+import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.timers.LedgerAutoSaver;
@@ -46,8 +49,8 @@ public final class Ledger extends JavaPlugin {
     }
 
     private void enableCommands() {
-        Objects.requireNonNull(getCommand("yes")).setExecutor(new YesCommand(this));
-        Objects.requireNonNull(getCommand("no")).setExecutor(new NoCommand(this));
+        Objects.requireNonNull(getCommand("accept")).setExecutor(new AcceptCommand(this));
+        Objects.requireNonNull(getCommand("deny")).setExecutor(new DenyCommand(this));
 
         Objects.requireNonNull(getCommand("sudo")).setExecutor(new SudoCommand(this));
 
@@ -63,6 +66,8 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("message")).setExecutor(new MessageCommand(this));
         Objects.requireNonNull(getCommand("reply")).setExecutor(new ReplyCommand(this));
 
+        Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand(this));
+        Objects.requireNonNull(getCommand("setspawn")).setExecutor(new SetSpawnCommand(this));
 
         Objects.requireNonNull(getCommand("teleportaccept")).setExecutor(new TeleportAcceptCommand(this));
         Objects.requireNonNull(getCommand("teleportdeny")).setExecutor(new TeleportDenyCommand(this));
@@ -95,12 +100,16 @@ public final class Ledger extends JavaPlugin {
 
     private void registerEventListeners() {
         new AssetTransferHandler(this);
+
         new PlayerProfileUpdater(this);
+        new PlayerPreviousLocationSetter(this);
     }
 
     private void scheduleRepeatingTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerAutoSaver(this), 20, 60 * 20);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerNoteHandler(this), 30, 15 * 20);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new DirectMessageProcessor(this), 10,10);
     }
 
     private LedgerState state = null;

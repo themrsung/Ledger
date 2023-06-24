@@ -23,17 +23,17 @@ commands:
     description: 메시지를 발송합니다.
     usage: /message 수신인 내용
     aliases: [m, w, t, msg, dm, 메시지, 디엠]
-  no:
+  deny:
     description: 제안 또는 거래를 거절합니다.
-    usage: /no
-    aliases: [n, d, deny, decline, 거부, 거절, 아니오]
+    usage: /deny
+    aliases: [n, d, no, decline, 거부, 거절, 아니오]
   punish:
     description: 대상에게 재제를 가합니다.
     usage: /punish
     aliases: [재제, 형벌, 선고]
   reply:
     description: 수신한 메시지에 답장합니다.
-    usage: /reply [수신인] 내용
+    usage: /reply 내용
     aliases: [r, re, 답변 답장]
   teleportaccept:
     description: 텔레포트 요청을 수락합니다.
@@ -50,15 +50,15 @@ commands:
   teleportrequest:
     description: 상대방에게 텔레포트 요청을 보냅니다.
     usage: /teleportrequest 상대
-    aliases: [tpr, tpa, tpask, tprequest, teleportask, 텡포, 텔레포트]
+    aliases: [tpr, tpa, tpask, tprequest, teleportask, 텔포, 텔레포트]
   vote:
     description: 주주통회 또는 선거에 참여하거나 안건을 상정합니다.
     usage: /vote
     aliases: [v, votes, voting, elect, election, elections, meeting, 투표, 선거, 의결, 주총, 주주총회, 총회]
-  yes:
+  accept:
     description: 제안 또는 거래를 수락합니다.
-    usage: /yes
-    aliases: [y, a, accept, agree, 동의, 수락, 예]
+    usage: /accept
+    aliases: [y, a, yes, agree, 동의, 수락, 예]
   directors:
     description: 이사회에 참여하거나 이사회를 관리합니다.
     usage: /directors
@@ -114,7 +114,7 @@ commands:
   list:
     description: 특정 유형에 해당하는 검색결과를 전부 조회합니다.
     usage: /list
-    aliases: []l, li, ls, list, search, 목록, 검색]
+    aliases: [l, li, ls, list, search, 목록, 검색]
   networthleaderboard:
     description: 순자산 상위 목록을 조회합니다.
     usage: /networthleaderboard
@@ -127,5 +127,14 @@ commands:
     description: 이전 위치로 이동합니다.
     usage: /back
     aliases: [b, bk, bck, back, 백, 뒤로]
+  spawn:
+    description: 스폰으로 이동합니다.
+    usage: /spawn
+    aliases: [lobby, 스폰]
+  setspawn:
+    description: 스폰 지점을 설정합니다.
+    usage: /setspawn
+    aliases: ss
+
 
 
