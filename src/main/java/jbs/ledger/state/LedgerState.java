@@ -1,7 +1,12 @@
 package jbs.ledger.state;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.assetholders.sovereignties.nations.Nation;
+import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.sovereignty.NationMember;
+import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.io.types.assetholders.AssetholderData;
 
@@ -85,5 +90,126 @@ public final class LedgerState {
 
         return null;
     }
+
+    // Corporations
+    public ArrayList<Corporate> getCorporates() {
+        ArrayList<Corporate> corporates = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Corporate) {
+                corporates.add((Corporate) a);
+            }
+        }
+
+        return corporates;
+    }
+
+    @Nullable
+    public Corporate getCorporate(UUID uniqueId) {
+        for (Corporate c : getCorporates()) {
+            if (c.getUniqueId().equals(uniqueId)) {
+                return c;
+            }
+        }
+
+        return null;
+    }
+
+    // Sovereigns
+    public ArrayList<Sovereign> getSovereigns() {
+        ArrayList<Sovereign> sovereigns = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Sovereign) {
+                sovereigns.add((Sovereign) a);
+            }
+        }
+
+        return sovereigns;
+    }
+
+    @Nullable
+    public Sovereign getSovereign(UUID uniqueId) {
+        for (Sovereign s : getSovereigns()) {
+            if (s.getUniqueId().equals(uniqueId)) {
+                return s;
+            }
+        }
+
+        return null;
+    }
+
+    // Nations
+    public ArrayList<Nation> getNations() {
+        ArrayList<Nation> nations = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Nation) {
+                nations.add((Nation) a);
+            }
+        }
+
+        return nations;
+    }
+
+    @Nullable
+    public Nation getNation(UUID uniqueId) {
+        for (Nation n : getNations()) {
+            if (n.getUniqueId().equals(uniqueId)) {
+                return n;
+            }
+        }
+
+        return null;
+    }
+
+    // Nations
+    public ArrayList<NationMember> getNationMembers() {
+        ArrayList<NationMember> members = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof NationMember) {
+                members.add((NationMember) a);
+            }
+        }
+
+        return members;
+    }
+
+    @Nullable
+    public NationMember getNationMember(UUID uniqueid) {
+        for (NationMember m : getNationMembers()) {
+            if (m.getUniqueId().equals(uniqueid)) {
+                return m;
+            }
+        }
+
+        return null;
+    }
+
+    // Foundations
+    public ArrayList<Foundation> getFoundations() {
+        ArrayList<Foundation> foundations = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Foundation) {
+                foundations.add((Foundation) a);
+            }
+        }
+
+        return foundations;
+    }
+
+    @Nullable
+    public Foundation getFoundation(UUID uniwueId) {
+        for (Foundation f : getFoundations()) {
+            if (f.getUniqueId().equals(uniwueId)) {
+                return f;
+            }
+        }
+
+        return null;
+    }
+
 
 }

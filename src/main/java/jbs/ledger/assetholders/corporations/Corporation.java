@@ -1,13 +1,10 @@
 package jbs.ledger.assetholders.corporations;
 
 import jbs.ledger.assetholders.Assetholder;
-import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.person.Person;
-import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.assetholders.corporations.CorporationData;
-import jbs.ledger.io.types.organizations.OrganizationData;
 import jbs.ledger.organizations.Board;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
@@ -16,7 +13,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class Corporation extends Assetholder implements Corporate {
+public abstract class Corporation extends Assetholder implements Corporate  {
     public Corporation(UUID uniqueId, String name, String symbol, String currency, Cash capital) {
         super(uniqueId, name);
 

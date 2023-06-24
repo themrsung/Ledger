@@ -2,10 +2,11 @@ package jbs.ledger.interfaces.corporate;
 
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.organization.Organization;
+import jbs.ledger.interfaces.sovereignty.NationMember;
 
 import javax.annotation.Nullable;
 
-public interface Corporate extends Business, ShareIssuer, Organization<Person> {
+public interface Corporate extends Business, ShareIssuer, Organization<Person>, NationMember {
     Organization<Person> getBoard();
 
     @Nullable

@@ -2,9 +2,11 @@ package jbs.ledger.assetholders.person;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
-import jbs.ledger.interfaces.common.Unique;
+import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
-import jbs.ledger.interfaces.sovereignty.SovereignMember;
+import jbs.ledger.interfaces.sovereignty.NationMember;
+import jbs.ledger.io.types.assetholders.person.PersonData;
+import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
 import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
@@ -13,7 +15,7 @@ import java.util.UUID;
 /**
  * Players
  */
-public final class Person extends Assetholder implements SovereignMember {
+public final class Person extends Assetholder implements NationMember {
     public Person(UUID uniqueId, String name) {
         super(uniqueId, name);
     }
@@ -21,7 +23,11 @@ public final class Person extends Assetholder implements SovereignMember {
         super(copy);
     }
 
-
+    // Type
+    @Override
+    public AssetholderType getType() {
+        return AssetholderType.PERSON;
+    }
 
     // IO
     public static Person getEmptyInstance(UUID uniqueId) {
@@ -31,15 +37,15 @@ public final class Person extends Assetholder implements SovereignMember {
         super(uniqueId);
     }
 
-    // Type
     @Override
-    public AssetholderType getType() {
-        return AssetholderType.PERSON;
+    public PersonData toData() {
+        PersonData data = new PersonData(super.toData());
+
+        return data;
     }
 
-    @Nullable
-    @Override
-    public Sovereign getNationality(LedgerState state) {
-        return null;
+    public void load(PersonData data, LedgerState state) {
+        super.load(data, state);
     }
+
 }

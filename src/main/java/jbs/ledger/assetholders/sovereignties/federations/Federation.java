@@ -5,6 +5,9 @@ import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
+import jbs.ledger.io.types.assetholders.AssetholderData;
+import jbs.ledger.io.types.assetholders.sovereignties.federations.FederationData;
+import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -57,5 +60,32 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
     @Override
     public AssetholderType getType() {
         return AssetholderType.FEDERATION;
+    }
+
+    // IO
+
+    @Override
+    public FederationData toData() {
+        FederationData data = new FederationData(super.toData());
+
+        return data;
+    }
+
+    public static Federation getEmptyInstance(UUID uniqueId) {
+        return new Federation(uniqueId);
+    }
+
+    private Federation(UUID uniqueId) {
+        super(uniqueId);
+
+        this.members = new ArrayList<>();
+    }
+
+    public void load(FederationData data, LedgerState state) {
+        super.load(data, state);
+
+        for (UUID n : data.members) {
+            members.add(state.getNation(n));
+        }
     }
 }
