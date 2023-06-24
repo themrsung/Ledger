@@ -101,7 +101,8 @@ public abstract class Corporation extends Assetholder implements Corporate  {
 
         this.symbol = null;
         this.preferredCurrency = null;
-        this.board = null;
+        this.capital = new Cash();
+        this.board = new Board();
         this.members = new ArrayList<>();
     }
 

@@ -1,5 +1,6 @@
 package jbs.ledger.io.types.assetholders;
 
+import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.io.types.assets.basic.CashData;
 import jbs.ledger.io.types.assets.basic.CommodityData;
 import jbs.ledger.io.types.assets.basic.StockData;
@@ -16,6 +17,7 @@ import java.util.UUID;
 
 public class AssetholderData {
     public AssetholderData(AssetholderData copy) {
+        this.type = copy.type;
         this.uniqueId = copy.uniqueId;
         this.name = copy.name;
         this.cash = copy.cash;
@@ -31,6 +33,8 @@ public class AssetholderData {
     }
 
     public AssetholderData() {}
+
+    public AssetholderType type;
 
     public UUID uniqueId;
     public String name;

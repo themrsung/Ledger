@@ -31,7 +31,7 @@ public class CorporationData extends AssetholderData {
     public String preferredCurrency;
     public OrganizationData board;
     public CashData capital;
-    public ArrayList<UUID> members;
+    public ArrayList<UUID> members = new ArrayList<>();
     @Nullable
     public UUID representative = null;
 }

@@ -34,7 +34,7 @@ public final class Merchant extends Corporation {
 
     // IO
     public MerchantData toData() {
-        return new MerchantData();
+        return new MerchantData(super.toData());
     }
 
     private Merchant(UUID uniqueId) {

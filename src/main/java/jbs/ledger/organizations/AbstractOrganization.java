@@ -22,7 +22,7 @@ public class AbstractOrganization<M extends Unique> implements Organization<M> {
     }
 
     public AbstractOrganization() {
-        this.uniqueId = null;
+        this.uniqueId = UUID.randomUUID();
         this.members = new ArrayList<>();
         this.representative = null;
     }
@@ -67,8 +67,14 @@ public class AbstractOrganization<M extends Unique> implements Organization<M> {
     public OrganizationData toData() {
         OrganizationData data = new OrganizationData();
 
+        data.uniqueId = uniqueId;
+
         for (M member : members) {
             data.members.add(member.getUniqueId());
+        }
+
+        if (representative != null) {
+            data.representative = representative.getUniqueId();
         }
 
         return data;

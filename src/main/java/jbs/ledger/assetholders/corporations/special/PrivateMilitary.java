@@ -36,7 +36,7 @@ public final class PrivateMilitary extends Corporation implements Faction {
 
     // IO
     public PrivateMilitaryData toData() {
-        return new PrivateMilitaryData();
+        return new PrivateMilitaryData(super.toData());
     }
 
     private PrivateMilitary(UUID uniqueId) {

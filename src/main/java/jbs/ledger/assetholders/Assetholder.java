@@ -195,6 +195,8 @@ public abstract class Assetholder implements Economic {
     public AssetholderData toData() {
         AssetholderData data = new AssetholderData();
 
+        data.type = this.getType();
+
         data.uniqueId = uniqueId;
         data.name = name;
 

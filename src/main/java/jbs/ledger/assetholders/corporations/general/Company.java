@@ -6,6 +6,7 @@ import jbs.ledger.io.types.assetholders.corporations.CorporationData;
 import jbs.ledger.io.types.assetholders.corporations.general.CompanyData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
+import org.bukkit.Bukkit;
 
 import java.util.UUID;
 
@@ -35,7 +36,9 @@ public final class Company extends Corporation {
 
     // IO
     public CompanyData toData() {
-        return new CompanyData();
+        CompanyData data = new CompanyData(super.toData());
+
+        return data;
     }
 
     private Company(UUID uniqueId) {

@@ -35,7 +35,7 @@ public final class LawFirm extends Corporation {
 
     // IO
     public LawFirmData toData() {
-        return new LawFirmData();
+        return new LawFirmData(super.toData());
     }
 
     private LawFirm(UUID uniqueId) {

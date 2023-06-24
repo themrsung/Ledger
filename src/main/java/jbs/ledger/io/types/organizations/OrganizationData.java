@@ -13,6 +13,6 @@ public class OrganizationData {
     public OrganizationData() {}
 
     public UUID uniqueId;
-    public ArrayList<UUID> members;
+    public ArrayList<UUID> members = new ArrayList<>();
     public UUID representative;
 }

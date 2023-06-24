@@ -29,7 +29,7 @@ public final class Foundation extends Assetholder implements NationMember {
 
     // IO
     public FoundationData toData() {
-        return new FoundationData();
+        return new FoundationData(super.toData());
     }
 
     private Foundation(UUID uniqueId) {

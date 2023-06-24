@@ -34,7 +34,7 @@ public final class ConstructionCompany extends Corporation {
 
     // IO
     public ConstructionCompanyData toData() {
-        return new ConstructionCompanyData();
+        return new ConstructionCompanyData(super.toData());
     }
 
     private ConstructionCompany(UUID uniqueId) {

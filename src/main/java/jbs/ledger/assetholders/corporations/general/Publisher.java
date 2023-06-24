@@ -34,7 +34,7 @@ public final class Publisher extends Corporation {
 
     // IO
     public PublisherData toData() {
-        return new PublisherData();
+        return new PublisherData(super.toData());
     }
 
     private Publisher(UUID uniqueId) {

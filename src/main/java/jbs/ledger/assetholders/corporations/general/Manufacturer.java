@@ -33,7 +33,7 @@ public final class Manufacturer extends Corporation {
 
     // IO
     public ManufacturerData toData() {
-        return new ManufacturerData();
+        return new ManufacturerData(super.toData());
     }
 
     private Manufacturer(UUID uniqueId) {

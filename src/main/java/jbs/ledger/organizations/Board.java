@@ -20,10 +20,14 @@ public class Board extends AbstractOrganization<Person> {
     }
 
     public static Board fromData(OrganizationData data, LedgerState state) {
-        Board board = new Board();
+        Board board = new Board(data.uniqueId);
 
         for (UUID id : data.members) {
             board.addMember(state.getPerson(id));
+        }
+
+        if (data.representative != null) {
+            board.setRepresentative(state.getPerson(data.representative));
         }
 
         return board;
