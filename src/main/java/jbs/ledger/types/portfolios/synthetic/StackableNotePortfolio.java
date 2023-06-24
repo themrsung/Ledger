@@ -5,6 +5,7 @@ import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
 import jbs.ledger.io.types.assets.synthetic.stackable.CommodityFuturesData;
 import jbs.ledger.io.types.assets.synthetic.stackable.StackableNoteData;
 import jbs.ledger.io.types.assets.synthetic.stackable.StockFuturesData;
+import jbs.ledger.io.types.assets.synthetic.unique.BondForwardData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;

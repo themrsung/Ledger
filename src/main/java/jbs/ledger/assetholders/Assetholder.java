@@ -1,11 +1,12 @@
-package jbs.ledger.classes;
+package jbs.ledger.assetholders;
 
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.io.types.accounts.AssetholderData;
+import jbs.ledger.io.types.assetholders.AssetholderData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.assets.synthetic.StackableNote;
 import jbs.ledger.types.portfolios.basic.CashPortfolio;
 import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
@@ -17,7 +18,7 @@ import java.util.UUID;
 /**
  * An entity capable of holding assets.
  */
-public final class Assetholder implements Economic {
+public abstract class Assetholder implements Economic {
     /**
      * Creates a blank instance
      * @param uniqueId Unique ID of this assetholder
@@ -35,6 +36,8 @@ public final class Assetholder implements Economic {
         this.notes = new UniqueNotePortfolio<>();
         this.commodityForwards = new UniqueNotePortfolio<>();
         this.stockForwards = new UniqueNotePortfolio<>();
+        this.bondForwards = new UniqueNotePortfolio<>();
+
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
     }
@@ -51,6 +54,7 @@ public final class Assetholder implements Economic {
         this.notes = copy.notes;
         this.commodityForwards = copy.commodityForwards;
         this.stockForwards = copy.stockForwards;
+        this.bondForwards = copy.bondForwards;
 
         this.commodityFutures = copy.commodityFutures;
         this.stockFutures = copy.stockFutures;
@@ -96,6 +100,7 @@ public final class Assetholder implements Economic {
     private final UniqueNotePortfolio<Cash> notes;
     private final UniqueNotePortfolio<Commodity> commodityForwards;
     private final UniqueNotePortfolio<Stock> stockForwards;
+    private final UniqueNotePortfolio<StackableNote<Cash>> bondForwards;
 
     // Stackable Notes (Futures)
     private final StackableNotePortfolio<Commodity> commodityFutures;
@@ -135,6 +140,11 @@ public final class Assetholder implements Economic {
     }
 
     @Override
+    public UniqueNotePortfolio<StackableNote<Cash>> getBondForwards() {
+        return bondForwards;
+    }
+
+    @Override
     public StackableNotePortfolio<Commodity> getCommodityFutures() {
         return commodityFutures;
     }
@@ -144,12 +154,11 @@ public final class Assetholder implements Economic {
         return stockFutures;
     }
 
-    // IO
-    public static Assetholder getEmptyInstance(UUID uniqueId) {
-        return new Assetholder(uniqueId);
-    }
+    // Type
+    public abstract AssetholderType getType();
 
-    private Assetholder(UUID uniqueId) {
+    // IO
+    protected Assetholder(UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.name = null;
 
@@ -161,6 +170,8 @@ public final class Assetholder implements Economic {
         this.notes = new UniqueNotePortfolio<>();
         this.commodityForwards = new UniqueNotePortfolio<>();
         this.stockForwards = new UniqueNotePortfolio<>();
+        this.bondForwards = new UniqueNotePortfolio<>();
+
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
     }

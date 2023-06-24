@@ -1,15 +1,15 @@
 package jbs.ledger.timers;
 
 import jbs.ledger.Ledger;
-import jbs.ledger.classes.Assetholder;
+import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.synthetic.StackableNote;
 
 import java.util.Date;
 
-public final class LedgerNoteExpirationHandler implements Runnable {
-    public LedgerNoteExpirationHandler(Ledger ledger) {
+public final class LedgerNoteHandler implements Runnable {
+    public LedgerNoteHandler(Ledger ledger) {
         this.state = ledger.getState();
     }
     private final LedgerState state;

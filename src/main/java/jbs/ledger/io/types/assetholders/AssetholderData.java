@@ -1,4 +1,4 @@
-package jbs.ledger.io.types.accounts;
+package jbs.ledger.io.types.assetholders;
 
 import jbs.ledger.io.types.assets.basic.CashData;
 import jbs.ledger.io.types.assets.basic.CommodityData;
@@ -6,6 +6,7 @@ import jbs.ledger.io.types.assets.basic.StockData;
 import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
 import jbs.ledger.io.types.assets.synthetic.stackable.CommodityFuturesData;
 import jbs.ledger.io.types.assets.synthetic.stackable.StockFuturesData;
+import jbs.ledger.io.types.assets.synthetic.unique.BondForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
 import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
@@ -29,6 +30,7 @@ public final class AssetholderData {
     public ArrayList<NoteData> notes = new ArrayList<>();
     public ArrayList<CommodityForwardData> commodityForwards = new ArrayList<>();
     public ArrayList<StockForwardData> stockForwards = new ArrayList<>();
+    public ArrayList<BondForwardData> bondForwards = new ArrayList<>();
 
     // FUTURES
     public ArrayList<CommodityFuturesData> commodityFutures = new ArrayList<>();

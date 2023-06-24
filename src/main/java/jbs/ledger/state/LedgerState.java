@@ -1,9 +1,9 @@
 package jbs.ledger.state;
 
-import jbs.ledger.classes.Assetholder;
+import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.io.LedgerSaveState;
-import jbs.ledger.io.types.accounts.AssetholderData;
-import jbs.ledger.types.config.LedgerConfig;
+import jbs.ledger.io.types.assetholders.AssetholderData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -17,7 +17,8 @@ public final class LedgerState {
         assetholders = new ArrayList<>();
 
         for (AssetholderData data : saveState.assetholders) {
-            assetholders.add(Assetholder.getEmptyInstance(data.uniqueId));
+            // FIXME asjdlksajkd
+//            assetholders.add(Assetholder.getEmptyInstance(data.uniqueId));
         }
 
         for (Assetholder a : assetholders) {
@@ -61,4 +62,28 @@ public final class LedgerState {
     public boolean removeAssetholder(Assetholder assetholder) {
         return this.assetholders.remove(assetholder);
     }
+
+    // People
+    public ArrayList<Person> getPeople() {
+        ArrayList<Person> people = new ArrayList<>();;
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Person) {
+                people.add((Person) a);
+            }
+        }
+
+        return people;
+    }
+    @Nullable
+    public Person getPerson(UUID uniqueId) {
+        for (Person p : getPeople()) {
+            if (p.getUniqueId().equals(uniqueId)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
 }

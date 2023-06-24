@@ -10,6 +10,7 @@ import jbs.ledger.io.types.assets.synthetic.AbstractNoteData;
 import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
 import jbs.ledger.io.types.assets.synthetic.stackable.CommodityFuturesData;
 import jbs.ledger.io.types.assets.synthetic.stackable.StockFuturesData;
+import jbs.ledger.io.types.assets.synthetic.unique.BondForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
 import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;

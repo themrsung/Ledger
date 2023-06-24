@@ -1,6 +1,7 @@
 package jbs.ledger.listeners;
 
 import jbs.ledger.Ledger;
+import jbs.ledger.state.LedgerState;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Listener;
 
@@ -17,5 +18,8 @@ public abstract class LedgerListener implements Listener {
 
     protected Ledger getLedger() {
         return ledger;
+    }
+    protected LedgerState getState() {
+        return getLedger().getState();
     }
 }

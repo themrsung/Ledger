@@ -1,16 +1,11 @@
 package jbs.ledger.types.portfolios.synthetic;
 
 import jbs.ledger.interfaces.assets.Asset;
-import jbs.ledger.io.types.assets.synthetic.stackable.StackableNoteData;
-import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
-import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
-import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
-import jbs.ledger.io.types.assets.synthetic.unique.UniqueNoteData;
+import jbs.ledger.io.types.assets.synthetic.unique.*;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
-import jbs.ledger.types.assets.synthetic.StackableNote;
 import jbs.ledger.types.assets.synthetic.UniqueNote;
 import jbs.ledger.types.portfolios.AbstractPortfolio;
 

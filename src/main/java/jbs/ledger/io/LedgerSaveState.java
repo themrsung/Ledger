@@ -2,8 +2,8 @@ package jbs.ledger.io;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import jbs.ledger.classes.Assetholder;
-import jbs.ledger.io.types.accounts.AssetholderData;
+import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.io.types.assetholders.AssetholderData;
 import jbs.ledger.state.LedgerState;
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
@@ -14,8 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * The save state os LedgerState.
- * Ledger only saves Accounts. Use your own IO system to save other data.
+ * The save state of LedgerState.
  */
 public final class LedgerSaveState {
     public static String PATH = "plugins/Ledger";

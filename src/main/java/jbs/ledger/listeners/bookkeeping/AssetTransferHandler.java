@@ -1,4 +1,4 @@
-package jbs.ledger.listeners;
+package jbs.ledger.listeners.bookkeeping;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
@@ -11,6 +11,7 @@ import jbs.ledger.events.transfers.basic.BondTransferredEvent;
 import jbs.ledger.events.transfers.futures.CommodityFuturesTransferredEvent;
 import jbs.ledger.events.transfers.futures.StockFuturesTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
+import jbs.ledger.listeners.LedgerListener;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
