@@ -44,6 +44,11 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
         return AssetholderType.FOUNDATION;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 75;
+    }
+
     // IO
     public FoundationData toData() {
         FoundationData data = new FoundationData(super.toData());

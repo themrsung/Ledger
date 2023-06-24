@@ -23,6 +23,11 @@ public final class PresidentialRepublic extends Nation {
         return AssetholderType.PRESIDENTIAL_REPUBLIC;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 1500;
+    }
+
     // IO
 
     @Override

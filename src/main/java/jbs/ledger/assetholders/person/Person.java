@@ -90,4 +90,11 @@ public final class Person extends Assetholder implements NationMember, Teleporta
     public void setPremium(boolean premium) {
         this.premium = premium;
     }
+
+    // Protection
+
+    @Override
+    public long getProtectionRadius() {
+        return 25;
+    }
 }

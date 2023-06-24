@@ -100,6 +100,14 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.representative = representative;
     }
 
+    // Protection
+
+
+    @Override
+    public long getProtectionRadius() {
+        return 75;
+    }
+
     // IO
     protected Corporation(UUID uniqueId) {
         super(uniqueId);

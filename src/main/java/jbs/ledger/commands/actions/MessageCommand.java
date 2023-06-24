@@ -61,6 +61,8 @@ public final class MessageCommand extends LedgerPlayerCommand {
                 content
         );
 
+        // @TODO Make this an event
+
         getMessenger().custom("[본인 -> " + recipient.getName() + "] " + content);
 
         getState().addMessage(message);

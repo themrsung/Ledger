@@ -1,5 +1,6 @@
 package jbs.ledger.messenger;
 
+import jbs.ledger.assetholders.person.Person;
 import org.bukkit.entity.Player;
 
 public final class LedgerPlayerMessenger {
@@ -48,5 +49,12 @@ public final class LedgerPlayerMessenger {
     }
     public void noMessagesReceived() {
         s("수신한 메시지가 없습니다.");
+    }
+
+    public void teleportRequestSent() {
+        s("텔레포트 요청을 보냈습니다.");
+    }
+    public void teleportRequestReceived(Person sender) {
+        s(sender.getName() + "에게 텔레포트 요청을 받았습니다. 수락하시려면 /tpyes, 거절하시려면 /tpno를 입력해주세요.");
     }
 }

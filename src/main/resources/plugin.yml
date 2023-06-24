@@ -48,7 +48,7 @@ commands:
     usage: /teleporthererequest 상대
     aliases: [tpahere, teleportaskhere, tpaskhere, 역텔포, 역텔레포트]
   teleportrequest:
-    description: 상대방에게 텔레포트 요청을 보냅니다.
+    description: 상대방에게 텔레포트 요청을 보냅니다. 상대가 법인인 경우 즉시 텔레포트됩니다.
     usage: /teleportrequest 상대
     aliases: [tpr, tpa, tpask, tprequest, teleportask, 텔포, 텔레포트]
   vote:

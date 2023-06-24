@@ -34,6 +34,11 @@ public final class PrivateMilitary extends Corporation implements Faction {
         return AssetholderType.PRIVATE_MILITARY;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 250;
+    }
+
     // IO
     public PrivateMilitaryData toData() {
         return new PrivateMilitaryData(super.toData());

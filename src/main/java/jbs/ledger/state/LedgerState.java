@@ -15,6 +15,7 @@ import jbs.ledger.assetholders.sovereignties.nations.Principality;
 import jbs.ledger.assetholders.trusts.InvestmentTrust;
 import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.classes.messages.DirectMessage;
+import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
@@ -82,6 +83,44 @@ public final class LedgerState {
 
     public boolean removeMessage(DirectMessage message) {
         return messages.remove(message);
+    }
+
+    private transient final ArrayList<TeleportRequest> teleportRequests = new ArrayList<>();
+
+    public ArrayList<TeleportRequest> getTeleportRequests() {
+        return new ArrayList<>(teleportRequests);
+    }
+
+    public ArrayList<TeleportRequest> getTeleportRequestsByRecipient(Person recipient) {
+        ArrayList<TeleportRequest> requests = new ArrayList<>();
+
+        for (TeleportRequest tr : getTeleportRequests()) {
+            if (tr.to.equals(recipient)) {
+                requests.add(tr);
+            }
+        }
+
+        return requests;
+    }
+
+    public ArrayList<TeleportRequest> getTeleportRequestsBySender(Person sender) {
+        ArrayList<TeleportRequest> requests = new ArrayList<>();
+
+        for (TeleportRequest tr : getTeleportRequests()) {
+            if (tr.from.equals(sender)) {
+                requests.add(tr);
+            }
+        }
+
+        return requests;
+    }
+
+    public void addTeleportRequest(TeleportRequest request) {
+        teleportRequests.add(request);
+    }
+
+    public boolean removeTeleportRequest(TeleportRequest request) {
+        return teleportRequests.remove(request);
     }
 
     /**

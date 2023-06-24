@@ -31,6 +31,11 @@ public final class Manufacturer extends Corporation {
         return AssetholderType.MANUFACTURER;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 125;
+    }
+
     // IO
     public ManufacturerData toData() {
         return new ManufacturerData(super.toData());

@@ -20,6 +20,10 @@ public final class RealEstateTrust extends Trust {
         return AssetholderType.REAL_ESTATE_TRUST;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 1000;
+    }
 
     // IO
 

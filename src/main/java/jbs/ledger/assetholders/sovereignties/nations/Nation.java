@@ -86,6 +86,11 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.representative = representative;
     }
 
+    @Override
+    public long getProtectionRadius() {
+        return 500;
+    }
+
     // IO
 
     @Override
