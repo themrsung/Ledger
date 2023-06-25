@@ -33,6 +33,7 @@ public abstract class LedgerCommandKeywords {
     public static List<String> CANCEL = Arrays.asList("c", "cn", "can", "cancel", "취소");
     public static List<String> SUDO = Arrays.asList("d", "deputy", "su", "sud", "sudo", "as", "ex", "exe", "execute", "대변", "대신");
 
+    // ACCEPT | DENY | CANCEL
     public enum AcceptableAction {
         TELEPORT,
         MEMBERSHIP_OFFER,
@@ -66,4 +67,9 @@ public abstract class LedgerCommandKeywords {
     public static List<String> DIRECTOR = Arrays.asList("d", "dr", "dir", "director", "directors", "b", "brd", "board", "이사", "이사회", "임원");
     public static List<String> REPRESENTATIVE = Arrays.asList("r", "rep", "representative", "p", "pr", "president", "ceo", "pm", "primeminister", "chancellor" ,"대표", "대표이사", "대통령", "총리", "총통");
     public static List<String> CONTRACT = Arrays.asList("con", "contract", "contracts", "n", "note", "f", "forward", "future", "futures", "bond", "debt", "trade", "transaction", "계약", "선도", "선물", "선도계약", "선물계약", "거래");
+
+    // CREATE
+    public static List<String> COMPANY = Arrays.asList("c", "comp", "company", "corp", "corporation", "inc", "회사", "기업", "주식회사");
+    public static List<String> CONSTRUCTION_COMPANY = Arrays.asList("cc", "contractor", "construction", "constructioncompany", "건설", "건설사", "건설회사");
+
 }
