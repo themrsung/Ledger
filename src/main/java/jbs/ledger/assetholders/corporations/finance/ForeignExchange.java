@@ -22,9 +22,10 @@ public final class ForeignExchange extends Corporation {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
 
         this.forexMarkets = new ArrayList<>();
     }
@@ -81,6 +82,8 @@ public final class ForeignExchange extends Corporation {
 
     public void load(ForexData data, LedgerState state) {
         super.load(data, state);
+
+        this.forexMarkets.clear();
 
         for (MarketData<CashData, ForexOrderData> market : data.markets) {
             forexMarkets.add(ForexMarket.fromData(market, state));

@@ -12,6 +12,11 @@ public enum AssetholderType {
     CONSTRUCTION_COMPANY,
 
     /**
+     * Can copy potions
+     */
+    DISTILLERY,
+
+    /**
      * Can manufacture special goods (e.g. card terminals)
      */
     MANUFACTURER,
@@ -102,4 +107,59 @@ public enum AssetholderType {
      * Declaring war on a member state automatically triggers declaration from all member states.
      */
     FEDERATION;
+
+    public boolean isCorporation() {
+        switch (this) {
+            case COMPANY:
+            case CONSTRUCTION_COMPANY:
+            case MANUFACTURER:
+            case MERCHANT:
+            case PUBLISHER:
+            case DISTILLERY:
+            case BANK:
+            case CREDIT_CARD_COMPANY:
+            case FOREIGN_EXCHANGE:
+            case FUTURES_EXCHANGE:
+            case SECURITIES_EXCHANGE:
+            case LAW_FIRM:
+            case PRIVATE_MILITARY:
+            case FOUNDATION:
+            case PRESIDENTIAL_REPUBLIC:
+            case PARLIAMENTARY_REPUBLIC:
+            case PRINCIPALITY:
+            case FEDERATION:
+            case INVESTMENT_TRUST:
+            case REAL_ESTATE_TRUST:
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean isSovereign() {
+        switch (this) {
+            case FEDERATION:
+            case PRESIDENTIAL_REPUBLIC:
+            case PARLIAMENTARY_REPUBLIC:
+            case PRINCIPALITY:
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean isTrust() {
+        switch(this) {
+            case INVESTMENT_TRUST:
+            case REAL_ESTATE_TRUST:
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean isFoundation() {
+        return this == FOUNDATION;
+    }
+
 }

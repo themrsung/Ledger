@@ -2,9 +2,11 @@ package jbs.ledger.assetholders.foundations;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.io.types.assetholders.foundations.FoundationData;
+import jbs.ledger.organizations.Board;
 import jbs.ledger.state.LedgerState;
 
 import java.util.UUID;
@@ -19,15 +21,26 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
         super(uniqueId, name);
 
         this.symbol = symbol;
+        this.board = new Board();
+
+        this.board.owner = this;
     }
 
     public Foundation(Foundation copy) {
         super(copy);
 
         this.symbol = copy.symbol;
+        this.board = copy.board;
+
+        this.board.owner = this;
     }
 
     private String symbol;
+    private Board board;
+
+    public Board getBoard() {
+        return board;
+    }
 
     @Override
     public String getSymbol() {
@@ -54,12 +67,17 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
         FoundationData data = new FoundationData(super.toData());
 
         data.symbol = symbol;
+        data.board = board.toData();
 
         return data;
     }
 
     private Foundation(UUID uniqueId) {
         super(uniqueId);
+
+        this.board = new Board();
+
+        this.board.owner = this;
     }
 
     public static Foundation getEmptyInstance(UUID uniqueId) {
@@ -70,5 +88,9 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
         super.load(data, state);
 
         this.symbol = data.symbol;
+        this.board = Board.fromData(data.board, state);
+
+        this.board.owner = this;
     }
+
 }

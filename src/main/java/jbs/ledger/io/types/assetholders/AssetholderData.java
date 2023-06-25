@@ -4,14 +4,13 @@ import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.io.types.assets.basic.CashData;
 import jbs.ledger.io.types.assets.basic.CommodityData;
 import jbs.ledger.io.types.assets.basic.StockData;
-import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
-import jbs.ledger.io.types.assets.synthetic.stackable.CommodityFuturesData;
-import jbs.ledger.io.types.assets.synthetic.stackable.StockFuturesData;
+import jbs.ledger.io.types.assets.synthetic.stackable.*;
 import jbs.ledger.io.types.assets.synthetic.unique.BondForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.CommodityForwardData;
 import jbs.ledger.io.types.assets.synthetic.unique.NoteData;
 import jbs.ledger.io.types.assets.synthetic.unique.StockForwardData;
 import jbs.ledger.io.types.navigation.Address;
+import jbs.ledger.types.credit.CreditRating;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -33,6 +32,7 @@ public class AssetholderData {
         this.commodityFutures = copy.commodityFutures;
         this.stockFutures = copy.stockFutures;
         this.address = copy.address;
+        this.creditScore = copy.creditScore;
     }
 
     public AssetholderData() {}
@@ -58,7 +58,14 @@ public class AssetholderData {
     public ArrayList<CommodityFuturesData> commodityFutures = new ArrayList<>();
     public ArrayList<StockFuturesData> stockFutures = new ArrayList<>();
 
+    // OPTIONS
+    public ArrayList<CashOptionData> cashOptions = new ArrayList<>();
+    public ArrayList<StockOptionData> stockOptions = new ArrayList<>();
+
     // Address
     @Nullable
     public Address address = null;
+
+    // Credit
+    public float creditScore;
 }

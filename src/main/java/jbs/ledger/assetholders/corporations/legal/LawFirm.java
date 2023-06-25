@@ -19,9 +19,10 @@ public final class LawFirm extends Corporation {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
     }
 
     public LawFirm(LawFirm copy) {

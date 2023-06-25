@@ -14,13 +14,15 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public abstract class Corporation extends Assetholder implements Corporate  {
-    public Corporation(UUID uniqueId, String name, String symbol, String currency, Cash capital) {
+    public Corporation(UUID uniqueId, String name, String symbol, String currency, Cash capital, long shareCount) {
         super(uniqueId, name);
 
         this.symbol = symbol;
         this.preferredCurrency = currency;
         this.board = new Board();
+        this.board.owner = this;
         this.capital = capital;
+        this.shareCount = shareCount;
         this.members = new ArrayList<>();
         this.representative = null;
     }
@@ -32,6 +34,7 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.preferredCurrency = copy.preferredCurrency;
         this.board = copy.board;
         this.capital = copy.capital;
+        this.shareCount = copy.shareCount;
         this.members = copy.members;
         this.representative = copy.representative;
     }
@@ -40,6 +43,7 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     private String preferredCurrency;
     private Board board;
     private Cash capital;
+    private long shareCount;
     private final ArrayList<Person> members;
     @Nullable
     private Person representative;
@@ -60,6 +64,11 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     }
 
     @Override
+    public long getShareCount() {
+        return shareCount;
+    }
+
+    @Override
     public Organization<Person> getBoard() {
         return board;
     }
@@ -72,6 +81,11 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     @Override
     public void setCapital(Cash capital) {
         this.capital = capital;
+    }
+
+    @Override
+    public void setShareCount(long shareCount) {
+        this.shareCount = shareCount;
     }
 
     @Override
@@ -117,6 +131,8 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.capital = new Cash();
         this.board = new Board();
         this.members = new ArrayList<>();
+
+        this.board.owner = this;
     }
 
     @Override
@@ -127,6 +143,7 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         data.preferredCurrency = preferredCurrency;
         data.board = board.toData();
         data.capital = capital.toData();
+        data.shareCount = shareCount;
 
         for (Person m : members) {
             data.members.add(m.getUniqueId());
@@ -143,8 +160,12 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.symbol = data.symbol;
         this.preferredCurrency = data.preferredCurrency;
         this.board = Board.fromData(data.board, state);
+        this.board.owner = this;
 
         this.capital = Cash.fromData(data.capital);
+        this.shareCount = data.shareCount;
+
+        this.members.clear();
 
         for (UUID m : data.members) {
             this.members.add(state.getPerson(m));

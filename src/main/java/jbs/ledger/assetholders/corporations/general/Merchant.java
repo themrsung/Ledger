@@ -18,9 +18,10 @@ public final class Merchant extends Corporation {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
     }
 
     public Merchant(Merchant copy) {

@@ -20,5 +20,6 @@ public enum AssetType {
     STOCK_FUTURES,
 
     // OPTIONS
+    CASH_OPTION,
     STOCK_OPTION;
 }

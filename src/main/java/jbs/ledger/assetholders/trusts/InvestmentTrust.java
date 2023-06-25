@@ -1,5 +1,6 @@
 package jbs.ledger.assetholders.trusts;
 
+import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.state.LedgerState;
@@ -7,8 +8,8 @@ import jbs.ledger.state.LedgerState;
 import java.util.UUID;
 
 public final class InvestmentTrust extends Trust {
-    public InvestmentTrust(UUID uniqueId, String name, String symbol) {
-        super(uniqueId, name, symbol);
+    public InvestmentTrust(UUID uniqueId, String name, String symbol, Assetholder grantor) {
+        super(uniqueId, name, symbol, grantor);
     }
 
     public InvestmentTrust(InvestmentTrust copy) {

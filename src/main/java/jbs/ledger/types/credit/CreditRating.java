@@ -48,5 +48,7 @@ public enum CreditRating {
             case D:
                 return 0;
         }
+
+        return 0;
     }
 }

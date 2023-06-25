@@ -5,6 +5,7 @@ import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Symbolic;
+import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.NationMember;
@@ -15,13 +16,15 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember>, Symbolic {
+public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember>, Symbolic, CurrencyIssuer {
     public Nation(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name);
 
         this.symbol = symbol;
         this.members = new ArrayList<>();
         this.representative = null;
+
+        this.issuedCurrency = null;
     }
 
     public Nation(Nation copy) {
@@ -30,6 +33,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.symbol = copy.symbol;
         this.members = copy.members;
         this.representative = copy.representative;
+
+        this.issuedCurrency = copy.issuedCurrency;
     }
 
     private String symbol;
@@ -91,6 +96,20 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         return 500;
     }
 
+    // Currency
+    @Nullable
+    private String issuedCurrency;
+
+    @Override
+    @Nullable
+    public String getIssuedCurrency() {
+        return issuedCurrency;
+    }
+
+    public void setIssuedCurrency(@Nullable String issuedCurrency) {
+        this.issuedCurrency = issuedCurrency;
+    }
+
     // IO
 
     @Override
@@ -109,6 +128,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
             }
         }
 
+        data.issuedCurrency = issuedCurrency;
+
         if (getRepresentative() != null) data.representative = getRepresentative().getUniqueId();
 
         return data;
@@ -120,12 +141,15 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.symbol = null;
         this.members = new ArrayList<>();
         this.representative = null;
+        this.issuedCurrency = null;
     }
 
     public void load(NationData data, LedgerState state) {
         super.load(data, state);
 
         this.symbol = data.symbol;
+
+        this.members.clear();
 
         for (UUID p : data.citizens) {
             members.add(state.getPerson(p));
@@ -138,6 +162,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         for (UUID f : data.foundations) {
             members.add(state.getFoundation(f));
         }
+
+        this.issuedCurrency = data.issuedCurrency;
 
         representative = state.getNationMember(data.representative);
     }

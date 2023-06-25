@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AbstractOrganization<M extends Unique> implements Organization<M> {
+public class AbstractOrganization<M extends Unique> implements Organization<M>, Unique {
     public AbstractOrganization(UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.members = new ArrayList<>();
@@ -61,6 +61,10 @@ public class AbstractOrganization<M extends Unique> implements Organization<M> {
     @Override
     public void setRepresentative(@Nullable M representative) {
         this.representative = representative;
+    }
+
+    public void nuke() {
+        members.clear();
     }
 
     // IO

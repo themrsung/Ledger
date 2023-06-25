@@ -35,14 +35,6 @@ commands:
     description: 수신한 메시지에 답장합니다.
     usage: /reply 내용
     aliases: [r, re, 답변 답장]
-  teleportaccept:
-    description: 텔레포트 요청을 수락합니다.
-    usage: /teleportaccept [상대]
-    aliases: [tpaccept, tpyes, teleportyes]
-  teleportdeny:
-    description: 텔레포트 요청을 거절합니다.
-    usage: /teleportdeny [상대]
-    aliases: [tpdeny, tpno, teleportno]
   teleporthererequest:
     description: 상대방에게 역텔레포트 요청을 보냅니다.
     usage: /teleporthererequest 상대
@@ -92,9 +84,13 @@ commands:
     usage: /forwards
     aliases: [contract, contracts, forward, 선도, 계약]
   futures:
-    description: 선물계약을 체결, 관리, 및 매매합니다.
+    description: 선물계약을 관리 및 매매합니다.
     usage: /futures
     aliases: [future, 선물]
+  options:
+    description: 옵션을 행사, 관리 및 매매합니다.
+    usage: /options
+    aliases: [o, option, 옵션]
   networth:
     description: 순자산을 조회합니다.
     usage: /networth
@@ -127,6 +123,10 @@ commands:
     description: 이전 위치로 이동합니다.
     usage: /back
     aliases: [b, bk, bck, back, 백, 뒤로]
+  balance:
+    description: 현금 잔고를 조회합니다.
+    usage: /balance
+    aliases: [bal, cash, money, m, balance, 잔고, 현금]
   spawn:
     description: 스폰으로 이동합니다.
     usage: /spawn
@@ -151,6 +151,23 @@ commands:
     description: 자산을 시장가로 매도합니다. 매수호가가 가장 높은 거래소에 주문이 접수됩니다. 수량 미입력시 전량매도로 간주합니다.
     usage: /sell 종목코드 [수량]
     aliases: [dump, 판매, 매도]
+  creditrating:
+    description: 대상의 신용등급을 확인합니다.
+    usage: /creditscore [대상]
+    aliases: [cs, cscore, cr, crating, crank, creditscore, 신용점수, 신용등급]
+  sethome:
+    description: 주소지를 등록합니다.
+    usage: /sethome
+    aliases: [sh, newhome, setaddress, changeaddress, newaddress, changehome, 집설정, 집변경, 주소지설정, 주소지변경]
+  deletehome:
+    description: 주소지를 삭제합니다.
+    usage: /deletehome
+    aliases: [dh, delhome, deladdress, deleteaddress, 집삭제, 주소지삭제]
+  home:
+    description: 주소지로 이동합니다.
+    usage: /home
+    aliases: [office, hq, address, house, 집, 홈, 사무실]
+
 
 
 

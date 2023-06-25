@@ -8,6 +8,7 @@ import jbs.ledger.types.assets.synthetic.StackableNote;
 import jbs.ledger.types.portfolios.basic.CashPortfolio;
 import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
+import jbs.ledger.types.portfolios.synthetic.OptionPortfolio;
 import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
 import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 
@@ -30,6 +31,10 @@ public interface Economic extends Searchable {
     // Futures
     StackableNotePortfolio<Commodity> getCommodityFutures();
     StackableNotePortfolio<Stock> getStockFutures();
+
+    // Options
+    OptionPortfolio<Cash> getCashOptions();
+    OptionPortfolio<Stock> getStockOptions();
 
     // Generic getters
     default ArrayList<Asset> getAssets() {

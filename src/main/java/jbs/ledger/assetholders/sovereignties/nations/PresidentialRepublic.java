@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public final class PresidentialRepublic extends Nation {
     public PresidentialRepublic(UUID uniqueId, String name, String symbol) {
-        super(uniqueId, name, name);
+        super(uniqueId, name, symbol);
     }
 
     public PresidentialRepublic(PresidentialRepublic copy) {

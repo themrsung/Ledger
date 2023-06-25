@@ -10,7 +10,7 @@ import java.util.UUID;
  * An organization of members.
  * @param <M> Which type of entity can join the organization.
  */
-public interface Organization<M extends Unique> extends Unique {
+public interface Organization<M extends Unique> extends Representable<M> {
     ArrayList<M> getMembers();
     @Nullable
     default M getMember(UUID uniqueId) {
@@ -25,8 +25,4 @@ public interface Organization<M extends Unique> extends Unique {
 
     void addMember(M member);
     boolean removeMember(M member);
-
-    @Nullable
-    M getRepresentative();
-    void setRepresentative(@Nullable M representative);
 }

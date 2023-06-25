@@ -105,6 +105,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
 
         this.symbol = data.symbol;
 
+        members.clear();
+
         for (UUID n : data.members) {
             members.add(state.getNation(n));
         }

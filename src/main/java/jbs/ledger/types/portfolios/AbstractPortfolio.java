@@ -55,4 +55,11 @@ public abstract class AbstractPortfolio<A extends Asset> implements Portfolio<A>
     public void add(A asset) {
         entries.add(asset);
     }
+
+    /**
+     * Clears every entry
+     */
+    public void nuke() {
+        getRaw().clear();
+    }
 }

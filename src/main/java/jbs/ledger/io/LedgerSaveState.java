@@ -208,6 +208,10 @@ public final class LedgerSaveState {
                     case FEDERATION:
                         state.assetholders.add(mapper.readValue(f, FederationData.class));
                         break;
+
+                    case DISTILLERY:
+                        state.assetholders.add(mapper.readValue(f, DistilleryData.class));
+                        break;
                 }
 
             } catch (IOException e) {

@@ -1,5 +1,7 @@
 package jbs.ledger.types.assets.synthetic;
 
+import java.util.Date;
+
 public enum OptionType {
     AMERICAN_CALL,
     AMERICAN_PUT,
@@ -34,5 +36,12 @@ public enum OptionType {
         }
 
         return false;
+    }
+
+    public boolean canBeExercised(double marketPrice, double exercisePrice, Date date) {
+        boolean priceCondition = isCall() ? marketPrice >= exercisePrice : marketPrice <= exercisePrice;
+        boolean dateCondition = isAmerican() || date.before(new Date());
+
+        return priceCondition && dateCondition;
     }
 }

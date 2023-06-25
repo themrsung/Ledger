@@ -9,10 +9,13 @@ import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.assets.synthetic.Option;
 import jbs.ledger.types.assets.synthetic.StackableNote;
+import jbs.ledger.types.credit.CreditRating;
 import jbs.ledger.types.portfolios.basic.CashPortfolio;
 import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
+import jbs.ledger.types.portfolios.synthetic.OptionPortfolio;
 import jbs.ledger.types.portfolios.synthetic.StackableNotePortfolio;
 import jbs.ledger.types.portfolios.synthetic.UniqueNotePortfolio;
 import jbs.ledger.utils.TypeUtils;
@@ -20,6 +23,7 @@ import org.bukkit.Location;
 import org.checkerframework.checker.units.qual.A;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
@@ -48,6 +52,9 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
 
+        this.cashOptions = new OptionPortfolio<>();
+        this.stockOptions = new OptionPortfolio<>();
+
         this.address = null;
         this.previousLocation = null;
     }
@@ -68,6 +75,9 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
 
         this.commodityFutures = copy.commodityFutures;
         this.stockFutures = copy.stockFutures;
+
+        this.cashOptions = copy.cashOptions;
+        this.stockOptions = copy.stockOptions;
 
         this.address = copy.address;
         this.previousLocation = copy.previousLocation;
@@ -124,6 +134,10 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
     private final StackableNotePortfolio<Commodity> commodityFutures;
     private final StackableNotePortfolio<Stock> stockFutures;
 
+    // Options
+    private final OptionPortfolio<Cash> cashOptions;
+    private final OptionPortfolio<Stock> stockOptions;
+
     @Override
     public CashPortfolio getCash() {
         return cash;
@@ -172,6 +186,16 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
         return stockFutures;
     }
 
+    @Override
+    public OptionPortfolio<Cash> getCashOptions() {
+        return cashOptions;
+    }
+
+    @Override
+    public OptionPortfolio<Stock> getStockOptions() {
+        return stockOptions;
+    }
+
     // Address
     @Nullable
     private Location address;
@@ -205,6 +229,21 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
         return 0;
     }
 
+    // Credit
+    private float creditScore = CreditRating.B.toScore();
+
+    public float getCreditScore() {
+        return creditScore;
+    }
+
+    public CreditRating getCreditRating() {
+        return CreditRating.fromScore(getCreditScore());
+    }
+
+    public void setCreditScore(float creditScore) {
+        this.creditScore = creditScore;
+    }
+
     // Type
     public abstract AssetholderType getType();
 
@@ -226,24 +265,54 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
         this.commodityFutures = new StackableNotePortfolio<>();
         this.stockFutures = new StackableNotePortfolio<>();
 
+        this.cashOptions = new OptionPortfolio<>();
+        this.stockOptions = new OptionPortfolio<>();
+
         this.address = null;
         this.previousLocation = null;
     }
 
+    /**
+     * Loads parameters from data class.
+     * This needs to be called AT LEAST TWICE. (Market pointers in options can be null if called once)
+     * @param data Data to initialize from
+     * @param state Current state
+     */
     public void load(AssetholderData data, LedgerState state) {
         this.name = data.name;
+
+        this.cash.nuke();
+        this.commodities.nuke();
+        this.stocks.nuke();
+        this.bonds.nuke();
 
         this.cash.add(CashPortfolio.fromData(data.cash));
         this.commodities.add(CommodityPortfolio.fromData(data.commodities));
         this.stocks.add(StockPortfolio.fromData(data.stocks));
         this.bonds.add(StackableNotePortfolio.fromBondData(data.bonds, state));
 
+        this.notes.nuke();
+        this.commodityForwards.nuke();
+        this.stockForwards.nuke();
+
         this.notes.add(UniqueNotePortfolio.fromNoteData(data.notes, state));
         this.commodityForwards.add(UniqueNotePortfolio.fromCommodityForwardData(data.commodityForwards, state));
         this.stockForwards.add(UniqueNotePortfolio.fromStockForwardData(data.stockForwards, state));
 
+        this.commodityFutures.nuke();
+        this.stockFutures.nuke();
+
         this.commodityFutures.add(StackableNotePortfolio.fromCommodityFuturesData(data.commodityFutures, state));
         this.stockFutures.add(StackableNotePortfolio.fromStockFuturesData(data.stockFutures, state));
+
+        this.cashOptions.nuke();
+        this.stockOptions.nuke();
+
+        this.cashOptions.add(OptionPortfolio.fromCashOptionData(data.cashOptions, state));
+        this.stockOptions.add(OptionPortfolio.fromStockOptionData(data.stockOptions, state));
+
+        this.creditScore = data.creditScore;
+
 
         if (data.address != null) this.address = TypeUtils.addressToLocation(data.address);
     }
@@ -267,6 +336,8 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
 
         data.commodityFutures = commodityFutures.toCommodityFuturesData();
         data.stockFutures = stockFutures.toStockFuturesData();
+
+        data.creditScore = creditScore;
 
         if (address != null) data.address = new Address(address);
 

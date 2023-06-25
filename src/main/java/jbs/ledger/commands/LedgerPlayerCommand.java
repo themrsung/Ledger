@@ -28,6 +28,13 @@ public abstract class LedgerPlayerCommand extends LedgerCommand {
 
     @Nonnull
     @Override
+    protected Assetholder getActor() {
+        assert super.getActor() != null;
+        return super.getActor();
+    }
+
+    @Nonnull
+    @Override
     protected Player getPlayer() {
         assert super.getPlayer() != null;
         return super.getPlayer();

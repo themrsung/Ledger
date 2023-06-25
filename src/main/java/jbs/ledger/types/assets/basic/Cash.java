@@ -2,8 +2,12 @@ package jbs.ledger.types.assets.basic;
 
 import jbs.ledger.interfaces.assets.FractionalAsset;
 import jbs.ledger.io.types.assets.basic.CashData;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.AssetType;
-import org.bukkit.Bukkit;
+
+import java.text.NumberFormat;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Cash
@@ -47,7 +51,6 @@ public final class Cash implements FractionalAsset {
 
     @Override
     public void setBalance(double balance) {
-        Bukkit.getLogger().info("balance change" + getBalance() + " -> " + balance);
         this.balance = balance;
     }
 
@@ -84,6 +87,68 @@ public final class Cash implements FractionalAsset {
         data.balance = balance;
 
         return data;
+    }
+
+    // Input
+    public static Cash fromInput(String input, LedgerState state) {
+        String fallbackCurrency = state.getConfig().defaultCurrency;
+
+        // Check for currency input
+        String currency = null;
+
+        for (String c : state.getCurrencies()) {
+            if (input.toUpperCase().startsWith(c)) {
+                currency = c;
+                break;
+            }
+        }
+
+        if (currency == null) {
+            currency = fallbackCurrency;
+        }
+
+        // Check for unit input
+        String numberWithUnit = input.toUpperCase().replaceAll(currency, "");
+
+        final List<String> koreanDelimiters = Arrays.asList("경", "조", "억", "만", "천", "백", "십");
+        final List<Double> koreanUnits = Arrays.asList(10000000000000000d, 1000000000000d, 10000000d, 10000d, 1000d, 100d, 10d);
+
+        for (int i = 0; i < koreanDelimiters.size(); i++) {
+            String d = koreanDelimiters.get(i);
+            if (numberWithUnit.contains(d)) {
+                String numberOnly = numberWithUnit.replaceAll(d, "");
+                try {
+                    return new Cash(currency, Double.parseDouble(numberOnly) * koreanUnits.get(i));
+                } catch (NumberFormatException e) {
+                    return new Cash(currency, 0);
+                }
+            }
+        }
+
+        final List<String> englishDelimiters = Arrays.asList("q", "t", "b", "m", "k");
+        final List<Double> englishUnits = Arrays.asList(1000000000000000d, 1000000000000d, 1000000000d, 1000000d, 1000d);
+
+        for (int i = 0; i < englishDelimiters.size(); i++) {
+            String d = englishDelimiters.get(i);
+            if (numberWithUnit.contains(d)) {
+                String numberOnly = numberWithUnit.replaceAll(d, "");
+                try {
+                    return new Cash(currency, Double.parseDouble(numberOnly) * englishUnits.get(i));
+                } catch (NumberFormatException e) {
+                    return new Cash(currency, 0);
+                }
+            }
+        }
+
+        try {
+            return new Cash(currency, Double.parseDouble(numberWithUnit));
+        } catch (NumberFormatException e) {
+            return new Cash(currency, 0);
+        }
+    }
+
+    public String format() {
+        return getSymbol() + " " + NumberFormat.getInstance().format(getBalance());
     }
 
 }

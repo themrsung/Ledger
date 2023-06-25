@@ -19,6 +19,7 @@ public class CorporationData extends AssetholderData {
         this.preferredCurrency = copy.preferredCurrency;
         this.board = copy.board;
         this.capital = copy.capital;
+        this.shareCount = copy.shareCount;
         this.members = copy.members;
         this.representative = copy.representative;
     }
@@ -29,8 +30,9 @@ public class CorporationData extends AssetholderData {
 
     public String symbol;
     public String preferredCurrency;
-    public OrganizationData board;
+    public OrganizationData board = new OrganizationData();
     public CashData capital;
+    public long shareCount;
     public ArrayList<UUID> members = new ArrayList<>();
     @Nullable
     public UUID representative = null;

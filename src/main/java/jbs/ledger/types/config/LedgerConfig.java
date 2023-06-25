@@ -6,4 +6,5 @@ public final class LedgerConfig {
     public LedgerConfig() {}
 
     public Address serverSpawn = null;
+    public String defaultCurrency = "CR";
 }

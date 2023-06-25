@@ -32,9 +32,10 @@ public final class SecuritiesExchange extends Corporation {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
 
         this.stockMarkets = new ArrayList<>();
         this.bondMarkets = new ArrayList<>();
@@ -111,6 +112,9 @@ public final class SecuritiesExchange extends Corporation {
 
     public void load(SecuritiesExchangeData data, LedgerState state) {
         super.load(data, state);
+
+        this.stockMarkets.clear();
+        this.bondMarkets.clear();
 
         for (MarketData<StockData, StockOrderData> market : data.stockMarkets) {
             stockMarkets.add(StockMarket.fromData(market, state));

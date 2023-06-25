@@ -20,9 +20,10 @@ public final class PrivateMilitary extends Corporation implements Faction {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
     }
 
     public PrivateMilitary(PrivateMilitary copy) {

@@ -27,9 +27,10 @@ public final class Bank extends Corporation implements Banking<Cash> {
             String name,
             String symbol,
             String currency,
-            Cash capital
+            Cash capital,
+            long shareCount
     ) {
-        super(uniqueId, name, symbol, currency, capital);
+        super(uniqueId, name, symbol, currency, capital, shareCount);
 
         this.accounts = new ArrayList<>();
         this.interestRate = 0f;
@@ -125,6 +126,8 @@ public final class Bank extends Corporation implements Banking<Cash> {
 
     public void load(BankData data, LedgerState state) {
         super.load(data, state);
+
+        this.accounts.clear();
 
         for (BankAccountData bad : data.accounts) {
             this.accounts.add(BankAccount.fromData(bad, state));

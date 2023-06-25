@@ -14,9 +14,13 @@ import jbs.ledger.assetholders.sovereignties.nations.PresidentialRepublic;
 import jbs.ledger.assetholders.sovereignties.nations.Principality;
 import jbs.ledger.assetholders.trusts.InvestmentTrust;
 import jbs.ledger.assetholders.trusts.RealEstateTrust;
+import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
+import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.currency.CurrencyIssuer;
+import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.LedgerSaveState;
@@ -225,6 +229,51 @@ public final class LedgerState {
 
         return null;
     }
+    @Nullable
+    public Person getPerson(String name) {
+        for (Person p : getPeople()) {
+            if (p.getName().equalsIgnoreCase(name)) {
+                return p;
+            }
+        }
+
+        return null;
+    }
+
+    // Exchanges
+    public ArrayList<ForeignExchange> getForeignExchanges() {
+        ArrayList<ForeignExchange> forexes = new ArrayList<>();
+
+        for (Corporate c : getCorporates()) {
+            if (c instanceof ForeignExchange) {
+                forexes.add((ForeignExchange) c);
+            }
+        }
+
+        return forexes;
+    }
+    public ArrayList<FuturesExchange> getFutureExchanges() {
+        ArrayList<FuturesExchange> forexes = new ArrayList<>();
+
+        for (Corporate c : getCorporates()) {
+            if (c instanceof FuturesExchange) {
+                forexes.add((FuturesExchange) c);
+            }
+        }
+
+        return forexes;
+    }
+    public ArrayList<SecuritiesExchange> getSecuritiesExchanges() {
+        ArrayList<SecuritiesExchange> forexes = new ArrayList<>();
+
+        for (Corporate c : getCorporates()) {
+            if (c instanceof SecuritiesExchange) {
+                forexes.add((SecuritiesExchange) c);
+            }
+        }
+
+        return forexes;
+    }
 
     // Corporations
     public ArrayList<Corporate> getCorporates() {
@@ -346,6 +395,96 @@ public final class LedgerState {
         return null;
     }
 
+    public ArrayList<Market<?>> getMarkets() {
+        ArrayList<Market<?>> markets = new ArrayList<>();
+
+        for (ForeignExchange forex : getForeignExchanges()) {
+            markets.addAll(forex.getForexMarkets());
+        }
+
+        for (FuturesExchange fx : getFutureExchanges()) {
+            markets.addAll(fx.getCommodityFuturesMarkets());
+            markets.addAll(fx.getStockFuturesMarkets());
+        }
+
+        for (SecuritiesExchange se : getSecuritiesExchanges()) {
+            markets.addAll(se.getBondMarkets());
+            markets.addAll(se.getStockMarkets());
+        }
+
+        return markets;
+    }
+
+    @Nullable
+    public Market<?> getMarket(UUID uniqueId) {
+        for (Market<?> market : getMarkets()) {
+            if (market.getUniqueId().equals(uniqueId)) {
+                return market;
+            }
+        }
+
+        return null;
+    }
+
+    @Nullable
+    public Market<?> getMarket(String symbol) {
+        for (Market<?> market : getMarkets()) {
+            if (market.getSymbol().equalsIgnoreCase(symbol)) {
+                return market;
+            }
+        }
+
+        return null;
+    }
+
+    // Currencies
+    public ArrayList<String> getCurrencies() {
+        ArrayList<String> currencies = new ArrayList<>();
+
+        for (Assetholder h : getAssetholders()) {
+            if (h instanceof CurrencyIssuer) {
+                String currency = (((CurrencyIssuer) h).getIssuedCurrency());
+
+                if (currency != null) {
+                    currencies.add(currency);
+                }
+            }
+        }
+
+        return currencies;
+    }
+
+    public boolean currencyExists(String currency) {
+        for (String c : getCurrencies()) {
+            if (c.equalsIgnoreCase(currency)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Nullable
+    public Person getRepresentative(Assetholder holder) {
+        if (holder instanceof Person) {
+            return (Person) holder;
+        } else if (holder instanceof Corporate) {
+            return ((Corporate) holder).getRepresentative();
+        } else if (holder instanceof Foundation) {
+            return ((Foundation) holder).getBoard().getRepresentative();
+        } else if (holder instanceof Nation) {
+            NationMember m = ((Nation) holder).getRepresentative();
+            if (m instanceof Person) {
+                return (Person) m;
+            }
+        } else if (holder instanceof Trust) {
+            Assetholder rep = ((Trust) holder).getTrustee();
+            return getRepresentative(rep);
+        }
+
+        return null;
+    }
+
 
     // IO
     public LedgerState(LedgerSaveState saveState) {
@@ -437,6 +576,16 @@ public final class LedgerState {
             }
         }
 
+        // This HAS to be called twice because of market references in options.
+        loadAssetholders(saveState);
+        loadAssetholders(saveState);
+
+        // A third safety call just in case any pointers are null.
+        loadAssetholders(saveState);
+
+    }
+
+    private void loadAssetholders(LedgerSaveState saveState) {
         for (Assetholder a : assetholders) {
             for (AssetholderData ad : saveState.assetholders) {
                 if (a.getUniqueId().equals(ad.uniqueId)) {
@@ -560,11 +709,16 @@ public final class LedgerState {
                             FederationData fdd = (FederationData) ad;
                             fdr.load(fdd, this);
                             break;
+
+                        case DISTILLERY:
+                            Distillery dis = (Distillery) a;
+                            DistilleryData dd = (DistilleryData) ad;
+                            dis.load(dd, this);
+                            break;
                     }
                 }
             }
         }
     }
-
 
 }

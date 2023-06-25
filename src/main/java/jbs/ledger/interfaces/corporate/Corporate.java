@@ -10,6 +10,9 @@ import javax.annotation.Nullable;
 public interface Corporate extends Business, ShareIssuer, Organization<Person>, NationMember, Symbolic {
     Organization<Person> getBoard();
 
+    long getShareCount();
+    void setShareCount(long shares);
+
     @Nullable
     @Override
     default Person getRepresentative() {
