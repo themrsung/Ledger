@@ -5,6 +5,7 @@ import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.interfaces.orders.Order;
+import jbs.ledger.types.markets.MarketTickData;
 import org.bukkit.Bukkit;
 
 import javax.annotation.Nonnegative;
@@ -227,5 +228,69 @@ public interface Market<A extends Asset> extends Symbolic, Unique {
         }
 
         return p != Double.MAX_VALUE ? p : 0d;
+    }
+
+    /**
+     * Gets structured list of buy order data.
+     * @return Returns sorted list of buy orders. Sorted by price descending.
+     */
+    default ArrayList<MarketTickData> getBuyTicks() {
+        ArrayList<MarketTickData> ticks = new ArrayList<>();
+
+        ArrayList<Double> prices = new ArrayList<>();
+        ArrayList<Long> volume = new ArrayList<>();
+
+        for (Order<A> o : getBuyOrders()) {
+            if (!prices.contains(o.getPrice())) {
+                prices.add(o.getPrice());
+                volume.add(o.getQuantity());
+            } else {
+                int index = prices.indexOf(o.getPrice());
+                volume.set(index, volume.get(index) + o.getQuantity());
+            }
+        }
+
+        for (int i = 0; i < prices.size(); i++) {
+            ticks.add(new MarketTickData(
+                    prices.get(i),
+                    volume.get(i)
+            ));
+        }
+
+        ticks.sort((t1, t2) -> Double.compare(t2.getPrice(), t1.getPrice()));
+
+        return ticks;
+    }
+
+    /**
+     * Gets structured list os sell order data.
+     * @return Returns sorted list of sell orders. Sorted by price ascending.
+     */
+    default ArrayList<MarketTickData> getSellTicks() {
+        ArrayList<MarketTickData> ticks = new ArrayList<>();
+
+        ArrayList<Double> prices = new ArrayList<>();
+        ArrayList<Long> volume = new ArrayList<>();
+
+        for (Order<A> o : getSellOrders()) {
+            if (!prices.contains(o.getPrice())) {
+                prices.add(o.getPrice());
+                volume.add(o.getQuantity());
+            } else {
+                int index = prices.indexOf(o.getPrice());
+                volume.set(index, volume.get(index) + o.getQuantity());
+            }
+        }
+
+        for (int i = 0; i < prices.size(); i++) {
+            ticks.add(new MarketTickData(
+                    prices.get(i),
+                    volume.get(i)
+            ));
+        }
+
+        ticks.sort((t1, t2) -> Double.compare(t1.getPrice(), t2.getPrice()));
+
+        return ticks;
     }
 }

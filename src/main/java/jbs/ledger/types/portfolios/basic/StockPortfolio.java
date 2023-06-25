@@ -33,7 +33,6 @@ public final class StockPortfolio extends AbstractPortfolio<Stock> {
         Stock existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
-            Bukkit.getLogger().info("quantity change: " + asset.getQuantity());
             existing.addQuantity(asset.getQuantity());
             return;
         }

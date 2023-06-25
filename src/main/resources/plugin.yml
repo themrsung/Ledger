@@ -30,7 +30,7 @@ commands:
   punish:
     description: 대상에게 재제를 가합니다.
     usage: /punish
-    aliases: [재제, 형벌, 선고]
+    aliases: [제재, 형벌, 선고]
   reply:
     description: 수신한 메시지에 답장합니다.
     usage: /reply 내용
