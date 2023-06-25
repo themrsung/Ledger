@@ -31,9 +31,9 @@ public final class FuturesExchangeData extends CorporationData {
         super();
     }
 
-    public ArrayList<MarketData<CommodityFuturesData, CommodityFuturesOrderData>> commodityFuturesMarkets;
-    public ArrayList<MarketData<StockFuturesData, StockFuturesOrderData>> stockFuturesMarkets;
-    public ArrayList<MarketData<StockOptionData, StockOptionOrderData>> stockOptionMarkets;
-    public ArrayList<MarketData<CashOptionData, CashOptionOrderData>> cashOptionMarkets;
+    public ArrayList<MarketData<CommodityFuturesData, CommodityFuturesOrderData>> commodityFuturesMarkets = new ArrayList<>();
+    public ArrayList<MarketData<StockFuturesData, StockFuturesOrderData>> stockFuturesMarkets = new ArrayList<>();
+    public ArrayList<MarketData<StockOptionData, StockOptionOrderData>> stockOptionMarkets = new ArrayList<>();
+    public ArrayList<MarketData<CashOptionData, CashOptionOrderData>> cashOptionMarkets = new ArrayList<>();
 
 }

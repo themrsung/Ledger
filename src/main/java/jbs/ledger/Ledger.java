@@ -1,7 +1,11 @@
 package jbs.ledger;
 
+import jbs.ledger.assetholders.corporations.finance.SecuritiesExchange;
+import jbs.ledger.classes.markets.basic.StockMarket;
 import jbs.ledger.classes.messages.DirectMessageProcessor;
 import jbs.ledger.commands.actions.*;
+import jbs.ledger.commands.actions.invite.InviteCommand;
+import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
 import jbs.ledger.commands.actions.teleportation.BackCommand;
 import jbs.ledger.commands.actions.create.CreateCommand;
 import jbs.ledger.commands.actions.create.CreateCommandCompleter;
@@ -47,10 +51,13 @@ import jbs.ledger.state.LedgerState;
 import jbs.ledger.timers.LedgerAutoSaver;
 import jbs.ledger.timers.LedgerNoteHandler;
 import jbs.ledger.timers.premium.PremiumExpirationHandler;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Stock;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
+import java.util.UUID;
 
 public final class Ledger extends JavaPlugin {
     public static String VERSION = "1.0";
@@ -67,6 +74,14 @@ public final class Ledger extends JavaPlugin {
         enableCommands();
         registerEventListeners();
         scheduleRepeatingTasks();
+
+        SecuritiesExchange exchange = new SecuritiesExchange(UUID.randomUUID(), "JBEX", "JBX", "CR", new Cash("CR", 10000000d), 100L);
+        StockMarket market = new StockMarket(UUID.randomUUID(), "STOCK", exchange, "CR", new Stock("STOCK", 1), 10);
+
+        exchange.addStockMarket(market);
+
+        state.addAssetholder(exchange);
+
 
         Bukkit.getLogger().info("Ledger v" + VERSION + " is loaded.");
     }
@@ -101,11 +116,12 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("home")).setExecutor(new HomeCommand(this));
         Objects.requireNonNull(getCommand("back")).setExecutor(new BackCommand(this));
 
+        Objects.requireNonNull(getCommand("invite")).setExecutor(new InviteCommand(this));
+        Objects.requireNonNull(getCommand("invite")).setTabCompleter(new InviteCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("manage")).setExecutor(new ManageCommand(this));
         Objects.requireNonNull(getCommand("members")).setExecutor(new MembersCommand(this));
         Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
-        Objects.requireNonNull(getCommand("invite")).setExecutor(new InviteCommand(this));
         Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
         Objects.requireNonNull(getCommand("pardon")).setExecutor(new PardonCommand(this));
         Objects.requireNonNull(getCommand("vote")).setExecutor(new VoteCommand(this));

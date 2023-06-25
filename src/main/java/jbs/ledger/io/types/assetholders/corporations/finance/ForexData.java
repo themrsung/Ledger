@@ -22,6 +22,6 @@ public final class ForexData extends CorporationData {
         super();
     }
 
-    public ArrayList<MarketData<CashData, ForexOrderData>> markets;
+    public ArrayList<MarketData<CashData, ForexOrderData>> markets = new ArrayList<>();
 
 }

@@ -3,6 +3,7 @@ package jbs.ledger.messenger;
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.navigation.GpsEntry;
+import jbs.ledger.classes.orders.OrderType;
 import jbs.ledger.types.assets.basic.Cash;
 import org.bukkit.entity.Player;
 
@@ -93,6 +94,9 @@ public final class LedgerPlayerMessenger {
     public void commandOnlyExecutableByPlayer() {
         s("플레이어만 실행 가능한 명령입니다.");
     }
+    public void commandOnlyExecutableByOrganizations() {
+        s("조직 명의로만 실행 가능한 명령입니다.");
+    }
     public void commandOnlyExecutableByNations() {
         s("국가만 실행 가능한 명령입니다.");
     }
@@ -126,6 +130,35 @@ public final class LedgerPlayerMessenger {
 
     public void balanceInformationHeader() {
         s("잔고를 조회합니다.");
+    }
+
+    public void onlyPlayersCanJoinThisOrganization() {
+        s("플레이어만 가입 가능한 조직입니다.");
+    }
+
+    public void onlyNationsCanJoinThisOrganization() {
+        s("국만 가입 가능한 조직입니다.");
+    }
+
+    public void invitedCannotJoinNations() {
+        s("국가에 소속될 수 없는 대상입니다.");
+    }
+
+    public void inviteSuccessful() {
+        s("초대가 발송되었습니다.");
+    }
+
+    public void marketNotFound() {
+        s("시장을 찾을 수 없습니다.");
+    }
+
+    public void orderSubmitted(OrderType type) {
+        s(type.toString() + " 주문이 접수되었습니다.");
+    }
+
+
+    public void trusteeSet(Assetholder trustee) {
+        s(trustee.getName() + "이 수탁자로 지정되었습니다.");
     }
 
     public void balanceInformation(@Nullable Cash cash) {

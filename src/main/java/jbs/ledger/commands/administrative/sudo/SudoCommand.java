@@ -9,6 +9,7 @@ import jbs.ledger.commands.actions.create.CreateCommand;
 import jbs.ledger.commands.actions.home.DeleteHomeCommand;
 import jbs.ledger.commands.actions.home.HomeCommand;
 import jbs.ledger.commands.actions.home.SetHomeCommand;
+import jbs.ledger.commands.actions.invite.InviteCommand;
 import jbs.ledger.commands.actions.offers.AcceptCommand;
 import jbs.ledger.commands.actions.offers.CancelCommand;
 import jbs.ledger.commands.actions.offers.DenyCommand;
@@ -19,6 +20,8 @@ import jbs.ledger.commands.economy.*;
 import jbs.ledger.commands.economy.balance.BalanceCommand;
 import jbs.ledger.commands.economy.credit.CreditRatingCommand;
 import jbs.ledger.commands.economy.pay.PayCommand;
+import jbs.ledger.commands.economy.trading.BuyCommand;
+import jbs.ledger.commands.economy.trading.SellCommand;
 import jbs.ledger.commands.informative.ListCommand;
 
 import javax.annotation.Nonnull;
@@ -222,6 +225,18 @@ public final class SudoCommand extends LedgerPlayerCommand {
         if (LedgerCommandKeywords.CREDIT_RATING.contains(sudoAction)) {
             CreditRatingCommand creditRating = new CreditRatingCommand(this, actor);
             creditRating.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.BUY.contains(sudoAction)) {
+            BuyCommand buy = new BuyCommand(this, actor);
+            buy.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.SELL.contains(sudoAction)) {
+            SellCommand sell = new SellCommand(this, actor);
+            sell.onSudoCommand(main, argsAfter);
             return;
         }
 

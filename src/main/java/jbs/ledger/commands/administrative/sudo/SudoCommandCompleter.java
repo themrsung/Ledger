@@ -52,6 +52,8 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
             results.addAll(LedgerCommandKeywords.SUDO);
             results.addAll(LedgerCommandKeywords.OPTIONS);
             results.addAll(LedgerCommandKeywords.CREDIT_RATING);
+            results.addAll(LedgerCommandKeywords.BUY);
+            results.addAll(LedgerCommandKeywords.SELL);
         } else  {
             String action = args[1].toLowerCase();
             if (LedgerCommandKeywords.CREATE.contains(action)) {

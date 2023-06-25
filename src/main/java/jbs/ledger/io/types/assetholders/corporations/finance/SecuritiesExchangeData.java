@@ -25,7 +25,7 @@ public final class SecuritiesExchangeData extends CorporationData {
         super();
     }
 
-    public ArrayList<MarketData<StockData, StockOrderData>> stockMarkets;
-    public ArrayList<MarketData<BondData, BondOrderData>> bondMarkets;
+    public ArrayList<MarketData<StockData, StockOrderData>> stockMarkets = new ArrayList<>();
+    public ArrayList<MarketData<BondData, BondOrderData>> bondMarkets = new ArrayList<>();
 
 }

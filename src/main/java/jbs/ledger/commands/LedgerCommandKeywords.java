@@ -35,6 +35,8 @@ public abstract class LedgerCommandKeywords {
     public static List<String> SUDO = Arrays.asList("d", "deputy", "su", "sud", "sudo", "as", "ex", "exe", "execute", "대변", "대신");
     public static List<String> OPTIONS = Arrays.asList("o", "option", "options", "옵션");
     public static List<String> CREDIT_RATING = Arrays.asList("cs", "cr", "cscore", "crank", "crating", "creditrating", "creditscore", "신용등급", "신용점수");
+    public static List<String> BUY = Arrays.asList("buy", "long", "purchase", "매수", "구매", "롱");
+    public static List<String> SELL = Arrays.asList("sell", "short", "dump", "매도", "판매", "숏");
 
     // ADD | DELETE
     public static List<String> ADD = Arrays.asList("a", "add", "s", "set", "추가", "지정", "설정", "신규");
