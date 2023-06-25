@@ -5,6 +5,7 @@ import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.common.Unique;
 import jbs.ledger.interfaces.orders.Order;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nonnegative;
 import java.util.ArrayList;
@@ -173,7 +174,7 @@ public interface Market<A extends Asset> extends Symbolic, Unique {
                     long q = Math.min(bo.getQuantity(), so.getQuantity());
 
                     bo.onFulfilled(this, p, q);
-                    so.onFulfilled(this, p, 1);
+                    so.onFulfilled(this, p, q);
 
                     setPrice(p);
                     addVolume(q);

@@ -3,6 +3,7 @@ package jbs.ledger.types.portfolios.basic;
 import jbs.ledger.io.types.assets.basic.StockData;
 import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.portfolios.AbstractPortfolio;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -32,11 +33,12 @@ public final class StockPortfolio extends AbstractPortfolio<Stock> {
         Stock existing = getRaw(asset.getSymbol());
 
         if (existing != null && existing.isStackable(asset)) {
+            Bukkit.getLogger().info("quantity change: " + asset.getQuantity());
             existing.addQuantity(asset.getQuantity());
             return;
         }
 
-        super.add(asset);
+        super.add(asset.copy());
 
         clean();
     }

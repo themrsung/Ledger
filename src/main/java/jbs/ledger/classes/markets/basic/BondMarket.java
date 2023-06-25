@@ -32,6 +32,11 @@ public final class BondMarket extends AbstractMarket<StackableNote<Cash>> {
         super(copy);
     }
 
+    @Override
+    public StackableNote<Cash> getUnitAsset() {
+        return unitAsset.copy();
+    }
+
     // IO
     public MarketData<BondData, BondOrderData> toData() {
         MarketData<BondData, BondOrderData> data = new MarketData<>();

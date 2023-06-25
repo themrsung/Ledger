@@ -12,6 +12,7 @@ public final class PremiumExpirationHandler implements Runnable {
 
     private final Ledger ledger;
 
+    @Override
     public void run() {
         for (Person p : ledger.getState().getPeople()) {
             Date now = new Date();

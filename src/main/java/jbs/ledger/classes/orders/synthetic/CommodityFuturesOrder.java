@@ -56,21 +56,21 @@ public final class CommodityFuturesOrder extends AbstractOrder<StackableNote<Com
                     market.getExchange(),
                     getSender(),
                     asset,
-                    "Buy order fulfilles"
+                    "Buy order fulfilled"
             ));
         } else {
             Bukkit.getPluginManager().callEvent(new CommodityFuturesTransferredEvent(
                     getSender(),
                     market.getExchange(),
                     asset,
-                    "Sell order fulfilles"
+                    "Sell order fulfilled"
             ));
 
             Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                     market.getExchange(),
                     getSender(),
                     settlement,
-                    "Sell order fulfilled" // NOW DO THIS TO ALL ORDER TYPES
+                    "Sell order fulfilled"
             ));
         }
     }

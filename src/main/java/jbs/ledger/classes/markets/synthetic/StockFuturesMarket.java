@@ -29,6 +29,11 @@ public final class StockFuturesMarket extends AbstractMarket<StackableNote<Stock
         super(copy);
     }
 
+    @Override
+    public StackableNote<Stock> getUnitAsset() {
+        return unitAsset.copy();
+    }
+
     // IO
     public MarketData<StockFuturesData, StockFuturesOrderData> toData() {
         MarketData<StockFuturesData, StockFuturesOrderData> data = new MarketData<>();

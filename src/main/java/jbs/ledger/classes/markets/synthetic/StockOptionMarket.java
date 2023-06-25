@@ -33,6 +33,11 @@ public final class StockOptionMarket extends AbstractMarket<Option<Stock>> {
         super(copy);
     }
 
+    @Override
+    public Option<Stock> getUnitAsset() {
+        return unitAsset.copy();
+    }
+
     // IO
     public MarketData<StockOptionData, StockOptionOrderData> toData() {
         MarketData<StockOptionData, StockOptionOrderData> data = new MarketData<>();

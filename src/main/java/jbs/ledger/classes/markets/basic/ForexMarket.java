@@ -32,6 +32,10 @@ public final class ForexMarket extends AbstractMarket<Cash> {
         super(copy);
     }
 
+    @Override
+    public Cash getUnitAsset() {
+        return unitAsset.copy();
+    }
 
     // IO
     public MarketData<CashData, ForexOrderData> toData() {

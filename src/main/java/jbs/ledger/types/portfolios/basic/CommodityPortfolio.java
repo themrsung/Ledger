@@ -36,7 +36,7 @@ public final class CommodityPortfolio extends AbstractPortfolio<Commodity> {
             return;
         }
 
-        super.add(asset);
+        super.add(asset.copy());
 
         clean();
     }

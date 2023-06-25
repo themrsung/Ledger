@@ -37,7 +37,7 @@ public final class CashPortfolio extends AbstractPortfolio<Cash> {
             return;
         }
 
-        super.add(asset);
+        super.add(asset.copy());
 
         clean();
     }

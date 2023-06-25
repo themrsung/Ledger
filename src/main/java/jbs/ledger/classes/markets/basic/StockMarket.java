@@ -32,6 +32,10 @@ public final class StockMarket extends AbstractMarket<Stock> {
         super(copy);
     }
 
+    @Override
+    public Stock getUnitAsset() {
+        return unitAsset.copy();
+    }
 
     // IO
     public MarketData<StockData, StockOrderData> toData() {

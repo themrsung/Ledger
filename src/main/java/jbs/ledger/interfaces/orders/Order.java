@@ -41,6 +41,8 @@ public interface Order<A extends Asset> extends Unique {
         float fulfillmentRatio = (float) quantity / getQuantity();
         double expectedVolume = getVolume() * fulfillmentRatio;
 
+        setQuantity(getQuantity() - quantity);
+
         if (getCashCollateral() != null) getCashCollateral().getDelivery().removeBalance(expectedVolume);
         if (getAssetCollateral() != null) getAssetCollateral().removeQuantity(quantity);
 

@@ -47,7 +47,7 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
 
     private final Economic exchange;
     private final String currency;
-    private final A unitAsset;
+    protected final A unitAsset;
     private final ArrayList<Order<A>> orders;
 
     private double price;
@@ -85,11 +85,6 @@ public abstract class AbstractMarket<A extends Asset> implements Market<A> {
     @Override
     public String getCurrency() {
         return currency;
-    }
-
-    @Override
-    public A getUnitAsset() {
-        return unitAsset;
     }
 
     @Override

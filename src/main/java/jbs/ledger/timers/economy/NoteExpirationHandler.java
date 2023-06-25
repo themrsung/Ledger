@@ -1,4 +1,4 @@
-package jbs.ledger.timers;
+package jbs.ledger.timers.economy;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
@@ -12,12 +12,13 @@ import jbs.ledger.types.assets.synthetic.UniqueNote;
 
 import java.util.Date;
 
-public final class LedgerNoteHandler implements Runnable {
-    public LedgerNoteHandler(Ledger ledger) {
+public final class NoteExpirationHandler implements Runnable {
+    public NoteExpirationHandler(Ledger ledger) {
         this.state = ledger.getState();
     }
     private final LedgerState state;
 
+    @Override
     public void run() {
         Date now = new Date();
 

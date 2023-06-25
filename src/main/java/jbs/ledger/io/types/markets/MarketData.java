@@ -19,7 +19,7 @@ public class MarketData<A extends AssetData, O extends OrderData<?>> {
     public UUID exchange;
     public String currency;
     public A unitAsset;
-    public ArrayList<O> orders;
+    public ArrayList<O> orders = new ArrayList<>();
 
     public double price;
     public double tickSize;

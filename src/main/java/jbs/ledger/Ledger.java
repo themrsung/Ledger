@@ -48,8 +48,9 @@ import jbs.ledger.listeners.transfers.AssetTransferHandler;
 import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
 import jbs.ledger.state.LedgerState;
-import jbs.ledger.timers.LedgerAutoSaver;
-import jbs.ledger.timers.LedgerNoteHandler;
+import jbs.ledger.timers.economy.MarketTicker;
+import jbs.ledger.timers.io.LedgerAutoSaver;
+import jbs.ledger.timers.economy.NoteExpirationHandler;
 import jbs.ledger.timers.premium.PremiumExpirationHandler;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
@@ -74,13 +75,6 @@ public final class Ledger extends JavaPlugin {
         enableCommands();
         registerEventListeners();
         scheduleRepeatingTasks();
-
-        SecuritiesExchange exchange = new SecuritiesExchange(UUID.randomUUID(), "JBEX", "JBX", "CR", new Cash("CR", 10000000d), 100L);
-        StockMarket market = new StockMarket(UUID.randomUUID(), "STOCK", exchange, "CR", new Stock("STOCK", 1), 10);
-
-        exchange.addStockMarket(market);
-
-        state.addAssetholder(exchange);
 
 
         Bukkit.getLogger().info("Ledger v" + VERSION + " is loaded.");
@@ -188,10 +182,12 @@ public final class Ledger extends JavaPlugin {
 
     private void scheduleRepeatingTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerAutoSaver(this), 20, 60 * 20);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new LedgerNoteHandler(this), 30, 15 * 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new NoteExpirationHandler(this), 30, 15 * 20);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new DirectMessageProcessor(this), 10,10);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new PremiumExpirationHandler(this), 20, 10 * 20);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MarketTicker(this), 20, 5);
     }
 
     private LedgerState state = null;
