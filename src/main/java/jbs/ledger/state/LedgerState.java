@@ -5,6 +5,7 @@ import jbs.ledger.assetholders.corporations.finance.*;
 import jbs.ledger.assetholders.corporations.general.*;
 import jbs.ledger.assetholders.corporations.legal.LawFirm;
 import jbs.ledger.assetholders.corporations.special.PrivateMilitary;
+import jbs.ledger.assetholders.corporations.special.SovereignCorporation;
 import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.federations.Federation;
@@ -17,7 +18,6 @@ import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
-import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.markets.Market;
@@ -547,6 +547,10 @@ public final class LedgerState {
 
                 case PRIVATE_MILITARY:
                     addAssetholder(PrivateMilitary.getEmptyInstance(data.uniqueId));
+                    break;
+
+                case SOVEREIGN_CORPORATION:
+                    addAssetholder(SovereignCorporation.getEmptyInstance(data.uniqueId));
                     break;
 
                 case INVESTMENT_TRUST:

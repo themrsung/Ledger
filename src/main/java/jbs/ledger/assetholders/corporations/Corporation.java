@@ -5,7 +5,7 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.assetholders.corporations.CorporationData;
-import jbs.ledger.organizations.Board;
+import jbs.ledger.organizations.corporate.Board;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 

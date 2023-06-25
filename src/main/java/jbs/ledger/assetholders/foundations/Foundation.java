@@ -2,11 +2,10 @@ package jbs.ledger.assetholders.foundations;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
-import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.io.types.assetholders.foundations.FoundationData;
-import jbs.ledger.organizations.Board;
+import jbs.ledger.organizations.corporate.Board;
 import jbs.ledger.state.LedgerState;
 
 import java.util.UUID;

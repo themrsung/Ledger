@@ -166,6 +166,10 @@ public final class AssetTransferHandler extends LedgerListener {
         r.getStockFutures().add(a);
     }
 
+    //
+    // Options
+    //
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onCashOptionTransferred(CashOptionTransferredEvent e) {
         Economic s = e.getSender();

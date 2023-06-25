@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class LedgerCommandKeywords {
-    public static List<String> PAY = Arrays.asList("p", "pay", "송금", "이체");
+    public static List<String> PAY = Arrays.asList("pay", "송금", "이체");
     public static  List<String> CREATE = Arrays.asList("new", "create", "신규", "추가", "생성");
     public static  List<String> BALANCE = Arrays.asList("bal", "balance", "m", "money", "cash", "잔고", "현금");
     public static List<String> STOCKS = Arrays.asList("s", "stock", "stocks", "share", "shares", "주식");
@@ -37,6 +37,7 @@ public abstract class LedgerCommandKeywords {
     public static List<String> CREDIT_RATING = Arrays.asList("cs", "cr", "cscore", "crank", "crating", "creditrating", "creditscore", "신용등급", "신용점수");
     public static List<String> BUY = Arrays.asList("buy", "long", "purchase", "매수", "구매", "롱");
     public static List<String> SELL = Arrays.asList("sell", "short", "dump", "매도", "판매", "숏");
+    public static List<String> PRICE = Arrays.asList("p", "pr", "price", "가격", "가치", "공정가치", "시장가치", "시장가격", "시장가");
 
     // ADD | DELETE
     public static List<String> ADD = Arrays.asList("a", "add", "s", "set", "추가", "지정", "설정", "신규");

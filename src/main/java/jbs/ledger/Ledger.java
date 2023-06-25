@@ -34,9 +34,7 @@ import jbs.ledger.commands.economy.credit.CreditRatingCommand;
 import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
 import jbs.ledger.commands.economy.pay.PayCommand;
 import jbs.ledger.commands.economy.pay.PayCommandCompleter;
-import jbs.ledger.commands.economy.trading.BuyCommand;
-import jbs.ledger.commands.economy.trading.BuyOrSellCommandCompleter;
-import jbs.ledger.commands.economy.trading.SellCommand;
+import jbs.ledger.commands.economy.trading.*;
 import jbs.ledger.commands.server.SetSpawnCommand;
 import jbs.ledger.commands.economy.*;
 import jbs.ledger.commands.informative.InformationCommand;
@@ -95,7 +93,6 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("cancel")).setExecutor(new CancelCommand(this));
         Objects.requireNonNull(getCommand("cancel")).setTabCompleter(new HandleOffersCommandCompleter(this));
 
-
         Objects.requireNonNull(getCommand("sudo")).setExecutor(new SudoCommand(this));
         Objects.requireNonNull(getCommand("sudo")).setTabCompleter(new SudoCommandCompleter(this));
 
@@ -151,6 +148,9 @@ public final class Ledger extends JavaPlugin {
 
         Objects.requireNonNull(getCommand("sell")).setExecutor(new SellCommand(this));
         Objects.requireNonNull(getCommand("sell")).setTabCompleter(new BuyOrSellCommandCompleter(this));
+
+        Objects.requireNonNull(getCommand("price")).setExecutor(new PriceCommand(this));
+        Objects.requireNonNull(getCommand("price")).setTabCompleter(new PriceCommandCompleter(this));
 
 
         Objects.requireNonNull(getCommand("assets")).setExecutor(new AssetsCommand(this));

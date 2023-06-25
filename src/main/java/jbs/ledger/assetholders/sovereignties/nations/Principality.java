@@ -1,10 +1,14 @@
 package jbs.ledger.assetholders.sovereignties.nations;
 
 import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PresidentialRepublicData;
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PrincipalityData;
 import jbs.ledger.state.LedgerState;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.UUID;
 
 /**
@@ -22,6 +26,37 @@ public final class Principality extends Nation {
     @Override
     public AssetholderType getType() {
         return AssetholderType.PRINCIPALITY;
+    }
+
+    // Ownership
+    @Nullable
+    @Override
+    public Person getRepresentative() {
+        return (Person) super.getRepresentative();
+    }
+
+    @Override
+    public boolean hasAdministrativePower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().equals(person);
+    }
+
+    @Override
+    public boolean hasLegislativePower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().equals(person);
+    }
+
+    @Override
+    public boolean hasJudicialPower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().equals(person);
+    }
+
+    @Override
+    public boolean hasClemency(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().equals(person);
     }
 
     // IO
@@ -44,4 +79,5 @@ public final class Principality extends Nation {
     public void load(PrincipalityData data, LedgerState state) {
         super.load(data, state);
     }
+
 }

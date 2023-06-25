@@ -4,11 +4,16 @@ import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.navigation.GpsEntry;
 import jbs.ledger.classes.orders.OrderType;
+import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.markets.MarketTickData;
 import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public final class LedgerPlayerMessenger {
@@ -221,5 +226,32 @@ public final class LedgerPlayerMessenger {
 
     public void premiumDaysRemoved(Person p) {
         s(p.getName() + "의 프리미엄 기간을 제거했습니다.");
+    }
+
+    public void marketPriceInformation(Market<?> m) {
+        s("&l" + m.getSymbol() + " 가격정보");
+        s("거래소: " + m.getExchange().getSearchTag() + " / 거래통화: " + m.getCurrency());
+        s("현재가: " + new Cash(m.getCurrency(), m.getPrice()).format() + " / 거래량: " + NumberFormat.getInstance().format(m.getVolume()));
+
+        ArrayList<MarketTickData> buyTicks = m.getBuyTicks();
+        ArrayList<MarketTickData> sellTicks = m.getSellTicks();
+
+        if (buyTicks.size() > 3) {
+            buyTicks.subList(3, buyTicks.size()).clear();
+        }
+
+        if (sellTicks.size() > 3) {
+            sellTicks.subList(3, sellTicks.size()).clear();
+        }
+
+        sellTicks.sort((s1, s2) -> Double.compare(s2.getPrice(), s1.getPrice()));
+
+        for (MarketTickData sellTick : sellTicks) {
+            s("&9" + new Cash(m.getCurrency(), sellTick.getPrice()).format() + "&r &f" + NumberFormat.getIntegerInstance().format(sellTick.getQuantity()));
+        }
+
+        for (MarketTickData buyTick : buyTicks) {
+            s("&c" + new Cash(m.getCurrency(), buyTick.getPrice()).format() + "&r &f" + NumberFormat.getIntegerInstance().format(buyTick.getQuantity()));
+        }
     }
 }

@@ -98,7 +98,7 @@ commands:
   pay:
     description: 현금을 송금합니다.
     usage: /pay 수신인 금액 [통화코드]
-    aliases: [p, pay, 송금, 이체]
+    aliases: [송금, 이체]
   stocks:
     description: 주식을 관리 및 매매합니다.
     usage: /stocks
@@ -167,6 +167,10 @@ commands:
     description: 주소지로 이동합니다.
     usage: /home
     aliases: [office, hq, address, house, 집, 홈, 사무실]
+  price:
+    description: 자산의 공정가격을 조회합니다.
+    usage: /price
+    aliases: [p, pr, price, 가격, 가치, 공정가치, 시장가치, 시장가격, 시장가]
 
 
 

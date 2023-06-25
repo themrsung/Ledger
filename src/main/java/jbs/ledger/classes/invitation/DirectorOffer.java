@@ -1,7 +1,7 @@
 package jbs.ledger.classes.invitation;
 
 import jbs.ledger.assetholders.person.Person;
-import jbs.ledger.organizations.Board;
+import jbs.ledger.organizations.corporate.Board;
 
 public final class DirectorOffer extends Invitation<Person, Board> {
     public DirectorOffer(Board from, Person to) {

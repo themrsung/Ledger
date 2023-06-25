@@ -9,6 +9,7 @@ import jbs.ledger.io.types.assetholders.corporations.finance.*;
 import jbs.ledger.io.types.assetholders.corporations.general.*;
 import jbs.ledger.io.types.assetholders.corporations.legal.LawFirmData;
 import jbs.ledger.io.types.assetholders.corporations.special.PrivateMilitaryData;
+import jbs.ledger.io.types.assetholders.corporations.special.SovereignCorporationData;
 import jbs.ledger.io.types.assetholders.foundations.FoundationData;
 import jbs.ledger.io.types.assetholders.person.PersonData;
 import jbs.ledger.io.types.assetholders.sovereignties.federations.FederationData;
@@ -183,6 +184,10 @@ public final class LedgerSaveState {
 
                     case PRIVATE_MILITARY:
                         state.assetholders.add(mapper.readValue(f, PrivateMilitaryData.class));
+                        break;
+
+                    case SOVEREIGN_CORPORATION:
+                        state.assetholders.add(mapper.readValue(f, SovereignCorporationData.class));
                         break;
 
                     case INVESTMENT_TRUST:

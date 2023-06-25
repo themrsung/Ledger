@@ -19,7 +19,7 @@ import java.util.Date;
 /**
  * Option
  * A note that is only delivered when the price of a certain asset is within the parameters.
- * Market types does not have to match the underlying. (e.g. A stock option dependent on the price of a bond is possible)
+ * Market type does not have to match the underlying. (e.g. A stock option dependent on the price of a bond is possible)
  * @param <D> Type of asset to deliver.
  */
 public final class Option<D extends Asset> extends Note<D> {

@@ -57,6 +57,8 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
 
         this.address = null;
         this.previousLocation = null;
+
+        this.creditScore = CreditRating.B.toScore();
     }
 
     public Assetholder(Assetholder copy) {
@@ -81,6 +83,8 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
 
         this.address = copy.address;
         this.previousLocation = copy.previousLocation;
+
+        this.creditScore = copy.creditScore;
     }
 
 
@@ -230,7 +234,7 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
     }
 
     // Credit
-    private float creditScore = CreditRating.B.toScore();
+    private float creditScore;
 
     public float getCreditScore() {
         return creditScore;
@@ -270,6 +274,8 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
 
         this.address = null;
         this.previousLocation = null;
+
+        this.creditScore = CreditRating.B.toScore();
     }
 
     /**

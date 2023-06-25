@@ -5,6 +5,12 @@ import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
 import jbs.ledger.commands.LedgerCommandKeywords;
 import jbs.ledger.commands.actions.create.CreateCommandCompleter;
+import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
+import jbs.ledger.commands.actions.offers.HandleOffersCommandCompleter;
+import jbs.ledger.commands.economy.balance.BalanceCommandCompleter;
+import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
+import jbs.ledger.commands.economy.pay.PayCommandCompleter;
+import jbs.ledger.commands.economy.trading.BuyOrSellCommandCompleter;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -62,6 +68,24 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
             } else if (LedgerCommandKeywords.SUDO.contains(action)){
                 SudoCommandCompleter scc = new SudoCommandCompleter(getLedger());
                 return scc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.PAY.contains(action)) {
+                PayCommandCompleter pcc = new PayCommandCompleter(getLedger());
+                return pcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.BUY.contains(action) || LedgerCommandKeywords.SELL.contains(action)) {
+                BuyOrSellCommandCompleter bos = new BuyOrSellCommandCompleter(getLedger());
+                return bos.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.ACCEPT.contains(action) || LedgerCommandKeywords.DENY.contains(action) || LedgerCommandKeywords.CANCEL.contains(action)) {
+                HandleOffersCommandCompleter hocc = new HandleOffersCommandCompleter(getLedger());
+                return hocc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.INVITE.contains(action)) {
+                InviteCommandCompleter icc = new InviteCommandCompleter(getLedger());
+                return icc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.BALANCE.contains(action)) {
+                BalanceCommandCompleter bcc = new BalanceCommandCompleter(getLedger());
+                return bcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.CREDIT_RATING.contains(action)) {
+                CreditRatingCommandCompleter crcc = new CreditRatingCommandCompleter(getLedger());
+                return crcc.onSudoComplete(args);
             }
         }
 

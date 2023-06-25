@@ -21,6 +21,7 @@ import jbs.ledger.commands.economy.balance.BalanceCommand;
 import jbs.ledger.commands.economy.credit.CreditRatingCommand;
 import jbs.ledger.commands.economy.pay.PayCommand;
 import jbs.ledger.commands.economy.trading.BuyCommand;
+import jbs.ledger.commands.economy.trading.PriceCommand;
 import jbs.ledger.commands.economy.trading.SellCommand;
 import jbs.ledger.commands.informative.ListCommand;
 
@@ -237,6 +238,12 @@ public final class SudoCommand extends LedgerPlayerCommand {
         if (LedgerCommandKeywords.SELL.contains(sudoAction)) {
             SellCommand sell = new SellCommand(this, actor);
             sell.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.PRICE.contains(sudoAction)) {
+            PriceCommand price = new PriceCommand(this, actor);
+            price.onSudoCommand(main, argsAfter);
             return;
         }
 

@@ -77,6 +77,11 @@ public enum AssetholderType {
     PRIVATE_MILITARY,
 
     /**
+     * A sovereignty ruled by shareholders
+     */
+    SOVEREIGN_CORPORATION,
+
+    /**
      * An entity that can hold assets. Cannot be taxed.
      */
     INVESTMENT_TRUST,
@@ -123,6 +128,7 @@ public enum AssetholderType {
             case SECURITIES_EXCHANGE:
             case LAW_FIRM:
             case PRIVATE_MILITARY:
+            case SOVEREIGN_CORPORATION:
             case FOUNDATION:
             case PRESIDENTIAL_REPUBLIC:
             case PARLIAMENTARY_REPUBLIC:
@@ -142,6 +148,7 @@ public enum AssetholderType {
             case PRESIDENTIAL_REPUBLIC:
             case PARLIAMENTARY_REPUBLIC:
             case PRINCIPALITY:
+            case SOVEREIGN_CORPORATION:
                 return true;
         }
 
