@@ -3,6 +3,7 @@ package jbs.ledger.assetholders.corporations.finance;
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.classes.banking.BankAccount;
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.banking.Account;
 import jbs.ledger.interfaces.banking.Banking;
@@ -88,7 +89,7 @@ public final class Bank extends Corporation implements Banking<Cash> {
                     this,
                     account.getOwner(),
                     interest,
-                    "Bank interest payment"
+                    AssetTransferCause.BANK_INTEREST
             ));
         }
     }

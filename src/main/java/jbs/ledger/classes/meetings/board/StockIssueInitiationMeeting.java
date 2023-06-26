@@ -3,7 +3,10 @@ package jbs.ledger.classes.meetings.board;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.shareholder.Shareholder;
+import jbs.ledger.classes.meetings.shareholder.StockDividendApprovalMeeting;
+import jbs.ledger.classes.meetings.shareholder.StockIssueApprovalMeeting;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
@@ -72,6 +75,18 @@ public final class StockIssueInitiationMeeting extends BoardMeeting {
         return MeetingType.BOARD_STOCK_ISSUE;
     }
 
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporate) {
+            Corporate corp = (Corporate) organization;
+            corp.addOpenMeeting(StockIssueApprovalMeeting.newMeeting(
+                    corp,
+                    state,
+                    getSharesToIssue()
+            ));
+
+        }
+    }
     @Override
     public MeetingData toData() {
         MeetingData data = super.toData();

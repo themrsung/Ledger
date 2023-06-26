@@ -2,6 +2,7 @@ package jbs.ledger.classes.meetings.federation;
 
 import jbs.ledger.assetholders.sovereignties.federations.Federation;
 import jbs.ledger.classes.meetings.VotableMember;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
@@ -64,6 +65,14 @@ public final class ChangeNameResolution extends FederationResolution {
     @Override
     public MeetingType getType() {
         return MeetingType.FEDERATION_CHANGE_NAME;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Federation) {
+            Federation fed = (Federation) organization;
+            fed.setName(getNewName());
+        }
     }
 
     @Override

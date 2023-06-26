@@ -6,6 +6,7 @@ import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.board.Director;
 import jbs.ledger.classes.meetings.board.StockDividendInitiationMeeting;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
@@ -68,6 +69,14 @@ public final class ChangeCapitalResolution extends FederationResolution {
     @Override
     public MeetingType getType() {
         return MeetingType.FEDERATION_NEW_MEMBER;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Federation) {
+            Federation fed = (Federation) organization;
+            fed.setRepresentative(getNewCapital());
+        }
     }
 
     @Override

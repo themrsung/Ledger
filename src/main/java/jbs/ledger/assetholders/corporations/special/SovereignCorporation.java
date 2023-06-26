@@ -9,6 +9,7 @@ import jbs.ledger.io.types.assetholders.corporations.special.SovereignCorporatio
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 public final class SovereignCorporation extends Corporation implements Sovereign, CurrencyIssuer {
@@ -21,10 +22,13 @@ public final class SovereignCorporation extends Corporation implements Sovereign
             long shareCount
     ) {
         super(uniqueId, name, symbol, currency, capital, shareCount);
+
+        this.laws = new ArrayList<>();
     }
 
     public SovereignCorporation(Corporation copy) {
         super(copy);
+        this.laws = new ArrayList<>();
     }
 
     // Currency issuance
@@ -69,6 +73,33 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         return 1000;
     }
 
+    // Laws
+    private ArrayList<String> laws;
+
+    @Override
+    public ArrayList<String> getLaws() {
+        return new ArrayList<>(laws);
+    }
+
+    @Override
+    public void addLaw(String law) {
+
+    }
+
+    @Override
+    public boolean removeLaw(String law) {
+        return laws.remove(law);
+    }
+
+    @Override
+    public void removeLaw(int index) {
+        laws.remove(index);
+    }
+
+    @Override
+    public void changeLaw(int index, String law) {
+        laws.set(index, law);
+    }
 
     // IO
 
@@ -76,6 +107,8 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         SovereignCorporationData data = new SovereignCorporationData(super.toData());
 
         data.issuedCurrency = issuedCurrency;
+
+        data.laws = laws;
 
         return data;
     }
@@ -97,5 +130,6 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         super.load(data, state);
 
         this.issuedCurrency = data.issuedCurrency;
+        this.laws = data.laws;
     }
 }

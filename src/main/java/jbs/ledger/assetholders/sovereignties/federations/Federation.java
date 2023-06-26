@@ -23,6 +23,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
 
         this.members = new ArrayList<>();
         this.capital = null;
+
+        this.laws = new ArrayList<>();
     }
 
     public Federation(Federation copy) {
@@ -31,6 +33,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
 
         this.members = copy.members;
         this.capital = copy.capital;
+
+        this.laws = copy.laws;
     }
 
     private final ArrayList<Sovereign> members;
@@ -90,6 +94,35 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         return false;
     }
 
+
+    // Laws
+    private ArrayList<String> laws;
+
+    @Override
+    public ArrayList<String> getLaws() {
+        return new ArrayList<>(laws);
+    }
+
+    @Override
+    public void addLaw(String law) {
+
+    }
+
+    @Override
+    public boolean removeLaw(String law) {
+        return laws.remove(law);
+    }
+
+    @Override
+    public void removeLaw(int index) {
+        laws.remove(index);
+    }
+
+    @Override
+    public void changeLaw(int index, String law) {
+        laws.set(index, law);
+    }
+
     // IO
 
     @Override
@@ -97,6 +130,7 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         FederationData data = new FederationData(super.toData());
 
         data.symbol = symbol;
+        data.laws = laws;
 
         return data;
     }
@@ -109,6 +143,7 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         super(uniqueId);
 
         this.members = new ArrayList<>();
+        this.laws = new ArrayList<>();
     }
 
     public void load(FederationData data, LedgerState state) {
@@ -121,6 +156,8 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         for (UUID n : data.members) {
             members.add(state.getSovereign(n));
         }
+
+        this.laws = data.laws;
     }
 
     // Powers

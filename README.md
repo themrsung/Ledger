@@ -1,12 +1,13 @@
 # Ledger
-The ultimate economy plugin for Minecraft servers.
+The ultimate economy/society plugin for Minecraft servers.
 
 ## Features
-- Basic and synthetic assets (Forwards, Futures, Notes)
+- Basic and synthetic assets (Forwards, Futures, Notes, Options)
 - Exchanges
 - Corporations
 - Law firms and lawsuits
-- Nations
-- Organizations
+- Sovereignties
+- Federations
+- Warfare
 - Trusts
 

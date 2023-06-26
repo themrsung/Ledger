@@ -14,6 +14,7 @@ import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.io.types.assetholders.sovereignties.nations.NationData;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.state.LedgerState;
+import org.checkerframework.checker.units.qual.A;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -28,6 +29,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.representative = null;
 
         this.issuedCurrency = null;
+
+        this.laws = new ArrayList<>();
     }
 
     public Nation(Nation copy) {
@@ -38,6 +41,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.representative = copy.representative;
 
         this.issuedCurrency = copy.issuedCurrency;
+
+        this.laws = copy.laws;
     }
 
     private String symbol;
@@ -137,6 +142,34 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.issuedCurrency = issuedCurrency;
     }
 
+    // Laws
+    private ArrayList<String> laws;
+
+    @Override
+    public ArrayList<String> getLaws() {
+        return new ArrayList<>(laws);
+    }
+
+    @Override
+    public void addLaw(String law) {
+
+    }
+
+    @Override
+    public boolean removeLaw(String law) {
+        return laws.remove(law);
+    }
+
+    @Override
+    public void removeLaw(int index) {
+        laws.remove(index);
+    }
+
+    @Override
+    public void changeLaw(int index, String law) {
+        laws.set(index, law);
+    }
+
     // IO
     @Override
     public NationData toData() {
@@ -157,6 +190,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         data.issuedCurrency = issuedCurrency;
 
         if (getRepresentative() != null) data.representative = getRepresentative().getUniqueId();
+
+        data.laws = laws;
 
         return data;
     }
@@ -190,6 +225,8 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         }
 
         this.issuedCurrency = data.issuedCurrency;
+
+        this.laws = data.laws;
 
         representative = state.getNationMember(data.representative);
     }

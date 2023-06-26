@@ -21,6 +21,7 @@ public class NationData extends AssetholderData {
         this.foundations = copy.foundations;
         this.representative = copy.representative;
         this.issuedCurrency = copy.issuedCurrency;
+        this.laws = copy.laws;
     }
 
     public NationData() {
@@ -35,4 +36,5 @@ public class NationData extends AssetholderData {
     public UUID representative = null;
     @Nullable
     public String issuedCurrency = null;
+    public ArrayList<String> laws = new ArrayList<>();
 }
