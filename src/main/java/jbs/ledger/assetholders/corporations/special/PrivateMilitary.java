@@ -37,7 +37,7 @@ public final class PrivateMilitary extends Corporation implements Faction {
 
     @Override
     public long getProtectionRadius() {
-        return 250;
+        return 750;
     }
 
     // IO

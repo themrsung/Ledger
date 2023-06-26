@@ -59,6 +59,14 @@ public final class Principality extends Nation {
         return getRepresentative().equals(person);
     }
 
+    // Protection
+
+    @Override
+    public long getProtectionRadius() {
+        return 5000;
+    }
+
+
     // IO
 
     @Override

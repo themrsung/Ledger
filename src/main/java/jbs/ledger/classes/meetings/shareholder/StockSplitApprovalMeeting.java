@@ -2,19 +2,14 @@ package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.corporations.Corporation;
-import jbs.ledger.assetholders.person.Person;
-import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
-import jbs.ledger.events.transfers.AssetTransferCause;
-import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;
-import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Date;

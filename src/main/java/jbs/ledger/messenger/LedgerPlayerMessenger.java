@@ -13,7 +13,6 @@ import javax.annotation.Nullable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Objects;
 
 public final class LedgerPlayerMessenger {
@@ -320,5 +319,49 @@ public final class LedgerPlayerMessenger {
 
     public void playerKicked() {
         s("플레이어가 킥되었습니다.");
+    }
+
+    public void meetingNotFound() {
+        s("투표 가능한 안건을 찾지 못했습니다.");
+    }
+
+    public void noVotesRemaining() {
+        s("투표 가능한 표가 남아있지 않습니다.");
+    }
+
+    public void votesCast() {
+        s("의결을 완료했습니다.");
+    }
+
+    public void unsupportedMeetingType() {
+        s("해당 사안을 상정할 수 있는 기관이 아닙니다.");
+    }
+
+    public void noRightsToProposeMeeting() {
+        s("해당 사안을 발의할 권한이 없습니다.");
+    }
+
+    public void ceoPositionNotVacant() {
+        s("CEO가 공석이 아닙니다.");
+    }
+
+    public void sameMeetingAlreadyOpen() {
+        s("중복상정이 불가능한 안건입니다.");
+    }
+
+    public void ceoPositionAlreadyVacant() {
+        s("CEO가 이미 공석입니다.");
+    }
+
+    public void personAlreadyDirector() {
+        s("이미 이사회에 소속되어있습니다.");
+    }
+
+    public void personNotDirector() {
+        s("이사회에 소속되어있지 않습니다.");
+    }
+
+    public void meetingProposed() {
+        s("안건이 상정되었습니다.");
     }
 }

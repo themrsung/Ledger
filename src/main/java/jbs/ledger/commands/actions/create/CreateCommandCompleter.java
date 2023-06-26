@@ -1,8 +1,12 @@
 package jbs.ledger.commands.actions.create;
 
 import jbs.ledger.Ledger;
+import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
 import jbs.ledger.commands.LedgerCommandKeywords;
+import jbs.ledger.interfaces.organization.Electorate;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -38,10 +42,61 @@ public final class CreateCommandCompleter extends LedgerCommandAutoCompleter {
             results.addAll(LedgerCommandKeywords.FEDERATION);
             results.addAll(LedgerCommandKeywords.INVESTMENT_TRUST);
             results.addAll(LedgerCommandKeywords.REAL_ESTATE_TRUST);
+            results.addAll(LedgerCommandKeywords.VOTE);
         } else if (args.length < 3) {
-            results.add("조직의 고유 코드를 입력해주세요. (알파벳 3글자 이하, 대소문자 구분 없음");
+            String action = args[1].toLowerCase();
+            if (LedgerCommandKeywords.VOTE.contains(action)) {
+                for (Assetholder a : getState().getAssetholders()) {
+                    results.add(a.getSearchTag());
+                }
+            } else {
+                results.add("조직의 고유 코드를 입력해주세요. (알파벳 3글자 이하, 대소문자 구분 없음");
+            }
         } else if (args.length < 4) {
-            results.add("조직의 이름을 입력해주세요. 띄어쓰기는 불가능합니다.");
+            String action = args[1].toLowerCase();
+            if (LedgerCommandKeywords.VOTE.contains(action)) {
+                Assetholder a = getState().getAssetholder(args[2], true, true);
+                if (a == null) {
+                    results.add("조직을 찾을 수 없습니다.");
+                } else {
+                    if (a.getType().isCorporation()) {
+                        results.add(MeetingType.BOARD_CASH_DIVIDEND.toString());
+                        results.add(MeetingType.BOARD_STOCK_DIVIDEND.toString());
+                        results.add(MeetingType.BOARD_STOCK_SPLIT.toString());
+                        results.add(MeetingType.BOARD_STOCK_ISSUE.toString());
+                        results.add(MeetingType.BOARD_STOCK_RETIRE.toString());
+                        results.add(MeetingType.BOARD_BOND_ISSUE.toString());
+                        results.add(MeetingType.SHAREHOLDER_HIRE_CEO.toString());
+                        results.add(MeetingType.SHAREHOLDER_FIRE_CEO.toString());
+                        results.add(MeetingType.SHAREHOLDER_HIRE_DIRECTOR.toString());
+                        results.add(MeetingType.SHAREHOLDER_FIRE_DIRECTOR.toString());
+                        results.add(MeetingType.SHAREHOLDER_CHANGE_NAME.toString());
+                        results.add(MeetingType.SHAREHOLDER_LIQUIDATE.toString());
+                    } else if (a.getType() == AssetholderType.PRESIDENTIAL_REPUBLIC) {
+                        results.add(MeetingType.SENATE_NEW_LAW.toString());
+                        results.add(MeetingType.SENATE_CHANGE_LAW.toString());
+                        results.add(MeetingType.SENATE_REPEAL_LAW.toString());
+                        results.add(MeetingType.SENATE_IMPEACH_PRESIDENT.toString());
+                        results.add(MeetingType.REFERENDUM_CHANGE_NAME.toString());
+                        results.add(MeetingType.ELECTION_PRESIDENTIAL.toString());
+                        results.add(MeetingType.ELECTION_GENERAL.toString());
+                    } else if (a.getType() == AssetholderType.PARLIAMENTARY_REPUBLIC) {
+                        results.add(MeetingType.PARLIAMENT_NO_CONFIDENCE.toString());
+                        results.add(MeetingType.PARLIAMENT_NEW_LAW.toString());
+                        results.add(MeetingType.PARLIAMENT_CHANGE_LAW.toString());
+                        results.add(MeetingType.PARLIAMENT_REPEAL_LAW.toString());
+                        results.add(MeetingType.REFERENDUM_CHANGE_NAME.toString());
+                        results.add(MeetingType.ELECTION_GENERAL.toString());
+                    } else if (a.getType() == AssetholderType.FEDERATION) {
+                        results.add(MeetingType.FEDERATION_CHANGE_NAME.toString());
+                        results.add(MeetingType.FEDERATION_NEW_MEMBER.toString());
+                        results.add(MeetingType.FEDERATION_KICK_MEMBER.toString());
+                        results.add(MeetingType.FEDERATION_CHANGE_CAPITAL.toString());
+                    }
+                }
+            } else {
+                results.add("조직의 이름을 입력해주세요. 띄어쓰기는 불가능합니다.");
+            }
         } else if (args.length < 5) {
             results.add("조직의 자본금을 입력해주세요. 예: CR300만 -> 3,000,000 크레딧");
         } else if (args.length < 6) {

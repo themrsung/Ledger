@@ -81,7 +81,7 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
     @Override
     public long getProtectionRadius() {
-        return 1000;
+        return 5000;
     }
 
     // Laws

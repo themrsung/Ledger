@@ -4,6 +4,7 @@ import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.organizations.OrganizationData;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public final class ParliamentaryRepublicData extends NationData {
     public ParliamentaryRepublicData(NationData parent) {
@@ -18,4 +19,6 @@ public final class ParliamentaryRepublicData extends NationData {
     public OrganizationData legislature = new OrganizationData();
     public OrganizationData judiciary = new OrganizationData();
     public ArrayList<MeetingData> openMeetings = new ArrayList<>();
+
+    public Date lastGeneralElectionDate;
 }

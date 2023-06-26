@@ -58,11 +58,6 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
     }
 
     @Override
-    public long getProtectionRadius() {
-        return 75;
-    }
-
-    @Override
     public boolean hasPropertyAccess(Person person) {
         return getBoard().getMembers().contains(person);
     }

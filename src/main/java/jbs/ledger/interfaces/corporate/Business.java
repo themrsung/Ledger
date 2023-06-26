@@ -1,5 +1,7 @@
 package jbs.ledger.interfaces.corporate;
 
-public interface Business {
+import jbs.ledger.interfaces.common.Symbolic;
+
+public interface Business extends Symbolic {
     String getPreferredCurrency();
 }

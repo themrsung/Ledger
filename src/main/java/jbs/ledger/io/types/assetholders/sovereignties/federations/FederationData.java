@@ -19,5 +19,4 @@ public class FederationData extends AssetholderData {
     public ArrayList<UUID> members = new ArrayList<>();
     @Nullable
     public UUID capital = null;
-    public ArrayList<String> laws = new ArrayList<>();
 }

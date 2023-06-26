@@ -6,7 +6,7 @@ import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;
@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public final class ChangeNameApprovalMeeting extends ShareholderMeeting {
-    public static ChangeNameApprovalMeeting newMeeting(
+public final class ChangeNameMeeting extends ShareholderMeeting {
+    public static ChangeNameMeeting newMeeting(
             Corporate corporation,
             LedgerState state,
             String newName
@@ -39,7 +39,7 @@ public final class ChangeNameApprovalMeeting extends ShareholderMeeting {
             }
         }
 
-        return new ChangeNameApprovalMeeting(
+        return new ChangeNameMeeting(
                 uniqueId,
                 symbol,
                 date,
@@ -52,7 +52,7 @@ public final class ChangeNameApprovalMeeting extends ShareholderMeeting {
     }
 
 
-    private ChangeNameApprovalMeeting(
+    private ChangeNameMeeting(
             UUID uniqueId,
             String symbol,
             Date date,
@@ -94,14 +94,14 @@ public final class ChangeNameApprovalMeeting extends ShareholderMeeting {
         return data;
     }
 
-    public static ChangeNameApprovalMeeting fromData(MeetingData data, LedgerState state) {
+    public static ChangeNameMeeting fromData(MeetingData data, LedgerState state) {
         ArrayList<VotableMember<Assetholder>> shareholders = new ArrayList<>();
 
         for (VotableMemberData vmd : data.votableMembers) {
             shareholders.add(Shareholder.fromData(vmd, state));
         }
 
-        return new ChangeNameApprovalMeeting(
+        return new ChangeNameMeeting(
                 data.uniqueId,
                 data.symbol,
                 data.date,

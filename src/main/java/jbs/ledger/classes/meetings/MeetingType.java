@@ -1,4 +1,4 @@
-package jbs.ledger.io.types.meetings;
+package jbs.ledger.classes.meetings;
 
 public enum MeetingType {
     // Board meetings
@@ -29,7 +29,7 @@ public enum MeetingType {
     PARLIAMENT_REPEAL_LAW,
     PARLIAMENT_NO_CONFIDENCE,
 
-    // Presidential
+    // Senate
     SENATE_NEW_LAW,
     SENATE_CHANGE_LAW,
     SENATE_REPEAL_LAW,
@@ -41,13 +41,17 @@ public enum MeetingType {
     // Referendums
     REFERENDUM_CHANGE_NAME,
 
+    // Elections
+    ELECTION_PRESIDENTIAL,
+    ELECTION_GENERAL,
+
     // Federations
     FEDERATION_CHANGE_NAME,
     FEDERATION_NEW_MEMBER,
     FEDERATION_KICK_MEMBER,
     FEDERATION_CHANGE_CAPITAL;
 
-    boolean isBoard() {
+    public boolean isBoard() {
         switch(this) {
             case BOARD_BOND_ISSUE:
             case BOARD_CASH_DIVIDEND:
@@ -62,7 +66,7 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isShareholder() {
+    public boolean isShareholder() {
         switch (this) {
             case SHAREHOLDER_CASH_DIVIDEND:
             case SHAREHOLDER_FIRE_CEO:
@@ -81,7 +85,7 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isSenate() {
+    public boolean isSenate() {
         switch (this) {
             case SENATE_CHANGE_LAW:
             case SENATE_NEW_LAW:
@@ -93,7 +97,7 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isParliament() {
+    public boolean isParliament() {
         switch (this) {
             case PARLIAMENT_CHANGE_LAW:
             case PARLIAMENT_NEW_LAW:
@@ -105,7 +109,7 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isSupremeCourt() {
+    public boolean isSupremeCourt() {
         switch (this) {
             case SUPREME_COURT_IMPEACH_PRESIDENT:
                 return true;
@@ -114,7 +118,7 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isReferendum() {
+    public boolean isReferendum() {
         switch (this) {
             case REFERENDUM_CHANGE_NAME:
                 return true;
@@ -123,7 +127,17 @@ public enum MeetingType {
         return false;
     }
 
-    boolean isFederation() {
+    public boolean isElection() {
+        switch (this) {
+            case ELECTION_GENERAL:
+            case ELECTION_PRESIDENTIAL:
+                return true;
+        }
+
+        return false;
+    }
+
+    public boolean isFederation() {
         switch (this) {
             case FEDERATION_CHANGE_CAPITAL:
             case FEDERATION_CHANGE_NAME:

@@ -71,7 +71,7 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     }
 
     @Override
-    public Organization<Person> getBoard() {
+    public Board getBoard() {
         return board;
     }
 
@@ -117,10 +117,6 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     }
 
     // Protection
-    @Override
-    public long getProtectionRadius() {
-        return 75;
-    }
 
     @Override
     public boolean hasPropertyAccess(Person person) {

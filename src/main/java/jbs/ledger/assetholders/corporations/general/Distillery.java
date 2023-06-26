@@ -33,11 +33,6 @@ public final class Distillery extends Corporation {
         return AssetholderType.DISTILLERY;
     }
 
-    @Override
-    public long getProtectionRadius() {
-        return 100;
-    }
-
     // IO
     public DistilleryData toData() {
         return new DistilleryData(super.toData());

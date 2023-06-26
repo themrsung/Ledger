@@ -142,10 +142,8 @@ public final class PropertyProtector extends LedgerListener {
 
         if (getOwner(location) == null) return;
 
-        Bukkit.getLogger().info("Owner exists");
         if (!DISABLED_ENTITIES.contains(e.getEntityType())) return;
 
-        Bukkit.getLogger().info("Entity spawn stopped");
 
         e.setCancelled(true);
     }

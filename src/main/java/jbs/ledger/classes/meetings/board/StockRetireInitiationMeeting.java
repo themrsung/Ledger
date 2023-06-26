@@ -2,13 +2,11 @@ package jbs.ledger.classes.meetings.board;
 
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.VotableMember;
-import jbs.ledger.classes.meetings.shareholder.Shareholder;
-import jbs.ledger.classes.meetings.shareholder.StockIssueApprovalMeeting;
 import jbs.ledger.classes.meetings.shareholder.StockRetireApprovalMeeting;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 

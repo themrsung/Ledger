@@ -68,7 +68,7 @@ public abstract class AbstractMeeting<M extends Unique> implements Meeting<M> {
     }
 
     @Override
-    public boolean vote(VotableMember<M> member, boolean yes) {
+    public boolean vote(VotableMember<?> member, boolean yes) {
         if (!getVotableMembers().contains(member)) return false;
 
         long votes = member.getVotes();
@@ -139,7 +139,7 @@ public abstract class AbstractMeeting<M extends Unique> implements Meeting<M> {
             case SHAREHOLDER_FIRE_DIRECTOR:
                 return FireDirectorMeeting.fromData(data, state);
             case SHAREHOLDER_CHANGE_NAME:
-                return ChangeNameApprovalMeeting.fromData(data, state);
+                return ChangeNameMeeting.fromData(data, state);
             case SHAREHOLDER_CASH_DIVIDEND:
                 return CashDividendApprovalMeeting.fromData(data, state);
             case SHAREHOLDER_STOCK_DIVIDEND:

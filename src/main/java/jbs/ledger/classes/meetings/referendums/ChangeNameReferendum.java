@@ -4,14 +4,9 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.parliament.MemberOfParliament;
-import jbs.ledger.classes.meetings.supremecourt.Justice;
-import jbs.ledger.classes.meetings.supremecourt.SupremeCourtBill;
 import jbs.ledger.interfaces.organization.Organization;
-import jbs.ledger.interfaces.sovereignty.NationMember;
-import jbs.ledger.interfaces.sovereignty.Sovereign;
-import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 
@@ -25,7 +20,7 @@ public final class ChangeNameReferendum extends Referendum {
             String newName
     ) {
         UUID uniqueId = nation.getUniqueId();
-        String symbol = nation.getSymbol() + "_대통령탄핵심판_" + UUID.randomUUID().toString().substring(0, 5);
+        String symbol = nation.getSymbol() + "_국명변경_" + UUID.randomUUID().toString().substring(0, 5);
         Date date = new Date();
 
         ArrayList<VotableMember<Person>> citizens = new ArrayList<>();

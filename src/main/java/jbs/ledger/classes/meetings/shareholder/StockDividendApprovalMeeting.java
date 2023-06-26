@@ -8,7 +8,7 @@ import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;

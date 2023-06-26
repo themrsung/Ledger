@@ -58,6 +58,10 @@ public final class StockPortfolio extends AbstractPortfolio<Stock> {
         return super.contains(asset);
     }
 
+    public boolean contains(String symbol) {
+        return get(symbol) != null;
+    }
+
     @Override
     public void clean() {
         getRaw().removeIf(e -> e.getQuantity() == 0L);

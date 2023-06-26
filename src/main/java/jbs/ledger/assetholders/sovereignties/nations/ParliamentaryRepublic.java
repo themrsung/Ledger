@@ -17,6 +17,7 @@ import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -31,6 +32,8 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         this.judiciary = new Judiciary();
 
         this.openMeetings = new ArrayList<>();
+
+        this.lastParliamentResetDate = new Date();
     }
 
     public ParliamentaryRepublic(ParliamentaryRepublic copy) {
@@ -41,6 +44,8 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         this.judiciary = copy.judiciary;
 
         this.openMeetings = copy.openMeetings;
+
+        this.lastParliamentResetDate = copy.lastParliamentResetDate;
     }
 
     @Override
@@ -50,7 +55,7 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
 
     @Override
     public long getProtectionRadius() {
-        return 1000;
+        return 5000;
     }
 
     // Tripartite
@@ -120,6 +125,17 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         return openMeetings.remove(meeting);
     }
 
+    // Elections
+    private Date lastParliamentResetDate;
+
+    public Date getLastParliamentResetDate() {
+        return lastParliamentResetDate;
+    }
+
+    public void setLastParliamentResetDate(Date lastParliamentResetDate) {
+        this.lastParliamentResetDate = lastParliamentResetDate;
+    }
+
     // IO
 
     @Override
@@ -133,6 +149,8 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         for (Meeting<Person> m : openMeetings) {
             data.openMeetings.add(((Referendum) m).toData());
         }
+
+        data.lastGeneralElectionDate = lastParliamentResetDate;
 
         return data;
     }
@@ -149,6 +167,8 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         this.judiciary = new Judiciary();
 
         this.openMeetings = new ArrayList<>();
+
+        this.lastParliamentResetDate = null;
     }
 
     public void load(ParliamentaryRepublicData data, LedgerState state) {
@@ -163,5 +183,7 @@ public final class ParliamentaryRepublic extends Nation implements Tripartite, E
         for (MeetingData md : data.openMeetings) {
             this.openMeetings.add((Referendum) AbstractMeeting.fromData(md, state));
         }
+
+        this.lastParliamentResetDate = data.lastGeneralElectionDate;
     }
 }

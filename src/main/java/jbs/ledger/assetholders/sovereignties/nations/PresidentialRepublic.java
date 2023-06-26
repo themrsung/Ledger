@@ -17,10 +17,11 @@ import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 /**
- * Presidential Republics have a president and vice president.
+ * Presidential Republics have a president.
  */
 public final class PresidentialRepublic extends Nation implements Tripartite, Electorate<Person> {
     public PresidentialRepublic(UUID uniqueId, String name, String symbol) {
@@ -31,6 +32,9 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         this.judiciary = new Judiciary();
 
         this.openMeetings = new ArrayList<>();
+
+        this.lastPresidentialElectionDate = new Date();
+        this.lastSenateResetDate = new Date();
     }
 
     public PresidentialRepublic(PresidentialRepublic copy) {
@@ -41,6 +45,9 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         this.judiciary = copy.judiciary;
 
         this.openMeetings = copy.openMeetings;
+
+        this.lastPresidentialElectionDate = copy.lastPresidentialElectionDate;
+        this.lastSenateResetDate = copy.lastSenateResetDate;
     }
 
     @Override
@@ -50,7 +57,7 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
 
     @Override
     public long getProtectionRadius() {
-        return 1500;
+        return 5000;
     }
 
     // Tripartite
@@ -119,6 +126,27 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         return getAdministration().getRepresentative();
     }
 
+    // Elections
+
+    private Date lastPresidentialElectionDate;
+    private Date lastSenateResetDate;
+
+    public Date getLastPresidentialElectionDate() {
+        return lastPresidentialElectionDate;
+    }
+
+    public Date getLastSenateResetDate() {
+        return lastSenateResetDate;
+    }
+
+    public void setLastSenateResetDate(Date lastSenateResetDate) {
+        this.lastSenateResetDate = lastSenateResetDate;
+    }
+
+    public void setLastPresidentialElectionDate(Date lastPresidentialElectionDate) {
+        this.lastPresidentialElectionDate = lastPresidentialElectionDate;
+    }
+
     // IO
 
     @Override
@@ -132,6 +160,9 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         for (Meeting<Person> m : openMeetings) {
             data.openMeetings.add(((Referendum) m).toData());
         }
+
+        data.lastGeneralElectionDate = lastSenateResetDate;
+        data.lastPresidentialElectionDate = lastPresidentialElectionDate;
 
         return data;
     }
@@ -148,6 +179,9 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         this.judiciary = new Judiciary();
 
         this.openMeetings = new ArrayList<>();
+
+        this.lastSenateResetDate = null;
+        this.lastPresidentialElectionDate = null;
     }
 
     public void load(PresidentialRepublicData data, LedgerState state) {
@@ -162,5 +196,8 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
         for (MeetingData md : data.openMeetings) {
             this.openMeetings.add((Referendum) AbstractMeeting.fromData(md, state));
         }
+
+        this.lastSenateResetDate = data.lastGeneralElectionDate;
+        this.lastPresidentialElectionDate = data.lastPresidentialElectionDate;
     }
 }

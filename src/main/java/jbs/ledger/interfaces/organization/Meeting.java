@@ -3,10 +3,12 @@ package jbs.ledger.interfaces.organization;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.common.Unique;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.state.LedgerState;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 /**
  * A meeting held by an organization.
@@ -19,13 +21,24 @@ public interface Meeting<M extends Unique> extends Symbolic, Unique {
      */
     ArrayList<VotableMember<M>> getVotableMembers();
 
+    @Nullable
+    default VotableMember<M> getVotableMember(UUID uniqueId) {
+        for (VotableMember<M> m : getVotableMembers()) {
+            if (m.getMember().getUniqueId().equals(uniqueId)) {
+                return m;
+            }
+        }
+
+        return null;
+    }
+
     /**
      * Processes vote
      * @param member Member to vote as
      * @param yes Whether to vote yes or no
      * @return Return whether vote was cast successfully.
      */
-    boolean vote(VotableMember<M> member, boolean yes);
+    boolean vote(VotableMember<?> member, boolean yes);
 
     long getCastYesVotes();
     long getCastVotes();

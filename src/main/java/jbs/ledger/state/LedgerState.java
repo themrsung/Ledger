@@ -22,8 +22,11 @@ import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.interfaces.organization.Electorate;
+import jbs.ledger.interfaces.organization.Meeting;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
+import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.io.types.assetholders.AssetholderData;
 import jbs.ledger.io.types.assetholders.corporations.finance.*;
@@ -56,150 +59,29 @@ public final class LedgerState {
         config = new LedgerConfig();
 
         // Server
-        SovereignCorporation JBS = new SovereignCorporation(
+        SovereignCorporation OAS = new SovereignCorporation(
                 UUID.randomUUID(),
-                "자본주의서버",
-                "JBS",
+                "오아시스",
+                "OAS",
                 "CR",
-                new Cash("CR", 100000000000000000000d),
-                10000000000L
+                new Cash("CR", 1000000000000d),
+                10000L
         );
 
         Person god = new Person(UUID.fromString("43c8a60f-e288-4ed3-a4af-fb220faad455"), "themrsung");
-        god.getStocks().add(new Stock("JBS", 10000000000L));
+        god.getStocks().add(new Stock("OAS", 10000L));
 
-        JBS.getCash().add(new Cash("CR", 1000000000000000000000d));
+        OAS.getCash().add(new Cash("CR", 1000000000000d));
+        god.getCash().add(new Cash("CR", 100000000d));
 
-        JBS.addMember(god);
-        JBS.getBoard().addMember(god);
-        JBS.setRepresentative(god);
+        OAS.addMember(god);
+        OAS.getBoard().addMember(god);
+        OAS.setRepresentative(god);
 
-        JBS.setIssuedCurrency("CR");
+        OAS.setIssuedCurrency("CR");
 
-        assetholders.add(JBS);
+        assetholders.add(OAS);
         assetholders.add(god);
-
-        // JBX
-        SecuritiesExchange JBX = new SecuritiesExchange(
-                UUID.randomUUID(),
-                "제이벡스",
-                "JBX",
-                "CR",
-                new Cash("CR", 100000000d),
-                1000000L
-        );
-
-        JBX.addMember(god);
-        JBX.getBoard().addMember(god);
-        JBX.setRepresentative(god);
-
-        JBS.getStocks().add(new Stock("JBX", 1000000L));
-        assetholders.add(JBX);
-
-        // FOREX
-        ForeignExchange FX = new ForeignExchange(
-                UUID.randomUUID(),
-                "JB외환거래소",
-                "FX",
-                "CR",
-                new Cash("CR", 100000000d),
-                1000000L
-        );
-
-        FX.addMember(god);
-        FX.getBoard().addMember(god);
-        FX.setRepresentative(god);
-
-        JBS.getStocks().add(new Stock("FX", 1000000L));
-        assetholders.add(FX);
-
-        // FUTURES EXCHANGE
-        FuturesExchange JFX = new FuturesExchange(
-                UUID.randomUUID(),
-                "JB선물거래소",
-                "JFX",
-                "CR",
-                new Cash("CR", 100000000d),
-                1000000L
-        );
-
-        JFX.addMember(god);
-        JFX.getBoard().addMember(god);
-        JFX.setRepresentative(god);
-
-        JBS.getStocks().add(new Stock("JFX", 1000000L));
-        assetholders.add(JFX);
-
-        Bank BNK = new Bank(
-                UUID.randomUUID(),
-                "자본주의은행",
-                "BNK",
-                "CR",
-                new Cash("CR", 100000000d),
-                1000000L
-        );
-
-        BNK.addMember(god);
-        BNK.getBoard().addMember(god);
-        BNK.setRepresentative(god);
-
-        JBS.getStocks().add(new Stock("BNK", 1000000L));
-        assetholders.add(BNK);
-
-        JBX.addStockMarket(new StockMarket(
-                UUID.randomUUID(),
-                "JBS",
-                JBX,
-                "CR",
-                new Stock("JBS", 1),
-                100
-        ));
-
-        JBX.addStockMarket(new StockMarket(
-                UUID.randomUUID(),
-                "JBX",
-                JBX,
-                "CR",
-                new Stock("JBX", 1),
-                1
-        ));
-
-        JBX.addStockMarket(new StockMarket(
-                UUID.randomUUID(),
-                "FX",
-                JBX,
-                "CR",
-                new Stock("FX", 1),
-                1
-        ));
-
-        JBX.addStockMarket(new StockMarket(
-                UUID.randomUUID(),
-                "JFX",
-                JBX,
-                "CR",
-                new Stock("JFX", 1),
-                1
-        ));
-
-        JBX.addStockMarket(new StockMarket(
-                UUID.randomUUID(),
-                "BNK",
-                JBX,
-                "CR",
-                new Stock("BNK", 1),
-                1
-        ));
-
-        Federation JTO = new Federation(
-                UUID.randomUUID(),
-                "자본주의조약기구",
-                "JTO"
-        );
-
-        JTO.addMember(JBS);
-        JTO.setRepresentative(JBS);
-        assetholders.add(JTO);
     }
 
     private final ArrayList<Assetholder> assetholders;
@@ -617,6 +499,52 @@ public final class LedgerState {
         }
 
         return false;
+    }
+
+    // Electorates
+    public ArrayList<Electorate<?>> getElectorates() {
+        ArrayList<Electorate<?>> electorates = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Electorate<?>) {
+                electorates.add((Electorate<?>) a);
+            }
+
+            if (a instanceof Corporate) {
+                Corporate corp = (Corporate) a;
+                electorates.add(corp.getBoard());
+            }
+
+            if (a instanceof Tripartite) {
+                Tripartite tri = (Tripartite) a;
+
+                electorates.add(tri.getLegislature());
+                electorates.add(tri.getJudiciary());
+            }
+        }
+
+        return electorates;
+    }
+
+    public ArrayList<Meeting<?>> getMeetings() {
+        ArrayList<Meeting<?>> meetings = new ArrayList<>();
+
+        for (Electorate<?> e : getElectorates()) {
+            meetings.addAll(e.getOpenMeetings());
+        }
+
+        return meetings;
+    }
+
+    @Nullable
+    public Meeting<?> getMeeting(String symbol) {
+        for (Meeting<?> m : getMeetings()) {
+            if (m.getSymbol().equals(symbol)) {
+                return m;
+            }
+        }
+
+        return null;
     }
 
     @Nullable

@@ -1,5 +1,6 @@
 package jbs.ledger.io.types.meetings;
 
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
 
 import java.util.ArrayList;

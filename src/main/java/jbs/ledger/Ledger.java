@@ -1,13 +1,14 @@
 package jbs.ledger;
 
 import jbs.ledger.classes.messages.DirectMessageProcessor;
-import jbs.ledger.commands.actions.*;
 import jbs.ledger.commands.actions.invite.InviteCommand;
 import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
 import jbs.ledger.commands.actions.kick.KickCommand;
 import jbs.ledger.commands.actions.kick.KickCommandCompleter;
 import jbs.ledger.commands.actions.pardon.PardonCommand;
+import jbs.ledger.commands.actions.pardon.PardonCommandCompleter;
 import jbs.ledger.commands.actions.punish.PunishCommand;
+import jbs.ledger.commands.actions.punish.PunishCommandCompleter;
 import jbs.ledger.commands.actions.teleportation.BackCommand;
 import jbs.ledger.commands.actions.create.CreateCommand;
 import jbs.ledger.commands.actions.create.CreateCommandCompleter;
@@ -27,6 +28,8 @@ import jbs.ledger.commands.actions.teleportation.SpawnCommand;
 import jbs.ledger.commands.actions.teleportation.TeleportHereRequestCommand;
 import jbs.ledger.commands.actions.teleportation.TeleportRequestCommand;
 import jbs.ledger.commands.actions.teleportation.TeleportRequestCommandCompleter;
+import jbs.ledger.commands.actions.vote.VoteCommand;
+import jbs.ledger.commands.actions.vote.VoteCommandCompleter;
 import jbs.ledger.commands.administrative.*;
 import jbs.ledger.commands.administrative.sudo.SudoCommand;
 import jbs.ledger.commands.administrative.sudo.SudoCommandCompleter;
@@ -51,6 +54,7 @@ import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.timers.economy.MarketTicker;
+import jbs.ledger.timers.governance.OfficeTermKeeper;
 import jbs.ledger.timers.io.LedgerAutoSaver;
 import jbs.ledger.timers.economy.NoteExpirationHandler;
 import jbs.ledger.timers.premium.PremiumExpirationHandler;
@@ -111,15 +115,21 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("invite")).setExecutor(new InviteCommand(this));
         Objects.requireNonNull(getCommand("invite")).setTabCompleter(new InviteCommandCompleter(this));
 
-        Objects.requireNonNull(getCommand("manage")).setExecutor(new ManageCommand(this));
-        Objects.requireNonNull(getCommand("members")).setExecutor(new MembersCommand(this));
-        Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
-        Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
-        Objects.requireNonNull(getCommand("pardon")).setExecutor(new PardonCommand(this));
         Objects.requireNonNull(getCommand("vote")).setExecutor(new VoteCommand(this));
+        Objects.requireNonNull(getCommand("vote")).setTabCompleter(new VoteCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("kick")).setExecutor(new KickCommand(this));
         Objects.requireNonNull(getCommand("kick")).setTabCompleter(new KickCommandCompleter(this));
+
+        Objects.requireNonNull(getCommand("manage")).setExecutor(new ManageCommand(this));
+        Objects.requireNonNull(getCommand("members")).setExecutor(new MembersCommand(this));
+        Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
+
+        Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
+        Objects.requireNonNull(getCommand("punish")).setTabCompleter(new PunishCommandCompleter(this));
+
+        Objects.requireNonNull(getCommand("pardon")).setExecutor(new PardonCommand(this));
+        Objects.requireNonNull(getCommand("pardon")).setTabCompleter(new PardonCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("message")).setExecutor(new MessageCommand(this));
         Objects.requireNonNull(getCommand("message")).setTabCompleter(new MessageCommandCompleter(this));
@@ -193,6 +203,8 @@ public final class Ledger extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new PremiumExpirationHandler(this), 20, 10 * 20);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MarketTicker(this), 20, 5);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new OfficeTermKeeper(this), 0, 60 * 60 * 20);
     }
 
     private LedgerState state = null;

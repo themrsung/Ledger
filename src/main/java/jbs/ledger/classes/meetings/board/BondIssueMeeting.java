@@ -3,17 +3,15 @@ package jbs.ledger.classes.meetings.board;
 import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.VotableMember;
-import jbs.ledger.classes.meetings.shareholder.Shareholder;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.assets.synthetic.stackable.BondData;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.synthetic.StackableNote;
-import org.checkerframework.checker.units.qual.C;
 
 import java.util.ArrayList;
 import java.util.Date;

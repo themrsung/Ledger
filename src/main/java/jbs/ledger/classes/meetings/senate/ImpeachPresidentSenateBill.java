@@ -6,10 +6,9 @@ import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.parliament.MemberOfParliament;
 import jbs.ledger.classes.meetings.supremecourt.ImpeachPresidentSupremeCourtBill;
 import jbs.ledger.interfaces.organization.Organization;
-import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
-import jbs.ledger.io.types.meetings.MeetingType;
+import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 
