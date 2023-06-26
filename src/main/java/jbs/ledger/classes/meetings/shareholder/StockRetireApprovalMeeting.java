@@ -1,10 +1,12 @@
 package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
@@ -74,6 +76,15 @@ public final class StockRetireApprovalMeeting extends ShareholderMeeting {
     @Override
     public MeetingType getType() {
         return MeetingType.SHAREHOLDER_STOCK_RETIRE;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporation) {
+            Corporation corp = (Corporation) organization;
+
+            corp.getStocks().remove(new Stock(corp.getSymbol(), getSharesToRetire()));
+        }
     }
 
     @Override

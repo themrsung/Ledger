@@ -5,17 +5,19 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public final class LiquidationMeeting extends AbstractMeeting<Person> {
+public final class LiquidationMeeting extends ShareholderMeeting {
     public static LiquidationMeeting newMeeting(
             Corporate corporation,
             LedgerState state
@@ -64,6 +66,12 @@ public final class LiquidationMeeting extends AbstractMeeting<Person> {
     @Override
     public MeetingType getType() {
         return MeetingType.SHAREHOLDER_LIQUIDATE;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        // TODO TODO TODO TODO TODO
+        Bukkit.getLogger().info("LIQUIDATION IS NOT SUPPORTED AT THIS TIME");
     }
 
     @Override

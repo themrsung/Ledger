@@ -3,6 +3,7 @@ package jbs.ledger.commands.economy.pay;
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerPlayerCommand;
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.basic.Cash;
@@ -43,7 +44,7 @@ public final class PayCommand extends LedgerPlayerCommand {
                 getActor(),
                 recipient,
                 payment,
-                "Pay command"
+                AssetTransferCause.PAY_COMMAND
         ));
         getMessenger().cashSent(recipient, payment);
     }

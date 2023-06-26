@@ -2,13 +2,14 @@ package jbs.ledger.classes.meetings.senate;
 
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
+import jbs.ledger.classes.meetings.LegislatureBill;
 import jbs.ledger.classes.meetings.VotableMember;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public abstract class SenateBill extends AbstractMeeting<Person> {
+public abstract class SenateBill extends LegislatureBill {
     protected SenateBill(
             UUID uniqueId,
             String symbol,

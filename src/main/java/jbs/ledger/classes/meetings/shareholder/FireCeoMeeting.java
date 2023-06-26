@@ -1,10 +1,12 @@
 package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
@@ -66,6 +68,13 @@ public final class FireCeoMeeting extends ShareholderMeeting {
         return MeetingType.SHAREHOLDER_FIRE_CEO;
     }
 
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporation) {
+            Corporation corp = (Corporation) organization;
+            corp.setRepresentative(null);
+        }
+    }
     @Override
     public MeetingData toData() {
         MeetingData data = super.toData();

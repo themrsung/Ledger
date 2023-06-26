@@ -6,6 +6,7 @@ import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.parliament.MemberOfParliament;
 import jbs.ledger.classes.meetings.supremecourt.Justice;
 import jbs.ledger.classes.meetings.supremecourt.SupremeCourtBill;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
@@ -71,6 +72,15 @@ public final class ChangeNameReferendum extends Referendum {
     @Override
     public MeetingType getType() {
         return MeetingType.REFERENDUM_CHANGE_NAME;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Nation) {
+            Nation sov = (Nation) organization;
+
+            sov.setName(getNewName());
+        }
     }
 
     @Override

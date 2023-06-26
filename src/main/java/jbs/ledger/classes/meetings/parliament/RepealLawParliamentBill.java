@@ -3,6 +3,8 @@ package jbs.ledger.classes.meetings.parliament;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.senate.Senator;
+import jbs.ledger.interfaces.organization.Organization;
+import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
@@ -63,6 +65,14 @@ public final class RepealLawParliamentBill extends ParliamentBill {
         return oldLawIndex;
     }
 
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Sovereign) {
+            Sovereign sov = (Sovereign) organization;
+
+            sov.removeLaw(getOldLawIndex());
+        }
+    }
 
     @Override
     public MeetingType getType() {

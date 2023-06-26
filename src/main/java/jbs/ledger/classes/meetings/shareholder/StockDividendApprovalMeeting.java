@@ -1,15 +1,18 @@
 package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
-import jbs.ledger.assetholders.person.Person;
-import jbs.ledger.classes.meetings.AbstractMeeting;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.classes.meetings.VotableMember;
+import jbs.ledger.events.transfers.AssetTransferCause;
+import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,7 +22,7 @@ public final class StockDividendApprovalMeeting extends ShareholderMeeting {
     public static StockDividendApprovalMeeting newMeeting(
             Corporate corporation,
             LedgerState state,
-            double dividendPerShare
+            long sharesPerShare
     ) {
         UUID uniqueId = corporation.getUniqueId();
         String symbol = corporation.getSymbol() + "_법인청산_" + UUID.randomUUID().toString().substring(0, 5);
@@ -47,7 +50,7 @@ public final class StockDividendApprovalMeeting extends ShareholderMeeting {
                 votes,
                 0,
                 0,
-                dividendPerShare
+                sharesPerShare
         );
     }
     private StockDividendApprovalMeeting(
@@ -58,17 +61,17 @@ public final class StockDividendApprovalMeeting extends ShareholderMeeting {
             long totalCastableVotes,
             long castVotes,
             long castYesVotes,
-            double dividendPerShare
+            long sharesPerShare
     ) {
         super(uniqueId, symbol, date, votableMembers, totalCastableVotes, castVotes, castYesVotes);
 
-        this.dividendPerShare = dividendPerShare;
+        this.sharesPerShare = sharesPerShare;
     }
 
-    private final double dividendPerShare;
+    private final long sharesPerShare;
 
-    public double getDividendPerShare() {
-        return dividendPerShare;
+    public long getSharesPerShare() {
+        return sharesPerShare;
     }
 
     @Override
@@ -77,10 +80,35 @@ public final class StockDividendApprovalMeeting extends ShareholderMeeting {
     }
 
     @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporation) {
+            Corporation corp = (Corporation) organization;
+
+            for (Assetholder a : state.getAssetholders()) {
+                Stock s = a.getStocks().get(corp.getSymbol());
+                if (s != null) {
+                    Stock d = new Stock(corp.getSymbol(), s.getQuantity() * getSharesPerShare());
+
+                    // Print stock
+                    corp.getStocks().add(d);
+
+                    // Send stock
+                    Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
+                            corp,
+                            a,
+                            d,
+                            AssetTransferCause.STOCK_DIVIDEND
+                    ));
+                }
+            }
+        }
+    }
+
+    @Override
     public MeetingData toData() {
         MeetingData data = super.toData();
 
-        data.dividendPerShare = dividendPerShare;
+        data.sharesPerShare = sharesPerShare;
 
         return data;
     }
@@ -100,7 +128,7 @@ public final class StockDividendApprovalMeeting extends ShareholderMeeting {
                 data.totalCastableVotes,
                 data.castVotes,
                 data.castYesVotes,
-                data.dividendPerShare
+                data.sharesPerShare
         );
     }
 }

@@ -6,6 +6,7 @@ import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.federation.FederationMember;
 import jbs.ledger.classes.meetings.federation.KickMemberResolution;
 import jbs.ledger.classes.meetings.parliament.MemberOfParliament;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
@@ -80,7 +81,14 @@ public final class ChangeLawSenateBill extends SenateBill {
     public MeetingType getType() {
         return MeetingType.SENATE_CHANGE_LAW;
     }
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Sovereign) {
+            Sovereign sov = (Sovereign) organization;
 
+            sov.changeLaw(getOldLawIndex(), getNewLaw());
+        }
+    }
     @Override
     public MeetingData toData() {
         MeetingData data = super.toData();

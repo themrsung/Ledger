@@ -1,11 +1,13 @@
 package jbs.ledger.classes.meetings.parliament;
 
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.assetholders.sovereignties.nations.ParliamentaryRepublic;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.federation.FederationMember;
 import jbs.ledger.classes.meetings.federation.FederationResolution;
 import jbs.ledger.classes.meetings.senate.ChangeLawSenateBill;
 import jbs.ledger.classes.meetings.senate.Senator;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
@@ -59,6 +61,14 @@ public final class MotionOfNoConfidence extends ParliamentBill {
     @Override
     public MeetingType getType() {
         return MeetingType.PARLIAMENT_NO_CONFIDENCE;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof ParliamentaryRepublic) {
+            ParliamentaryRepublic pr = (ParliamentaryRepublic) organization;
+            pr.setRepresentative(null);
+        }
     }
 
     @Override

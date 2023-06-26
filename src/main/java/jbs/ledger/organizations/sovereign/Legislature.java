@@ -2,26 +2,39 @@ package jbs.ledger.organizations.sovereign;
 
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
+import jbs.ledger.classes.meetings.AbstractMeeting;
+import jbs.ledger.classes.meetings.LegislatureBill;
+import jbs.ledger.classes.meetings.supremecourt.SupremeCourtBill;
+import jbs.ledger.interfaces.organization.Electorate;
+import jbs.ledger.interfaces.organization.Meeting;
+import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.organizations.OrganizationData;
 import jbs.ledger.organizations.AbstractOrganization;
 import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.UUID;
 
-public final class Legislature extends AbstractOrganization<Person> {
+public final class Legislature extends AbstractOrganization<Person> implements Electorate<Person> {
     public Legislature(UUID uniqueId) {
         super(uniqueId);
+
+        this.openMeetings = new ArrayList<>();
     }
 
     public Legislature(Legislature copy) {
         super(copy);
 
         this.owner = copy.owner;
+
+        this.openMeetings = copy.openMeetings;
     }
 
     public Legislature() {
         super();
+
+        this.openMeetings = new ArrayList<>();
     }
 
     @Nullable
@@ -33,18 +46,41 @@ public final class Legislature extends AbstractOrganization<Person> {
         return owner.getName() + " 입법부";
     }
 
+    private final ArrayList<Meeting<Person>> openMeetings;
+
+    @Override
+    public ArrayList<Meeting<Person>> getOpenMeetings() {
+        return new ArrayList<>(openMeetings);
+    }
+
+    @Override
+    public void addOpenMeeting(Meeting<Person> meeting) {
+        openMeetings.add(meeting);
+    }
+
+    @Override
+    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+        return openMeetings.remove(meeting);
+    }
+
 
     public static Legislature fromData(OrganizationData data, LedgerState state) {
-        Legislature board = new Legislature(data.uniqueId);
+        Legislature legislature = new Legislature(data.uniqueId);
 
         for (UUID id : data.members) {
-            board.addMember(state.getPerson(id));
+            legislature.addMember(state.getPerson(id));
         }
 
         if (data.representative != null) {
-            board.setRepresentative(state.getPerson(data.representative));
+            legislature.setRepresentative(state.getPerson(data.representative));
         }
 
-        return board;
+        legislature.openMeetings.clear();
+
+        for (MeetingData md : data.openMeetings) {
+            legislature.openMeetings.add((LegislatureBill) AbstractMeeting.fromData(md, state));
+        }
+
+        return legislature;
     }
 }

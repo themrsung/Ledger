@@ -162,11 +162,14 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
 
     @Override
     public void removeLaw(int index) {
+        if (index >= getLaws().size()) return;
         laws.remove(index);
     }
 
     @Override
     public void changeLaw(int index, String law) {
+        if (index >= laws.size()) return;
+
         laws.set(index, law);
     }
 

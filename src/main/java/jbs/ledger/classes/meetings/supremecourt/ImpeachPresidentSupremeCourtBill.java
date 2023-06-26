@@ -1,10 +1,13 @@
 package jbs.ledger.classes.meetings.supremecourt;
 
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.assetholders.sovereignties.nations.PresidentialRepublic;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.parliament.MemberOfParliament;
 import jbs.ledger.classes.meetings.senate.SenateBill;
 import jbs.ledger.classes.meetings.senate.Senator;
+import jbs.ledger.interfaces.organization.Organization;
+import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
@@ -56,6 +59,14 @@ public final class ImpeachPresidentSupremeCourtBill extends SupremeCourtBill {
     @Override
     public MeetingType getType() {
         return MeetingType.SUPREME_COURT_IMPEACH_PRESIDENT;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof PresidentialRepublic) {
+            PresidentialRepublic pr = (PresidentialRepublic) organization;
+            pr.setRepresentative(null);
+        }
     }
 
     @Override

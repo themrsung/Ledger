@@ -2,9 +2,11 @@ package jbs.ledger.organizations.corporate;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.board.BoardMeeting;
 import jbs.ledger.interfaces.organization.Electorate;
 import jbs.ledger.interfaces.organization.Meeting;
+import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.organizations.OrganizationData;
 import jbs.ledger.organizations.AbstractOrganization;
 import jbs.ledger.state.LedgerState;
@@ -69,6 +71,12 @@ public final class Board extends AbstractOrganization<Person> implements Elector
 
         if (data.representative != null) {
             board.setRepresentative(state.getPerson(data.representative));
+        }
+
+        board.openMeetings.clear();
+
+        for (MeetingData md : data.openMeetings) {
+            board.openMeetings.add((BoardMeeting) AbstractMeeting.fromData(md, state));
         }
 
         return board;

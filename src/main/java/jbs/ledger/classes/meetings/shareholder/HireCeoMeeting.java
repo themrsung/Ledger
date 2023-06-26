@@ -1,16 +1,16 @@
 package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
-import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Stock;
-import jdk.internal.misc.VM;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -78,6 +78,13 @@ public final class HireCeoMeeting extends ShareholderMeeting {
         return MeetingType.SHAREHOLDER_HIRE_CEO;
     }
 
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporation) {
+            Corporation corp = (Corporation) organization;
+            corp.setRepresentative(getCeoToHire());
+        }
+    }
     @Override
     public MeetingData toData() {
         MeetingData data = super.toData();
