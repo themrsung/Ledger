@@ -7,18 +7,7 @@ import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
 
 public interface ShareIssuer extends Symbolic {
-    default long getShareCount(LedgerState state) {
-        long shareCount = 0L;
-
-        for (Assetholder a : state.getAssetholders()) {
-            Stock stock = a.getStocks().get(getSymbol());
-            if (stock != null) {
-                shareCount += stock.getQuantity();
-            }
-        }
-
-        return shareCount;
-    }
+    long getShareCount();
 
     Cash getCapital();
     void setCapital(Cash capital);
