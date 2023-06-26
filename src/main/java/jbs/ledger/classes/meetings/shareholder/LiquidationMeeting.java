@@ -15,8 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public final class LiquidationApprovalMeeting extends AbstractMeeting<Person> {
-    public static LiquidationApprovalMeeting newMeeting(
+public final class LiquidationMeeting extends AbstractMeeting<Person> {
+    public static LiquidationMeeting newMeeting(
             Corporate corporation,
             LedgerState state
     ) {
@@ -38,7 +38,7 @@ public final class LiquidationApprovalMeeting extends AbstractMeeting<Person> {
             }
         }
 
-        return new LiquidationApprovalMeeting(
+        return new LiquidationMeeting(
                 uniqueId,
                 symbol,
                 date,
@@ -49,7 +49,7 @@ public final class LiquidationApprovalMeeting extends AbstractMeeting<Person> {
         );
     }
 
-    private LiquidationApprovalMeeting(
+    private LiquidationMeeting(
             UUID uniqueId,
             String symbol,
             Date date,
@@ -73,14 +73,14 @@ public final class LiquidationApprovalMeeting extends AbstractMeeting<Person> {
         return data;
     }
 
-    public static LiquidationApprovalMeeting fromData(MeetingData data, LedgerState state) {
+    public static LiquidationMeeting fromData(MeetingData data, LedgerState state) {
         ArrayList<VotableMember<Assetholder>> shareholders = new ArrayList<>();
 
         for (VotableMemberData vmd : data.votableMembers) {
             shareholders.add(Shareholder.fromData(vmd, state));
         }
 
-        return new LiquidationApprovalMeeting(
+        return new LiquidationMeeting(
                 data.uniqueId,
                 data.symbol,
                 data.date,

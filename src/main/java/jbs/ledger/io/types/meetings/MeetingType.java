@@ -23,7 +23,7 @@ public enum MeetingType {
     SHAREHOLDER_STOCK_RETIRE,
     SHAREHOLDER_LIQUIDATE,
 
-    // Parliament
+    // Parliamentary
     PARLIAMENT_NEW_LAW,
     PARLIAMENT_CHANGE_LAW,
     PARLIAMENT_REPEAL_LAW,

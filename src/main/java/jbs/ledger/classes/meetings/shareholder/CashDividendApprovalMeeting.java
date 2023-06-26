@@ -1,17 +1,23 @@
 package jbs.ledger.classes.meetings.shareholder;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.VotableMember;
 import jbs.ledger.classes.meetings.board.Director;
 import jbs.ledger.classes.meetings.board.StockSplitInitiationMeeting;
+import jbs.ledger.events.transfers.AssetTransferCause;
+import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
+import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,6 +78,27 @@ public final class CashDividendApprovalMeeting extends ShareholderMeeting {
 
     public double getDividendPerShare() {
         return dividendPerShare;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporation) {
+            Corporation c = (Corporation) organization;
+            for (Assetholder a : state.getAssetholders()) {
+                Stock s = a.getStocks().get(c.getSymbol());
+                if (s != null) {
+                    long q = s.getQuantity();
+                    Cash d = new Cash(c.getPreferredCurrency(), q * getDividendPerShare());
+
+                    Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                            c,
+                            a,
+                            d,
+                            AssetTransferCause.CASH_DIVIDEND
+                    ));
+                }
+            }
+        }
     }
 
     @Override

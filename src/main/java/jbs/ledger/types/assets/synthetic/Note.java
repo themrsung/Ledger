@@ -1,5 +1,6 @@
 package jbs.ledger.types.assets.synthetic;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.events.transfers.basic.CommodityTransferredEvent;
 import jbs.ledger.events.transfers.basic.StockTransferredEvent;
@@ -96,7 +97,7 @@ public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D>
                         getDeliverer(),
                         assetholder,
                         cash,
-                        "Note expired"
+                        AssetTransferCause.NOTE_EXPIRED
                 ));
 
                 break;
@@ -107,7 +108,7 @@ public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D>
                         getDeliverer(),
                         assetholder,
                         item,
-                        "Note expired"
+                        AssetTransferCause.NOTE_EXPIRED
                 ));
 
                 break;
@@ -118,7 +119,7 @@ public abstract class Note<D extends Asset> implements IntegralAsset, Delayed<D>
                         getDeliverer(),
                         assetholder,
                         stock,
-                        "Note expired"
+                        AssetTransferCause.NOTE_EXPIRED
                 ));
 
                 break;

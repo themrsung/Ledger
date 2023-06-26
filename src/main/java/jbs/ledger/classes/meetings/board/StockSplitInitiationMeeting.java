@@ -65,7 +65,7 @@ public final class StockSplitInitiationMeeting extends BoardMeeting {
 
     @Override
     public MeetingType getType() {
-        return null;
+        return MeetingType.BOARD_STOCK_SPLIT;
     }
 
     @Override

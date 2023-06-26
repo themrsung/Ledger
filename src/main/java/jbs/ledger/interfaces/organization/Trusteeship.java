@@ -55,13 +55,4 @@ public interface Trusteeship extends Organization<Assetholder> {
     default boolean removeMember(Assetholder member) {
         return false;
     }
-
-    /**
-     * Not supported for trusts
-     * @return Empty list
-     */
-    @Override
-    default ArrayList<Meeting<Assetholder>> getOpenMeetings() {
-        return new ArrayList<>();
-    }
 }

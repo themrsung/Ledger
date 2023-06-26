@@ -1,5 +1,6 @@
 package jbs.ledger.events.transfers.forwards;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.basic.Stock;
@@ -12,8 +13,8 @@ public final class StockForwardTransferredEvent extends AssetTransferredEvent<Un
             Economic sender,
             Economic recipient,
             UniqueNote<Stock> asset,
-            @Nullable String reason
+            @Nullable AssetTransferCause cause
     ) {
-        super(sender, recipient, asset, reason);
+        super(sender, recipient, asset, cause);
     }
 }

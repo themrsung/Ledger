@@ -2,27 +2,35 @@ package jbs.ledger.assetholders.sovereignties.nations;
 
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.classes.meetings.AbstractMeeting;
+import jbs.ledger.classes.meetings.referendums.Referendum;
+import jbs.ledger.interfaces.organization.Electorate;
+import jbs.ledger.interfaces.organization.Meeting;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.interfaces.sovereignty.Tripartite;
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PresidentialRepublicData;
+import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.organizations.sovereign.Administration;
 import jbs.ledger.organizations.sovereign.Judiciary;
 import jbs.ledger.organizations.sovereign.Legislature;
 import jbs.ledger.state.LedgerState;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 /**
  * Presidential Republics have a president and vice president.
  */
-public final class PresidentialRepublic extends Nation implements Tripartite {
+public final class PresidentialRepublic extends Nation implements Tripartite, Electorate<Person> {
     public PresidentialRepublic(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name, symbol);
 
         this.administration = new Administration();
         this.legislature = new Legislature();
         this.judiciary = new Judiciary();
+
+        this.openMeetings = new ArrayList<>();
     }
 
     public PresidentialRepublic(PresidentialRepublic copy) {
@@ -31,6 +39,8 @@ public final class PresidentialRepublic extends Nation implements Tripartite {
         this.administration = copy.administration;
         this.legislature = copy.legislature;
         this.judiciary = copy.judiciary;
+
+        this.openMeetings = copy.openMeetings;
     }
 
     @Override
@@ -84,6 +94,25 @@ public final class PresidentialRepublic extends Nation implements Tripartite {
         return getRepresentative().equals(person);
     }
 
+    // Democracy
+
+    private final ArrayList<Meeting<Person>> openMeetings;
+
+    @Override
+    public ArrayList<Meeting<Person>> getOpenMeetings() {
+        return new ArrayList<>(openMeetings);
+    }
+
+    @Override
+    public void addOpenMeeting(Meeting<Person> meeting) {
+        openMeetings.add(meeting);
+    }
+
+    @Override
+    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+        return openMeetings.remove(meeting);
+    }
+
     @Nullable
     @Override
     public NationMember getRepresentative() {
@@ -100,6 +129,10 @@ public final class PresidentialRepublic extends Nation implements Tripartite {
         data.legislature = legislature.toData();
         data.judiciary = judiciary.toData();
 
+        for (Meeting<Person> m : openMeetings) {
+            data.openMeetings.add(((Referendum) m).toData());
+        }
+
         return data;
     }
 
@@ -113,6 +146,8 @@ public final class PresidentialRepublic extends Nation implements Tripartite {
         this.administration = new Administration();
         this.legislature = new Legislature();
         this.judiciary = new Judiciary();
+
+        this.openMeetings = new ArrayList<>();
     }
 
     public void load(PresidentialRepublicData data, LedgerState state) {
@@ -121,5 +156,11 @@ public final class PresidentialRepublic extends Nation implements Tripartite {
         this.administration = Administration.fromData(data.administration, state);
         this.legislature = Legislature.fromData(data.administration, state);
         this.judiciary = Judiciary.fromData(data.administration, state);
+
+        this.openMeetings.clear();
+
+        for (MeetingData md : data.openMeetings) {
+            this.openMeetings.add((Referendum) AbstractMeeting.fromData(md, state));
+        }
     }
 }

@@ -17,19 +17,19 @@ public abstract class AssetTransferredEvent<A extends Asset> extends LedgerEvent
             Economic sender,
             Economic recipient,
             A asset,
-            @Nullable String reason
+            @Nullable AssetTransferCause cause
     ) {
         this.sender = sender;
         this.recipient = recipient;
         this.asset = asset;
-        this.reason = reason;
+        this.cause = cause;
     }
 
     private final Economic sender;
     private final Economic recipient;
     private final A asset;
     @Nullable
-    private final String reason;
+    private final AssetTransferCause cause;
 
     public Economic getSender() {
         return sender;
@@ -44,7 +44,7 @@ public abstract class AssetTransferredEvent<A extends Asset> extends LedgerEvent
     }
 
     @Nullable
-    public String getReason() {
-        return reason;
+    public AssetTransferCause getCause() {
+        return cause;
     }
 }

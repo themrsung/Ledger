@@ -19,7 +19,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember>, Symbolic, CurrencyIssuer, Votable<Sovereign> {
+public abstract class Nation extends Assetholder implements Sovereign, Organization<NationMember>, Symbolic, CurrencyIssuer {
     public Nation(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name);
 
@@ -28,8 +28,6 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.representative = null;
 
         this.issuedCurrency = null;
-
-        this.openMeetings = new ArrayList<>();
     }
 
     public Nation(Nation copy) {
@@ -40,8 +38,6 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.representative = copy.representative;
 
         this.issuedCurrency = copy.issuedCurrency;
-
-        this.openMeetings = copy.openMeetings;
     }
 
     private String symbol;
@@ -75,6 +71,18 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
     @Override
     public ArrayList<NationMember> getMembers() {
         return new ArrayList<>(members);
+    }
+
+    public ArrayList<Person> getCitizens() {
+        ArrayList<Person> citizens = new ArrayList<>();
+
+        for (NationMember m : getMembers()) {
+            if (m instanceof Person) {
+                citizens.add((Person) m);
+            }
+        }
+
+        return citizens;
     }
 
     @Override
@@ -129,24 +137,6 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.issuedCurrency = issuedCurrency;
     }
 
-    // Voting
-    private final ArrayList<Meeting<NationMember>> openMeetings;
-
-    @Override
-    public ArrayList<Meeting<NationMember>> getOpenMeetings() {
-        return new ArrayList<>(openMeetings);
-    }
-
-    @Override
-    public void addOpenMeeting(Meeting<NationMember> meeting) {
-        openMeetings.add(meeting);
-    }
-
-    @Override
-    public boolean removeOpenMeeting(Meeting<NationMember> meeting) {
-        return openMeetings.remove(meeting);
-    }
-
     // IO
     @Override
     public NationData toData() {
@@ -178,8 +168,6 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.members = new ArrayList<>();
         this.representative = null;
         this.issuedCurrency = null;
-
-        this.openMeetings = new ArrayList<>();
     }
 
     public void load(NationData data, LedgerState state) {
@@ -199,12 +187,6 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
 
         for (UUID f : data.foundations) {
             members.add(state.getFoundation(f));
-        }
-
-        this.openMeetings.clear();
-
-        for (MeetingData md : data.openMeetings) {
-            this.openMeetings.add(BoardMeeting.fromData(md, state));
         }
 
         this.issuedCurrency = data.issuedCurrency;

@@ -1,5 +1,6 @@
 package jbs.ledger.events.transfers.basic;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.basic.Cash;
@@ -11,8 +12,8 @@ public final class CashTransferredEvent extends AssetTransferredEvent<Cash> {
             Economic sender,
             Economic recipient,
             Cash asset,
-            @Nullable String reason
+            @Nullable AssetTransferCause cause
     ) {
-        super(sender, recipient, asset, reason);
+        super(sender, recipient, asset, cause);
     }
 }

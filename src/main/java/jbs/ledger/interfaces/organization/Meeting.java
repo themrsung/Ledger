@@ -49,7 +49,7 @@ public interface Meeting<M extends Unique> extends Symbolic, Unique {
      * @param organization Organization this meeting is being held
      * @param state State of the server
      */
-    void onPassed(Organization<M> organization, LedgerState state);
+    void onPassed(Organization<?> organization, LedgerState state);
 
     MeetingType getType();
 

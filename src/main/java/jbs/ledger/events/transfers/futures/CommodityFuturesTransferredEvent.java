@@ -1,5 +1,6 @@
 package jbs.ledger.events.transfers.futures;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.types.assets.basic.Commodity;
@@ -12,8 +13,8 @@ public final class CommodityFuturesTransferredEvent extends AssetTransferredEven
             Economic sender,
             Economic recipient,
             StackableNote<Commodity> asset,
-            @Nullable String reason
+            @Nullable AssetTransferCause cause
     ) {
-        super(sender, recipient, asset, reason);
+        super(sender, recipient, asset, cause);
     }
 }

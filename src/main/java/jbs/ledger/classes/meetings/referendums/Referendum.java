@@ -1,4 +1,4 @@
-package jbs.ledger.classes.meetings.supremecourt;
+package jbs.ledger.classes.meetings.referendums;
 
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.AbstractMeeting;
@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
-public abstract class SupremeCourtBill extends AbstractMeeting<Person> {
-    protected SupremeCourtBill(
+public abstract class Referendum extends AbstractMeeting<Person> {
+    protected Referendum(
             UUID uniqueId,
             String symbol,
             Date date,

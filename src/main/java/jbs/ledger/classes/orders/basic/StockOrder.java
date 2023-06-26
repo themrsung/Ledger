@@ -2,6 +2,7 @@ package jbs.ledger.classes.orders.basic;
 
 import jbs.ledger.classes.orders.AbstractOrder;
 import jbs.ledger.classes.orders.OrderType;
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.events.transfers.basic.CommodityTransferredEvent;
 import jbs.ledger.events.transfers.basic.StockTransferredEvent;
@@ -57,28 +58,28 @@ public final class StockOrder extends AbstractOrder<Stock> {
                     getSender(),
                     market.getExchange(),
                     settlement.copy(),
-                    "Buy order fulfilled"
+                    AssetTransferCause.ORDER_FULFILLED
             ));
 
             Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
                     market.getExchange(),
                     getSender(),
                     asset.copy(),
-                    "Buy order fulfilled"
+                    AssetTransferCause.ORDER_FULFILLED
             ));
         } else {
             Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
                     getSender(),
                     market.getExchange(),
                     asset.copy(),
-                    "Sell order fulfilled"
+                    AssetTransferCause.ORDER_FULFILLED
             ));
 
             Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                     market.getExchange(),
                     getSender(),
                     settlement.copy(),
-                    "Sell order fulfilled"
+                    AssetTransferCause.ORDER_FULFILLED
             ));
         }
     }

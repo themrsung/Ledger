@@ -1,15 +1,22 @@
 package jbs.ledger.classes.meetings.board;
 
+import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.VotableMember;
+import jbs.ledger.classes.meetings.shareholder.CashDividendApprovalMeeting;
 import jbs.ledger.classes.meetings.shareholder.Shareholder;
+import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.meetings.MeetingType;
 import jbs.ledger.io.types.meetings.VotableMemberData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.assets.synthetic.StackableNote;
+import org.bukkit.Bukkit;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -68,6 +75,19 @@ public final class CashDividendInitiationMeeting extends BoardMeeting {
     @Override
     public MeetingType getType() {
         return MeetingType.BOARD_CASH_DIVIDEND;
+    }
+
+    @Override
+    public void onPassed(Organization<?> organization, LedgerState state) {
+        if (organization instanceof Corporate) {
+            Corporate corp = (Corporate) organization;
+            corp.addOpenMeeting(CashDividendApprovalMeeting.newMeeting(
+                    corp,
+                    state,
+                    getDividendPerShare()
+            ));
+
+        }
     }
 
     @Override

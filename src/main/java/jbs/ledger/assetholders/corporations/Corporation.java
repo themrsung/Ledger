@@ -26,6 +26,8 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.capital = capital;
         this.shareCount = shareCount;
         this.members = new ArrayList<>();
+
+        this.openMeetings = new ArrayList<>();
     }
 
     public Corporation(Corporation copy) {
@@ -37,6 +39,8 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.capital = copy.capital;
         this.shareCount = copy.shareCount;
         this.members = copy.members;
+
+        this.openMeetings = copy.openMeetings;
     }
 
     private String symbol;
@@ -125,22 +129,20 @@ public abstract class Corporation extends Assetholder implements Corporate  {
 
     // Meetings
 
-    private final ArrayList<ShareholderMeeting> openMeetings;
+    private final ArrayList<Meeting<Assetholder>> openMeetings;
 
     @Override
-    public ArrayList<Meeting<Person>> getOpenMeetings() {
+    public ArrayList<Meeting<Assetholder>> getOpenMeetings() {
         return new ArrayList<>(openMeetings);
     }
 
     @Override
-    public void addOpenMeeting(Meeting<Person> meeting) {
-        if (!(meeting instanceof ShareholderMeeting)) return;
-
-        openMeetings.add((ShareholderMeeting) meeting);
+    public void addOpenMeeting(Meeting<Assetholder> meeting) {
+        openMeetings.add(meeting);
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+    public boolean removeOpenMeeting(Meeting<Assetholder> meeting) {
         return openMeetings.remove(meeting);
     }
 
@@ -155,6 +157,8 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.members = new ArrayList<>();
 
         this.board.owner = this;
+
+        this.openMeetings = new ArrayList<>();
     }
 
     @Override

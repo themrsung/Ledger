@@ -1,5 +1,6 @@
 package jbs.ledger.types.assets.synthetic;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.events.transfers.basic.StockTransferredEvent;
 import jbs.ledger.interfaces.assets.Asset;
@@ -122,28 +123,28 @@ public final class Option<D extends Asset> extends Note<D> {
                         assetholder,
                         getDeliverer(),
                         getExerciseSettlement(),
-                        "Cash call option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
 
                 Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                         getDeliverer(),
                         assetholder,
                         (Cash) getDelivery(),
-                        "Cash call option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
             } else if (getDelivery() instanceof Stock) {
                 Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                         assetholder,
                         getDeliverer(),
                         getExerciseSettlement(),
-                        "Stock call option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
 
                 Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
                         getDeliverer(),
                         assetholder,
                         (Stock) getDelivery(),
-                        "Stock call option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
             }
         } else {
@@ -152,28 +153,28 @@ public final class Option<D extends Asset> extends Note<D> {
                         getDeliverer(),
                         assetholder,
                         getExerciseSettlement(),
-                        "Cash put option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
 
                 Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                         assetholder,
                         getDeliverer(),
                         (Cash) getDelivery(),
-                        "Cash put option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
             } else if (getDelivery() instanceof Stock) {
                 Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
                         getDeliverer(),
                         assetholder,
                         getExerciseSettlement(),
-                        "Stock put option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
 
                 Bukkit.getPluginManager().callEvent(new StockTransferredEvent(
                         assetholder,
                         getDeliverer(),
                         (Stock) getDelivery(),
-                        "Stock put option exercised"
+                        AssetTransferCause.OPTION_EXERCISED
                 ));
             }
         }

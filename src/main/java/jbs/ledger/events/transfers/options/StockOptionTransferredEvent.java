@@ -1,8 +1,8 @@
 package jbs.ledger.events.transfers.options;
 
+import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.AssetTransferredEvent;
 import jbs.ledger.interfaces.common.Economic;
-import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.assets.synthetic.Option;
 
@@ -13,8 +13,8 @@ public final class StockOptionTransferredEvent extends AssetTransferredEvent<Opt
             Economic sender,
             Economic recipient,
             Option<Stock> asset,
-            @Nullable String reason
+            @Nullable AssetTransferCause cause
     ) {
-        super(sender, recipient, asset, reason);
+        super(sender, recipient, asset, cause);
     }
 }

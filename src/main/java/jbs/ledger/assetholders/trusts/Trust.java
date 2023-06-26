@@ -91,6 +91,8 @@ public abstract class Trust extends Assetholder implements Symbolic, Trusteeship
     public TrustData toData() {
         TrustData data = new TrustData(super.toData());
 
+        data.symbol = symbol;
+
         return data;
     }
 

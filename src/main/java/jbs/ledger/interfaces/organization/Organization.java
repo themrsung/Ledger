@@ -25,8 +25,4 @@ public interface Organization<M extends Unique> extends Representable<M> {
 
     void addMember(M member);
     boolean removeMember(M member);
-
-    ArrayList<Meeting<M>> getOpenMeetings();
-    void addOpenMeeting(Meeting<M> meeting);
-    boolean removeOpenMeeting(Meeting<M> meeting);
 }

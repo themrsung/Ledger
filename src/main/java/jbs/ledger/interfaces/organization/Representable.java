@@ -5,7 +5,7 @@ import jbs.ledger.interfaces.common.Unique;
 
 import javax.annotation.Nullable;
 
-public interface Representable<M extends Unique> extends Symbolic {
+public interface Representable<M extends Unique> {
 
     @Nullable
     M getRepresentative();
