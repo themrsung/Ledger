@@ -1,6 +1,7 @@
 package jbs.ledger.io.types.assetholders.sovereignties.nations;
 
 import jbs.ledger.io.types.assetholders.AssetholderData;
+import jbs.ledger.io.types.meetings.MeetingData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class NationData extends AssetholderData {
         this.foundations = copy.foundations;
         this.representative = copy.representative;
         this.issuedCurrency = copy.issuedCurrency;
+        this.openMeetings = copy.openMeetings;
     }
 
     public NationData() {
@@ -34,4 +36,5 @@ public class NationData extends AssetholderData {
     public UUID representative = null;
     @Nullable
     public String issuedCurrency = null;
+    public ArrayList<MeetingData> openMeetings = new ArrayList<>();
 }

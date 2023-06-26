@@ -8,8 +8,8 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
-public class PlayerRespawnLocationSetter extends LedgerListener {
-    public PlayerRespawnLocationSetter(Ledger ledger) {
+public final class PlayerRespawnHandler extends LedgerListener {
+    public PlayerRespawnHandler(Ledger ledger) {
         super(ledger);
     }
 

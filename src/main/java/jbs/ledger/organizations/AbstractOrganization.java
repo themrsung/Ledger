@@ -8,7 +8,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class AbstractOrganization<M extends Unique> implements Organization<M>, Unique {
+public abstract class AbstractOrganization<M extends Unique> implements Organization<M>, Unique {
     public AbstractOrganization(UUID uniqueId) {
         this.uniqueId = uniqueId;
         this.members = new ArrayList<>();

@@ -34,8 +34,6 @@ public final class PayCommand extends LedgerPlayerCommand {
             return;
         }
 
-        assert getActor() != null;
-
         if (!getActor().getCash().contains(payment)) {
             getMessenger().insufficientCash();
             return;

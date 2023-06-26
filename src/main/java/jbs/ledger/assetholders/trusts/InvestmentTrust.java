@@ -2,6 +2,7 @@ package jbs.ledger.assetholders.trusts;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.state.LedgerState;
 
@@ -20,7 +21,6 @@ public final class InvestmentTrust extends Trust {
     public AssetholderType getType() {
         return AssetholderType.INVESTMENT_TRUST;
     }
-
 
     // IO
 

@@ -2,6 +2,7 @@ package jbs.ledger.assetholders.sovereignties.federations;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.organization.Organization;
@@ -14,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public final class Federation extends Assetholder implements Sovereign, Organization<Nation>, Symbolic {
+public final class Federation extends Assetholder implements Sovereign, Organization<Sovereign>, Symbolic {
     public Federation(UUID uniqueId, String name, String symbol) {
         super(uniqueId, name);
 
@@ -32,7 +33,7 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         this.capital = copy.capital;
     }
 
-    private final ArrayList<Nation> members;
+    private final ArrayList<Sovereign> members;
 
     private String symbol;
 
@@ -47,36 +48,46 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
     }
 
     @Nullable
-    private Nation capital;
+    private Sovereign capital;
 
     @Override
-    public ArrayList<Nation> getMembers() {
+    public ArrayList<Sovereign> getMembers() {
         return new ArrayList<>(members);
     }
 
     @Override
-    public void addMember(Nation member) {
+    public void addMember(Sovereign member) {
         members.add(member);
     }
 
     @Override
-    public boolean removeMember(Nation member) {
+    public boolean removeMember(Sovereign member) {
         return members.remove(member);
     }
 
     @Nullable
     @Override
-    public Nation getRepresentative() {
+    public Sovereign getRepresentative() {
         return capital;
     }
 
     @Override
-    public void setRepresentative(@Nullable Nation representative) {
+    public void setRepresentative(@Nullable Sovereign representative) {
         this.capital = representative;
     }
     @Override
     public AssetholderType getType() {
         return AssetholderType.FEDERATION;
+    }
+
+    @Override
+    public boolean hasPropertyAccess(Person person) {
+        for (Sovereign s : getMembers()) {
+            if (s.hasPropertyAccess(person)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     // IO
@@ -108,7 +119,33 @@ public final class Federation extends Assetholder implements Sovereign, Organiza
         members.clear();
 
         for (UUID n : data.members) {
-            members.add(state.getNation(n));
+            members.add(state.getSovereign(n));
         }
+    }
+
+    // Powers
+
+    @Override
+    public boolean hasAdministrativePower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().hasAdministrativePower(person);
+    }
+
+    @Override
+    public boolean hasLegislativePower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().hasLegislativePower(person);
+    }
+
+    @Override
+    public boolean hasJudicialPower(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().hasJudicialPower(person);
+    }
+
+    @Override
+    public boolean hasClemency(Person person) {
+        if (getRepresentative() == null) return false;
+        return getRepresentative().hasClemency(person);
     }
 }

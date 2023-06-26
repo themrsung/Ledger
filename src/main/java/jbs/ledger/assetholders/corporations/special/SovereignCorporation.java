@@ -3,6 +3,7 @@ package jbs.ledger.assetholders.corporations.special;
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.io.types.assetholders.corporations.special.SovereignCorporationData;
 import jbs.ledger.state.LedgerState;
@@ -10,7 +11,7 @@ import jbs.ledger.types.assets.basic.Cash;
 
 import java.util.UUID;
 
-public final class SovereignCorporation extends Corporation implements Sovereign {
+public final class SovereignCorporation extends Corporation implements Sovereign, CurrencyIssuer {
     public SovereignCorporation(
             UUID uniqueId,
             String name,
@@ -24,6 +25,18 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
     public SovereignCorporation(Corporation copy) {
         super(copy);
+    }
+
+    // Currency issuance
+    private String issuedCurrency;
+
+    @Override
+    public String getIssuedCurrency() {
+        return issuedCurrency;
+    }
+
+    public void setIssuedCurrency(String issuedCurrency) {
+        this.issuedCurrency = issuedCurrency;
     }
 
     // Powers
@@ -62,6 +75,8 @@ public final class SovereignCorporation extends Corporation implements Sovereign
     public SovereignCorporationData toData() {
         SovereignCorporationData data = new SovereignCorporationData(super.toData());
 
+        data.issuedCurrency = issuedCurrency;
+
         return data;
     }
 
@@ -71,7 +86,7 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
     @Override
     public AssetholderType getType() {
-        return null;
+        return AssetholderType.SOVEREIGN_CORPORATION;
     }
 
     public SovereignCorporation(UUID uniqueId) {
@@ -80,5 +95,7 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
     public void load(SovereignCorporationData data, LedgerState state) {
         super.load(data, state);
+
+        this.issuedCurrency = data.issuedCurrency;
     }
 }

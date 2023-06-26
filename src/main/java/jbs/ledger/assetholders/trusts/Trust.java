@@ -76,6 +76,15 @@ public abstract class Trust extends Assetholder implements Symbolic, Trusteeship
         this.beneficiary = beneficiary;
     }
 
+    // Protection
+
+    @Override
+    public boolean hasPropertyAccess(Person person) {
+        if (getTrustee() == null) return false;
+
+        return getTrustee().equals(person) || getTrustee().hasPropertyAccess(person);
+    }
+
     // IO
 
     @Override

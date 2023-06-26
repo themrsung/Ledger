@@ -2,6 +2,7 @@ package jbs.ledger.io.types.assetholders.corporations;
 
 import jbs.ledger.io.types.assetholders.AssetholderData;
 import jbs.ledger.io.types.assets.basic.CashData;
+import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.io.types.organizations.OrganizationData;
 
 import javax.annotation.Nullable;
@@ -21,7 +22,7 @@ public class CorporationData extends AssetholderData {
         this.capital = copy.capital;
         this.shareCount = copy.shareCount;
         this.members = copy.members;
-        this.representative = copy.representative;
+        this.openMeetings = copy.openMeetings;
     }
 
     public CorporationData() {
@@ -34,6 +35,5 @@ public class CorporationData extends AssetholderData {
     public CashData capital;
     public long shareCount;
     public ArrayList<UUID> members = new ArrayList<>();
-    @Nullable
-    public UUID representative = null;
+    public ArrayList<MeetingData> openMeetings = new ArrayList<>();
 }

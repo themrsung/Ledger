@@ -111,7 +111,7 @@ public final class Cash implements FractionalAsset {
         String numberWithUnit = input.toUpperCase().replaceAll(currency, "");
 
         final List<String> koreanDelimiters = Arrays.asList("경", "조", "억", "만", "천", "백", "십");
-        final List<Double> koreanUnits = Arrays.asList(10000000000000000d, 1000000000000d, 10000000d, 10000d, 1000d, 100d, 10d);
+        final List<Double> koreanUnits = Arrays.asList(10000000000000000d, 1000000000000d, 100000000d, 10000d, 1000d, 100d, 10d);
 
         for (int i = 0; i < koreanDelimiters.size(); i++) {
             String d = koreanDelimiters.get(i);

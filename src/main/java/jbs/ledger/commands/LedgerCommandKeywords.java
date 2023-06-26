@@ -27,7 +27,7 @@ public abstract class LedgerCommandKeywords {
     public static List<String> CARDS = Arrays.asList("card", "ccard", "dcard", "ccards", "dcards", "creditcard", "debitcard", "creditcards", "debitcards", "cards", "카드", "신용카드", "체크카드");
     public static List<String> VOTE = Arrays.asList("v", "vote", "votes", "voting", "elect", "election", "elections", "meeting", "투표", "선거", "의결", "주총", "주주총회", "총회");
     public static List<String> HOME = Arrays.asList("home", "office", "hq", "address", "house", "집", "홈", "사무실");
-    public static List<String> SET_HOME = Arrays.asList("sh", "sethome", "newhome", "setaddress", "changeaddress", "newaddress", "changehome", "집설정", "집변경", "주소지설정", "주소지변경");
+    public static List<String> SET_HOME = Arrays.asList("sh", "sethome", "sethq", "setoffice", "so", "setheadquarters", "newhome", "setaddress", "changeaddress", "newaddress", "changehome", "집설정", "집변경", "주소지설정", "주소지변경");
     public static List<String> DELETE_HOME = Arrays.asList("dh", "delhome", "deletehome", "deladdress", "deleteaddress", "집삭제", "주소지삭제");
     public static List<String> MANAGE = Arrays.asList("mg", "mgm", "manage", "modify", "setting", "settings", "설정", "관리");
     public static List<String> BANK = Arrays.asList("bn", "bk", "bnk", "bank", "banks", "banking", "은행");
@@ -91,6 +91,8 @@ public abstract class LedgerCommandKeywords {
     public static List<String> SECURITIES_EXCHANGE = Arrays.asList("sx", "sex", "stockex", "securitiesex", "securityex", "stockexchange", "securitiesexchange", "증권시장", "주식시장", "증권거래소", "주식거래소");
     public static List<String> LAW_FIRM = Arrays.asList("lf", "law", "lawfirm", "lfirm", "법무법인", "로펌");
     public static List<String> PRIVATE_MILITARY = Arrays.asList("pmc", "military", "privatemilitary", "용병", "용병회사", "민간군사기업");
+    public static List<String> SOVEREIGN_CORPORATION = Arrays.asList("sc", "sovc", "sovereignc", "sovereigncorp", "scorp", "scorporation", "sovereigncorporation", "주권국가", "주주민주주의");
+
     public static List<String> CORPORATIONS() {
         List<String> corps = new ArrayList<>();
 
@@ -107,6 +109,7 @@ public abstract class LedgerCommandKeywords {
         corps.addAll(SECURITIES_EXCHANGE);
         corps.addAll(LAW_FIRM);
         corps.addAll(PRIVATE_MILITARY);
+        corps.addAll(SOVEREIGN_CORPORATION);
 
         return corps;
     }

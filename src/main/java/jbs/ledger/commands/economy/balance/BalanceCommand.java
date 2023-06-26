@@ -21,8 +21,6 @@ public final class BalanceCommand extends LedgerPlayerCommand {
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
         ArrayList<String> currencies = getState().getCurrencies();
 
-        assert getActor() != null;
-
         if (mainArg != null) {
             currencies.removeIf(c -> !c.equalsIgnoreCase(mainArg));
         }

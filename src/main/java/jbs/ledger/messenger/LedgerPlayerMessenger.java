@@ -183,6 +183,10 @@ public final class LedgerPlayerMessenger {
         s("주소지가 설정되었습니다.");
     }
 
+    public void addressTooCloseToAnotherAddress() {
+        s("다른 주소지와 너무 가깝습니다.");
+    }
+
     public void addressDeleted() {
         s("주소지가 삭제되었습니다.");
     }

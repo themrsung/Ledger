@@ -8,6 +8,7 @@ import jbs.ledger.assetholders.corporations.finance.*;
 import jbs.ledger.assetholders.corporations.general.*;
 import jbs.ledger.assetholders.corporations.legal.LawFirm;
 import jbs.ledger.assetholders.corporations.special.PrivateMilitary;
+import jbs.ledger.assetholders.corporations.special.SovereignCorporation;
 import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.federations.Federation;
@@ -84,6 +85,8 @@ public final class CreateCommand extends LedgerPlayerCommand {
             type = AssetholderType.INVESTMENT_TRUST;
         } else if (LedgerCommandKeywords.REAL_ESTATE_TRUST.contains(mainArg)) {
             type = AssetholderType.REAL_ESTATE_TRUST;
+        } else if (LedgerCommandKeywords.SOVEREIGN_CORPORATION.contains(mainArg)) {
+            type = AssetholderType.SOVEREIGN_CORPORATION;
         }
 
         if (type == null) {
@@ -117,8 +120,6 @@ public final class CreateCommand extends LedgerPlayerCommand {
         Cash capital = Cash.fromInput(argsAfterMain[2], getState());
 
         if (type.isFoundation() || type.isSovereign()) {
-            assert getActor() != null;
-
             if (!getActor().getCash().contains(capital)) {
                 getMessenger().insufficientCash();
                 return;
@@ -151,6 +152,7 @@ public final class CreateCommand extends LedgerPlayerCommand {
 
                 f.addMember(actor);
                 f.setRepresentative(actor);
+                // TODO Send money to foundation from actor upon creation
 
                 getMessenger().federationCreated();
                 return;
@@ -196,6 +198,7 @@ public final class CreateCommand extends LedgerPlayerCommand {
                     getMessenger().unknownError();
                     return;
                 }
+                // TODO Send money to nation from actor upon creation
 
                 n.addMember(getPerson());
                 n.setRepresentative(getPerson());
@@ -365,6 +368,17 @@ public final class CreateCommand extends LedgerPlayerCommand {
                                 shareCount
                         );
                         break;
+
+                    case SOVEREIGN_CORPORATION:
+                        corp = new SovereignCorporation(
+                                u,
+                                name,
+                                symbol,
+                                currency,
+                                capital,
+                                shareCount
+                        );
+                        break;
                 }
 
                 if (corp == null) {
@@ -372,7 +386,10 @@ public final class CreateCommand extends LedgerPlayerCommand {
                     return;
                 }
 
+                // TODO Send money to corporation from actor upon creation
+
                 corp.getMembers().add(getPerson());
+                corp.getBoard().addMember(getPerson());
                 corp.getBoard().setRepresentative(getPerson());
 
                 Stock stocks = new Stock(symbol, shareCount);
@@ -425,6 +442,8 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 getMessenger().unknownError();
                 return;
             }
+            // TODO Send money to trust from actor upon creation
+
 
             t.setTrustee(trustee);
             t.setBeneficiary(beneficiary);

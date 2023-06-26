@@ -42,6 +42,8 @@ import jbs.ledger.commands.informative.ListCommand;
 import jbs.ledger.commands.informative.NetWorthLeaderboardCommand;
 import jbs.ledger.commands.informative.premium.PremiumCommand;
 import jbs.ledger.io.LedgerSaveState;
+import jbs.ledger.listeners.player.PlayerRespawnHandler;
+import jbs.ledger.listeners.property.PropertyProtector;
 import jbs.ledger.listeners.transfers.AssetTransferHandler;
 import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
@@ -177,7 +179,9 @@ public final class Ledger extends JavaPlugin {
 
         new PlayerProfileUpdater(this);
         new PlayerPreviousLocationSetter(this);
+        new PlayerRespawnHandler(this);
 
+        new PropertyProtector(this);
     }
 
     private void scheduleRepeatingTasks() {

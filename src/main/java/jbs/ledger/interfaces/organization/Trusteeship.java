@@ -37,13 +37,31 @@ public interface Trusteeship extends Organization<Assetholder> {
         return members;
     }
 
+    /**
+     * Not supported for trusts
+     * @param member Does nothing
+     */
     @Override
     default void addMember(Assetholder member) {
 
     }
 
+    /**
+     * Not supported for trusts
+     * @param member Does nothing
+     * @return Returns false
+     */
     @Override
     default boolean removeMember(Assetholder member) {
         return false;
+    }
+
+    /**
+     * Not supported for trusts
+     * @return Empty list
+     */
+    @Override
+    default ArrayList<Meeting<Assetholder>> getOpenMeetings() {
+        return new ArrayList<>();
     }
 }

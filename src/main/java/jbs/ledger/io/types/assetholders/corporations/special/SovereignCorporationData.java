@@ -10,4 +10,6 @@ public final class SovereignCorporationData extends CorporationData {
         super();
     }
 
+    public String issuedCurrency;
+
 }

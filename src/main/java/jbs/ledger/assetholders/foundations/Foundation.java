@@ -2,6 +2,7 @@ package jbs.ledger.assetholders.foundations;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.AssetholderType;
+import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.sovereignty.NationMember;
 import jbs.ledger.io.types.assetholders.foundations.FoundationData;
@@ -59,6 +60,11 @@ public final class Foundation extends Assetholder implements NationMember, Symbo
     @Override
     public long getProtectionRadius() {
         return 75;
+    }
+
+    @Override
+    public boolean hasPropertyAccess(Person person) {
+        return getBoard().getMembers().contains(person);
     }
 
     // IO

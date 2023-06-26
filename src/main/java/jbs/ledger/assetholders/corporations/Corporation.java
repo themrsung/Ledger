@@ -2,7 +2,9 @@ package jbs.ledger.assetholders.corporations;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.classes.meetings.shareholder.ShareholderMeeting;
 import jbs.ledger.interfaces.corporate.Corporate;
+import jbs.ledger.interfaces.organization.Meeting;
 import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.assetholders.corporations.CorporationData;
 import jbs.ledger.organizations.corporate.Board;
@@ -24,7 +26,6 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.capital = capital;
         this.shareCount = shareCount;
         this.members = new ArrayList<>();
-        this.representative = null;
     }
 
     public Corporation(Corporation copy) {
@@ -36,7 +37,6 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         this.capital = copy.capital;
         this.shareCount = copy.shareCount;
         this.members = copy.members;
-        this.representative = copy.representative;
     }
 
     private String symbol;
@@ -45,8 +45,6 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     private Cash capital;
     private long shareCount;
     private final ArrayList<Person> members;
-    @Nullable
-    private Person representative;
 
     @Override
     public String getSymbol() {
@@ -106,20 +104,44 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     @Override
     @Nullable
     public Person getRepresentative() {
-        return representative;
+        return getBoard().getRepresentative();
     }
 
     @Override
     public void setRepresentative(@Nullable Person representative) {
-        this.representative = representative;
+        this.getBoard().setRepresentative(representative);
     }
 
     // Protection
-
-
     @Override
     public long getProtectionRadius() {
         return 75;
+    }
+
+    @Override
+    public boolean hasPropertyAccess(Person person) {
+        return getMembers().contains(person) || getBoard().getMembers().contains(person);
+    }
+
+    // Meetings
+
+    private final ArrayList<ShareholderMeeting> openMeetings;
+
+    @Override
+    public ArrayList<Meeting<Person>> getOpenMeetings() {
+        return new ArrayList<>(openMeetings);
+    }
+
+    @Override
+    public void addOpenMeeting(Meeting<Person> meeting) {
+        if (!(meeting instanceof ShareholderMeeting)) return;
+
+        openMeetings.add((ShareholderMeeting) meeting);
+    }
+
+    @Override
+    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+        return openMeetings.remove(meeting);
     }
 
     // IO
@@ -149,8 +171,6 @@ public abstract class Corporation extends Assetholder implements Corporate  {
             data.members.add(m.getUniqueId());
         }
 
-        if (representative != null) data.representative = representative.getUniqueId();
-
         return data;
     }
 
@@ -170,7 +190,5 @@ public abstract class Corporation extends Assetholder implements Corporate  {
         for (UUID m : data.members) {
             this.members.add(state.getPerson(m));
         }
-
-        if (data.representative != null) this.representative = state.getPerson(data.representative);
     }
 }

@@ -161,4 +161,9 @@ public final class Person extends Assetholder implements NationMember, Teleporta
     public long getProtectionRadius() {
         return 25;
     }
+
+    @Override
+    public boolean hasPropertyAccess(Person person) {
+        return this.equals(person);
+    }
 }

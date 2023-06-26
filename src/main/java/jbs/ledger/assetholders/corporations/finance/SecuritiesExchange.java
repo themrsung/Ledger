@@ -80,9 +80,6 @@ public final class SecuritiesExchange extends Corporation {
         return AssetholderType.SECURITIES_EXCHANGE;
     }
 
-
-
-
     // IO
     @Override
     public SecuritiesExchangeData toData() {

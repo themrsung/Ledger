@@ -158,7 +158,7 @@ commands:
   sethome:
     description: 주소지를 등록합니다.
     usage: /sethome
-    aliases: [sh, newhome, setaddress, changeaddress, newaddress, changehome, 집설정, 집변경, 주소지설정, 주소지변경]
+    aliases: [sh, sethq, so, setoffice, setheadquaeters, newhome, setaddress, changeaddress, newaddress, changehome, 집설정, 집변경, 주소지설정, 주소지변경]
   deletehome:
     description: 주소지를 삭제합니다.
     usage: /deletehome

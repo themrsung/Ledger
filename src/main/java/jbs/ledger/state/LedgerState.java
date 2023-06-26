@@ -16,6 +16,7 @@ import jbs.ledger.assetholders.sovereignties.nations.Principality;
 import jbs.ledger.assetholders.trusts.InvestmentTrust;
 import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.assetholders.trusts.Trust;
+import jbs.ledger.classes.markets.basic.StockMarket;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.corporate.Corporate;
@@ -29,6 +30,7 @@ import jbs.ledger.io.types.assetholders.corporations.finance.*;
 import jbs.ledger.io.types.assetholders.corporations.general.*;
 import jbs.ledger.io.types.assetholders.corporations.legal.LawFirmData;
 import jbs.ledger.io.types.assetholders.corporations.special.PrivateMilitaryData;
+import jbs.ledger.io.types.assetholders.corporations.special.SovereignCorporationData;
 import jbs.ledger.io.types.assetholders.foundations.FoundationData;
 import jbs.ledger.io.types.assetholders.person.PersonData;
 import jbs.ledger.io.types.assetholders.sovereignties.federations.FederationData;
@@ -37,6 +39,8 @@ import jbs.ledger.io.types.assetholders.sovereignties.nations.PresidentialRepubl
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PrincipalityData;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
+import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.config.LedgerConfig;
 
 import javax.annotation.Nullable;
@@ -50,6 +54,152 @@ public final class LedgerState {
     public LedgerState() {
         this.assetholders = new ArrayList<>();
         config = new LedgerConfig();
+
+        // Server
+        SovereignCorporation JBS = new SovereignCorporation(
+                UUID.randomUUID(),
+                "자본주의서버",
+                "JBS",
+                "CR",
+                new Cash("CR", 100000000000000000000d),
+                10000000000L
+        );
+
+        Person god = new Person(UUID.fromString("43c8a60f-e288-4ed3-a4af-fb220faad455"), "themrsung");
+        god.getStocks().add(new Stock("JBS", 10000000000L));
+
+        JBS.getCash().add(new Cash("CR", 1000000000000000000000d));
+
+        JBS.addMember(god);
+        JBS.getBoard().addMember(god);
+        JBS.setRepresentative(god);
+
+        JBS.setIssuedCurrency("CR");
+
+        assetholders.add(JBS);
+        assetholders.add(god);
+
+        // JBX
+        SecuritiesExchange JBX = new SecuritiesExchange(
+                UUID.randomUUID(),
+                "제이벡스",
+                "JBX",
+                "CR",
+                new Cash("CR", 100000000d),
+                1000000L
+        );
+
+        JBX.addMember(god);
+        JBX.getBoard().addMember(god);
+        JBX.setRepresentative(god);
+
+        JBS.getStocks().add(new Stock("JBX", 1000000L));
+        assetholders.add(JBX);
+
+        // FOREX
+        ForeignExchange FX = new ForeignExchange(
+                UUID.randomUUID(),
+                "JB외환거래소",
+                "FX",
+                "CR",
+                new Cash("CR", 100000000d),
+                1000000L
+        );
+
+        FX.addMember(god);
+        FX.getBoard().addMember(god);
+        FX.setRepresentative(god);
+
+        JBS.getStocks().add(new Stock("FX", 1000000L));
+        assetholders.add(FX);
+
+        // FUTURES EXCHANGE
+        FuturesExchange JFX = new FuturesExchange(
+                UUID.randomUUID(),
+                "JB선물거래소",
+                "JFX",
+                "CR",
+                new Cash("CR", 100000000d),
+                1000000L
+        );
+
+        JFX.addMember(god);
+        JFX.getBoard().addMember(god);
+        JFX.setRepresentative(god);
+
+        JBS.getStocks().add(new Stock("JFX", 1000000L));
+        assetholders.add(JFX);
+
+        Bank BNK = new Bank(
+                UUID.randomUUID(),
+                "자본주의은행",
+                "BNK",
+                "CR",
+                new Cash("CR", 100000000d),
+                1000000L
+        );
+
+        BNK.addMember(god);
+        BNK.getBoard().addMember(god);
+        BNK.setRepresentative(god);
+
+        JBS.getStocks().add(new Stock("BNK", 1000000L));
+        assetholders.add(BNK);
+
+        JBX.addStockMarket(new StockMarket(
+                UUID.randomUUID(),
+                "JBS",
+                JBX,
+                "CR",
+                new Stock("JBS", 1),
+                100
+        ));
+
+        JBX.addStockMarket(new StockMarket(
+                UUID.randomUUID(),
+                "JBX",
+                JBX,
+                "CR",
+                new Stock("JBX", 1),
+                1
+        ));
+
+        JBX.addStockMarket(new StockMarket(
+                UUID.randomUUID(),
+                "FX",
+                JBX,
+                "CR",
+                new Stock("FX", 1),
+                1
+        ));
+
+        JBX.addStockMarket(new StockMarket(
+                UUID.randomUUID(),
+                "JFX",
+                JBX,
+                "CR",
+                new Stock("JFX", 1),
+                1
+        ));
+
+        JBX.addStockMarket(new StockMarket(
+                UUID.randomUUID(),
+                "BNK",
+                JBX,
+                "CR",
+                new Stock("BNK", 1),
+                1
+        ));
+
+        Federation JTO = new Federation(
+                UUID.randomUUID(),
+                "자본주의조약기구",
+                "JTO"
+        );
+
+        JTO.addMember(JBS);
+        JTO.setRepresentative(JBS);
+        assetholders.add(JTO);
     }
 
     private final ArrayList<Assetholder> assetholders;
@@ -676,6 +826,12 @@ public final class LedgerState {
                             PrivateMilitary pmc = (PrivateMilitary) a;
                             PrivateMilitaryData pmcd = (PrivateMilitaryData) ad;
                             pmc.load(pmcd, this);
+                            break;
+
+                        case SOVEREIGN_CORPORATION:
+                            SovereignCorporation sc = (SovereignCorporation) a;
+                            SovereignCorporationData scd = (SovereignCorporationData) ad;
+                            sc.load(scd, this);
                             break;
 
                         case INVESTMENT_TRUST:
