@@ -9,7 +9,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class ParliamentBill extends AbstractMeeting<Person> {
-    private ParliamentBill(
+    protected ParliamentBill(
             UUID uniqueId,
             String symbol,
             Date date,

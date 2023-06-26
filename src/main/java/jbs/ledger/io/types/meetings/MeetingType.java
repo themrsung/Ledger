@@ -23,16 +23,19 @@ public enum MeetingType {
     SHAREHOLDER_STOCK_RETIRE,
     SHAREHOLDER_LIQUIDATE,
 
-    // Legislature
-    LEGISLATURE_NEW_LAW,
-    LEGISLATURE_CHANGE_LAW,
-    LEGISLATURE_REPEAL_LAW,
-
-    // Parliamentary
+    // Parliament
+    PARLIAMENT_NEW_LAW,
+    PARLIAMENT_CHANGE_LAW,
+    PARLIAMENT_REPEAL_LAW,
     PARLIAMENT_NO_CONFIDENCE,
 
     // Presidential
+    SENATE_NEW_LAW,
+    SENATE_CHANGE_LAW,
+    SENATE_REPEAL_LAW,
     SENATE_IMPEACH_PRESIDENT,
+
+    // Supreme Court
     SUPREME_COURT_IMPEACH_PRESIDENT,
 
     // Referendums
@@ -80,9 +83,9 @@ public enum MeetingType {
 
     boolean isSenate() {
         switch (this) {
-            case LEGISLATURE_CHANGE_LAW:
-            case LEGISLATURE_NEW_LAW:
-            case LEGISLATURE_REPEAL_LAW:
+            case SENATE_CHANGE_LAW:
+            case SENATE_NEW_LAW:
+            case SENATE_REPEAL_LAW:
             case SENATE_IMPEACH_PRESIDENT:
                 return true;
         }
@@ -92,9 +95,9 @@ public enum MeetingType {
 
     boolean isParliament() {
         switch (this) {
-            case LEGISLATURE_CHANGE_LAW:
-            case LEGISLATURE_NEW_LAW:
-            case LEGISLATURE_REPEAL_LAW:
+            case PARLIAMENT_CHANGE_LAW:
+            case PARLIAMENT_NEW_LAW:
+            case PARLIAMENT_REPEAL_LAW:
             case PARLIAMENT_NO_CONFIDENCE:
                 return true;
         }

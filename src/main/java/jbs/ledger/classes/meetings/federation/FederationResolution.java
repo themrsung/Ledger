@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public abstract class FederationResolution extends AbstractMeeting<Sovereign> {
-    private FederationResolution(
+    protected FederationResolution(
             UUID uniqueId,
             String symbol,
             Date date,
