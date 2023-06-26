@@ -133,6 +133,17 @@ public final class LedgerPlayerMessenger {
         s("유효하지 않은 수량입니다.");
     }
 
+    public void memberNotInOrganization() {
+        s("해당 조직에 소속되어있지 않습니다.");
+    }
+    public void memberCannotJoinThisOrganization() {
+        s("해당 조직에 소속될 수 있는 회원이 아닙니다.");
+    }
+
+    public void memberKickedFromOrganization() {
+        s("조직에서 추방되었습니다.");
+    }
+
     public void balanceInformationHeader() {
         s("잔고를 조회합니다.");
     }
@@ -257,5 +268,57 @@ public final class LedgerPlayerMessenger {
         for (MarketTickData buyTick : buyTicks) {
             s("&c" + new Cash(m.getCurrency(), buyTick.getPrice()).format() + "&r &f" + NumberFormat.getIntegerInstance().format(buyTick.getQuantity()));
         }
+    }
+
+    public void playerPardoned() {
+        s("유저가 사면되었습니다.");
+    }
+
+    public void playerNotPardonable() {
+        s("유저에게 적용 중인 제재가 없습니다.");
+    }
+
+    public void playerNotCitizen() {
+        s("유저가 해당 국가의 시민이 아닙니다.");
+    }
+
+    public void playerAlreadyBanned() {
+        s("유저가 이미 밴되어있습니다.");
+    }
+
+    public void playerNotBanned() {
+        s("유저가 밴되어있지 않습니다.");
+    }
+
+    public void playerBanned() {
+        s("유저가 밴되었습니다.");
+    }
+
+    public void playerUnBanned() {
+        s("유저에 대한 밴에 해제되었습니다.");
+    }
+
+    public void playerAlreadyMuted() {
+        s("유저가 이미 뮤트되어있습니다.");
+    }
+
+    public void playerNotMuted() {
+        s("유저가 뮤트되어있지 않습니다.");
+    }
+
+    public void playerMuted() {
+        s("유저가 뮤트되었습니다.");
+    }
+
+    public void playerUnMuted() {
+        s("유저에 대한 뮤트가 해제되었습니다.");
+    }
+
+    public void playerNotOnline() {
+        s("플레이어가 접속해있지 않습니다.");
+    }
+
+    public void playerKicked() {
+        s("플레이어가 킥되었습니다.");
     }
 }

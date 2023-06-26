@@ -38,6 +38,7 @@ public abstract class LedgerCommandKeywords {
     public static List<String> BUY = Arrays.asList("buy", "long", "purchase", "매수", "구매", "롱");
     public static List<String> SELL = Arrays.asList("sell", "short", "dump", "매도", "판매", "숏");
     public static List<String> PRICE = Arrays.asList("p", "pr", "price", "가격", "가치", "공정가치", "시장가치", "시장가격", "시장가");
+    public static List<String> PARDON = Arrays.asList("pardon", "사면", "pr", "prd");
 
     // ADD | DELETE
     public static List<String> ADD = Arrays.asList("a", "add", "s", "set", "추가", "지정", "설정", "신규");
@@ -141,5 +142,11 @@ public abstract class LedgerCommandKeywords {
 
         return trusts;
     }
+
+
+    public static List<String> BAN = Arrays.asList("b", "bn", "ban", "밴");
+    public static List<String> UNBAN = Arrays.asList("ub", "unban", "언밴", "밴해제");
+    public static List<String> MUTE = Arrays.asList("m", "mt", "mte", "mute", "뮤트", "음소거");
+    public static List<String> UN_MUTE = Arrays.asList("um", "umt", "umte", "unmute", "언뮤트", "음소거해제", "살려주세요 하루 종일 코딩만 해서 죽을 거 같아요");
 
 }

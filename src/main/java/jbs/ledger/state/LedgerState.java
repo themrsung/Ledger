@@ -386,6 +386,11 @@ public final class LedgerState {
                 return p;
             }
         }
+        for (Person p : getPeople()) {
+            if (p.getName().toLowerCase().contains(name.toLowerCase())) {
+                return p;
+            }
+        }
 
         return null;
     }

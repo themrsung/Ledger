@@ -1,11 +1,13 @@
 package jbs.ledger;
 
-import jbs.ledger.assetholders.corporations.finance.SecuritiesExchange;
-import jbs.ledger.classes.markets.basic.StockMarket;
 import jbs.ledger.classes.messages.DirectMessageProcessor;
 import jbs.ledger.commands.actions.*;
 import jbs.ledger.commands.actions.invite.InviteCommand;
 import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
+import jbs.ledger.commands.actions.kick.KickCommand;
+import jbs.ledger.commands.actions.kick.KickCommandCompleter;
+import jbs.ledger.commands.actions.pardon.PardonCommand;
+import jbs.ledger.commands.actions.punish.PunishCommand;
 import jbs.ledger.commands.actions.teleportation.BackCommand;
 import jbs.ledger.commands.actions.create.CreateCommand;
 import jbs.ledger.commands.actions.create.CreateCommandCompleter;
@@ -52,13 +54,10 @@ import jbs.ledger.timers.economy.MarketTicker;
 import jbs.ledger.timers.io.LedgerAutoSaver;
 import jbs.ledger.timers.economy.NoteExpirationHandler;
 import jbs.ledger.timers.premium.PremiumExpirationHandler;
-import jbs.ledger.types.assets.basic.Cash;
-import jbs.ledger.types.assets.basic.Stock;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.Objects;
-import java.util.UUID;
 
 public final class Ledger extends JavaPlugin {
     public static String VERSION = "1.0";
@@ -118,7 +117,9 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
         Objects.requireNonNull(getCommand("pardon")).setExecutor(new PardonCommand(this));
         Objects.requireNonNull(getCommand("vote")).setExecutor(new VoteCommand(this));
+
         Objects.requireNonNull(getCommand("kick")).setExecutor(new KickCommand(this));
+        Objects.requireNonNull(getCommand("kick")).setTabCompleter(new KickCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("message")).setExecutor(new MessageCommand(this));
         Objects.requireNonNull(getCommand("message")).setTabCompleter(new MessageCommandCompleter(this));

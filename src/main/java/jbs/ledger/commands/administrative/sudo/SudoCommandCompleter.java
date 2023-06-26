@@ -6,11 +6,15 @@ import jbs.ledger.commands.LedgerCommandAutoCompleter;
 import jbs.ledger.commands.LedgerCommandKeywords;
 import jbs.ledger.commands.actions.create.CreateCommandCompleter;
 import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
+import jbs.ledger.commands.actions.kick.KickCommandCompleter;
 import jbs.ledger.commands.actions.offers.HandleOffersCommandCompleter;
+import jbs.ledger.commands.actions.pardon.PardonCommandCompleter;
+import jbs.ledger.commands.actions.punish.PunishCommandCompleter;
 import jbs.ledger.commands.economy.balance.BalanceCommandCompleter;
 import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
 import jbs.ledger.commands.economy.pay.PayCommandCompleter;
 import jbs.ledger.commands.economy.trading.BuyOrSellCommandCompleter;
+import jbs.ledger.commands.economy.trading.PriceCommandCompleter;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -60,6 +64,8 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
             results.addAll(LedgerCommandKeywords.CREDIT_RATING);
             results.addAll(LedgerCommandKeywords.BUY);
             results.addAll(LedgerCommandKeywords.SELL);
+            results.addAll(LedgerCommandKeywords.PRICE);
+            results.addAll(LedgerCommandKeywords.PARDON);
         } else  {
             String action = args[1].toLowerCase();
             if (LedgerCommandKeywords.CREATE.contains(action)) {
@@ -86,6 +92,18 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
             } else if (LedgerCommandKeywords.CREDIT_RATING.contains(action)) {
                 CreditRatingCommandCompleter crcc = new CreditRatingCommandCompleter(getLedger());
                 return crcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.KICK.contains(action)) {
+                KickCommandCompleter kcc = new KickCommandCompleter(getLedger());
+                return kcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.PRICE.contains(action)) {
+                PriceCommandCompleter pcc = new PriceCommandCompleter(getLedger());
+                return pcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.PARDON.contains(action)) {
+                PardonCommandCompleter pcc = new PardonCommandCompleter(getLedger());
+                return pcc.onSudoComplete(args);
+            } else if (LedgerCommandKeywords.PUNISH.contains(action)) {
+                PunishCommandCompleter pcc = new PunishCommandCompleter(getLedger());
+                return pcc.onSudoComplete(args);
             }
         }
 

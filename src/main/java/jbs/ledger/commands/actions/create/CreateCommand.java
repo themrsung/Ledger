@@ -21,8 +21,11 @@ import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.commands.LedgerCommandKeywords;
 import jbs.ledger.commands.LedgerPlayerCommand;
+import jbs.ledger.events.transfers.AssetTransferCause;
+import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Stock;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -132,6 +135,13 @@ public final class CreateCommand extends LedgerPlayerCommand {
                         symbol
                 );
 
+                Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                        getActor(),
+                        f,
+                        capital,
+                        AssetTransferCause.FOUNDATION_CREATED
+                ));
+
                 f.getBoard().addMember(getPerson());
                 f.getBoard().setRepresentative(getPerson());
                 getMessenger().foundationCreated();
@@ -152,7 +162,13 @@ public final class CreateCommand extends LedgerPlayerCommand {
 
                 f.addMember(actor);
                 f.setRepresentative(actor);
-                // TODO Send money to foundation from actor upon creation
+
+                Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                        getActor(),
+                        f,
+                        capital,
+                        AssetTransferCause.FEDERATION_CREATED
+                ));
 
                 getMessenger().federationCreated();
                 return;
@@ -202,6 +218,13 @@ public final class CreateCommand extends LedgerPlayerCommand {
 
                 n.addMember(getPerson());
                 n.setRepresentative(getPerson());
+
+                Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                        getActor(),
+                        n,
+                        capital,
+                        AssetTransferCause.NATION_CREATED
+                ));
 
                 getState().addAssetholder(n);
                 getMessenger().nationCreated();
@@ -395,6 +418,15 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 Stock stocks = new Stock(symbol, shareCount);
                 getActor().getStocks().add(stocks);
 
+
+
+                Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                        getActor(),
+                        corp,
+                        capital,
+                        AssetTransferCause.CORPORATION_CREATED
+                ));
+
                 getState().addAssetholder(corp);
                 getMessenger().corporationCreated();
                 return;
@@ -442,7 +474,15 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 getMessenger().unknownError();
                 return;
             }
-            // TODO Send money to trust from actor upon creation
+
+
+
+            Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                    getActor(),
+                    t,
+                    capital,
+                    AssetTransferCause.TRUST_CREATED
+            ));
 
 
             t.setTrustee(trustee);

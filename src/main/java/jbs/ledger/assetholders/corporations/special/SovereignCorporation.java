@@ -24,11 +24,22 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         super(uniqueId, name, symbol, currency, capital, shareCount);
 
         this.laws = new ArrayList<>();
+
+        this.bannedPlayers = new ArrayList<>();
+        this.mutedPlayers = new ArrayList<>();
+
+
     }
 
-    public SovereignCorporation(Corporation copy) {
+    public SovereignCorporation(SovereignCorporation copy) {
         super(copy);
-        this.laws = new ArrayList<>();
+
+        this.laws = copy.laws;
+
+        this.issuedCurrency = copy.issuedCurrency;
+
+        this.bannedPlayers = copy.bannedPlayers;
+        this.mutedPlayers = copy.mutedPlayers;
     }
 
     // Currency issuance
@@ -104,6 +115,42 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         laws.set(index, law);
     }
 
+    // Punishment
+
+    private final ArrayList<Person> bannedPlayers;
+    private final ArrayList<Person> mutedPlayers;
+
+    @Override
+    public ArrayList<Person> getBannedPlayers() {
+        return new ArrayList<>(bannedPlayers);
+    }
+
+    @Override
+    public void addBannedPlayer(Person p) {
+        bannedPlayers.add(p);
+    }
+
+    @Override
+    public boolean removeBannedPlayer(Person p) {
+        return bannedPlayers.remove(p);
+    }
+
+    @Override
+    public ArrayList<Person> getMutedPlayers() {
+        return new ArrayList<>(mutedPlayers);
+    }
+
+    @Override
+    public void addMutedPlayer(Person p) {
+        mutedPlayers.add(p);
+    }
+
+    @Override
+    public boolean removeMutedPlayer(Person p) {
+        return mutedPlayers.remove(p);
+    }
+
+
     // IO
 
     public SovereignCorporationData toData() {
@@ -112,6 +159,14 @@ public final class SovereignCorporation extends Corporation implements Sovereign
         data.issuedCurrency = issuedCurrency;
 
         data.laws = laws;
+
+        for (Person p : getBannedPlayers()) {
+            data.bannedPlayers.add(p.getUniqueId());
+        }
+
+        for (Person p : getMutedPlayers()) {
+            data.mutedPlayers.add(p.getUniqueId());
+        }
 
         return data;
     }
@@ -127,6 +182,11 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
     public SovereignCorporation(UUID uniqueId) {
         super(uniqueId);
+
+        this.laws = new ArrayList<>();
+
+        this.bannedPlayers = new ArrayList<>();
+        this.mutedPlayers = new ArrayList<>();
     }
 
     public void load(SovereignCorporationData data, LedgerState state) {
@@ -134,5 +194,15 @@ public final class SovereignCorporation extends Corporation implements Sovereign
 
         this.issuedCurrency = data.issuedCurrency;
         this.laws = data.laws;
+
+        this.bannedPlayers.clear();
+        for (UUID id : data.bannedPlayers) {
+            this.bannedPlayers.add(state.getPerson(id));
+        }
+
+        this.mutedPlayers.clear();
+        for (UUID id : data.mutedPlayers) {
+            this.mutedPlayers.add(state.getPerson(id));
+        }
     }
 }

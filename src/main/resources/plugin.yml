@@ -138,7 +138,7 @@ commands:
   pardon:
     description: 유저에 대한 모드 재제를 취소합니다.
     usage: /pardon 유저
-    aliases: [pr, prd, pardon]
+    aliases: [pr, prd, 사면]
   cancel:
     description: 취소 가능한 행동을 취소합니다.
     usage: /cancel

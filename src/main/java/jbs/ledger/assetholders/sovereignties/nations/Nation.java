@@ -31,6 +31,9 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.issuedCurrency = null;
 
         this.laws = new ArrayList<>();
+
+        this.bannedPlayers = new ArrayList<>();
+        this.mutedPlayers = new ArrayList<>();
     }
 
     public Nation(Nation copy) {
@@ -43,6 +46,9 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.issuedCurrency = copy.issuedCurrency;
 
         this.laws = copy.laws;
+
+        this.bannedPlayers = copy.bannedPlayers;
+        this.mutedPlayers = copy.mutedPlayers;
     }
 
     private String symbol;
@@ -173,6 +179,41 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         laws.set(index, law);
     }
 
+    // Punishment
+
+    private final ArrayList<Person> bannedPlayers;
+    private final ArrayList<Person> mutedPlayers;
+
+    @Override
+    public ArrayList<Person> getBannedPlayers() {
+        return new ArrayList<>(bannedPlayers);
+    }
+
+    @Override
+    public void addBannedPlayer(Person p) {
+        bannedPlayers.add(p);
+    }
+
+    @Override
+    public boolean removeBannedPlayer(Person p) {
+        return bannedPlayers.remove(p);
+    }
+
+    @Override
+    public ArrayList<Person> getMutedPlayers() {
+        return new ArrayList<>(mutedPlayers);
+    }
+
+    @Override
+    public void addMutedPlayer(Person p) {
+        mutedPlayers.add(p);
+    }
+
+    @Override
+    public boolean removeMutedPlayer(Person p) {
+        return mutedPlayers.remove(p);
+    }
+
     // IO
     @Override
     public NationData toData() {
@@ -194,6 +235,14 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
 
         if (getRepresentative() != null) data.representative = getRepresentative().getUniqueId();
 
+        for (Person p : getBannedPlayers()) {
+            data.bannedPlayers.add(p.getUniqueId());
+        }
+
+        for (Person p : getMutedPlayers()) {
+            data.mutedPlayers.add(p.getUniqueId());
+        }
+
         data.laws = laws;
 
         return data;
@@ -206,6 +255,11 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.members = new ArrayList<>();
         this.representative = null;
         this.issuedCurrency = null;
+
+        this.laws = new ArrayList<>();
+
+        this.bannedPlayers = new ArrayList<>();
+        this.mutedPlayers = new ArrayList<>();
     }
 
     public void load(NationData data, LedgerState state) {
@@ -230,6 +284,16 @@ public abstract class Nation extends Assetholder implements Sovereign, Organizat
         this.issuedCurrency = data.issuedCurrency;
 
         this.laws = data.laws;
+
+        this.bannedPlayers.clear();
+        for (UUID id : data.bannedPlayers) {
+            this.bannedPlayers.add(state.getPerson(id));
+        }
+
+        this.mutedPlayers.clear();
+        for (UUID id : data.mutedPlayers) {
+            this.mutedPlayers.add(state.getPerson(id));
+        }
 
         representative = state.getNationMember(data.representative);
     }

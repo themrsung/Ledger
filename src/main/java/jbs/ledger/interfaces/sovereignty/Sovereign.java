@@ -18,4 +18,13 @@ public interface Sovereign extends Economic, Headquartered, Symbolic {
     void changeLaw(int index, String law);
     boolean removeLaw(String law);
     void removeLaw(int index);
+
+    ArrayList<Person> getBannedPlayers();
+    ArrayList<Person> getMutedPlayers();
+
+    void addBannedPlayer(Person p);
+    boolean removeBannedPlayer(Person p);
+
+    void addMutedPlayer(Person p);
+    boolean removeMutedPlayer(Person p);
 }

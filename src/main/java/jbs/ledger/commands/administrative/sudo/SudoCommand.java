@@ -10,9 +10,12 @@ import jbs.ledger.commands.actions.home.DeleteHomeCommand;
 import jbs.ledger.commands.actions.home.HomeCommand;
 import jbs.ledger.commands.actions.home.SetHomeCommand;
 import jbs.ledger.commands.actions.invite.InviteCommand;
+import jbs.ledger.commands.actions.kick.KickCommand;
 import jbs.ledger.commands.actions.offers.AcceptCommand;
 import jbs.ledger.commands.actions.offers.CancelCommand;
 import jbs.ledger.commands.actions.offers.DenyCommand;
+import jbs.ledger.commands.actions.pardon.PardonCommand;
+import jbs.ledger.commands.actions.punish.PunishCommand;
 import jbs.ledger.commands.administrative.DirectorsCommand;
 import jbs.ledger.commands.administrative.ManageCommand;
 import jbs.ledger.commands.administrative.MembersCommand;
@@ -244,6 +247,12 @@ public final class SudoCommand extends LedgerPlayerCommand {
         if (LedgerCommandKeywords.PRICE.contains(sudoAction)) {
             PriceCommand price = new PriceCommand(this, actor);
             price.onSudoCommand(main, argsAfter);
+            return;
+        }
+
+        if (LedgerCommandKeywords.PARDON.contains(sudoAction)) {
+            PardonCommand pardon = new PardonCommand(this, actor);
+            pardon.onSudoCommand(main, argsAfter);
             return;
         }
 

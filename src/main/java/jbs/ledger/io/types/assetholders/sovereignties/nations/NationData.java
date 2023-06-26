@@ -1,7 +1,6 @@
 package jbs.ledger.io.types.assetholders.sovereignties.nations;
 
 import jbs.ledger.io.types.assetholders.AssetholderData;
-import jbs.ledger.io.types.meetings.MeetingData;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -22,6 +21,8 @@ public class NationData extends AssetholderData {
         this.representative = copy.representative;
         this.issuedCurrency = copy.issuedCurrency;
         this.laws = copy.laws;
+        this.bannedPlayers = copy.bannedPlayers;
+        this.mutedPlayers = copy.mutedPlayers;
     }
 
     public NationData() {
@@ -37,4 +38,7 @@ public class NationData extends AssetholderData {
     @Nullable
     public String issuedCurrency = null;
     public ArrayList<String> laws = new ArrayList<>();
+
+    public ArrayList<UUID> bannedPlayers = new ArrayList<>();
+    public ArrayList<UUID> mutedPlayers = new ArrayList<>();
 }
