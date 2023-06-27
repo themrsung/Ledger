@@ -28,27 +28,54 @@ public enum CreditRating {
     public float toScore() {
         switch (this) {
             case AAA:
-                return 5000;
+                return 5000f;
             case AA:
-                return 4500;
+                return 4500f;
             case A:
-                return 4000;
+                return 4000f;
             case BBB:
-                return 3000;
+                return 3000f;
             case BB:
-                return 2000;
+                return 2000f;
             case B:
-                return 1000;
+                return 1000f;
             case CCC:
-                return 700;
+                return 700f;
             case CC:
-                return 500;
+                return 500f;
             case C:
-                return 250;
+                return 250f;
             case D:
-                return 0;
+                return 0f;
         }
 
-        return 0;
+        return 0f;
+    }
+
+    public float getNoteDiscountRate() {
+        switch (this) {
+            case AAA:
+                return 0.01f;
+            case AA:
+                return 0.025f;
+            case A:
+                return 0.05f;
+            case BBB:
+                return 0.1f;
+            case BB:
+                return 0.15f;
+            case B:
+                return 0.2f;
+            case CCC:
+                return 0.3f;
+            case CC:
+                return 0.5f;
+            case C:
+                return 0.7f;
+            case D:
+                return 0.99f;
+        }
+
+        return 0f;
     }
 }

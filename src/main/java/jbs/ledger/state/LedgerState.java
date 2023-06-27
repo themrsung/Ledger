@@ -19,6 +19,7 @@ import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.markets.basic.StockMarket;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
+import jbs.ledger.interfaces.assets.Asset;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.markets.Market;
@@ -43,8 +44,12 @@ import jbs.ledger.io.types.assetholders.sovereignties.nations.PresidentialRepubl
 import jbs.ledger.io.types.assetholders.sovereignties.nations.PrincipalityData;
 import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
+import jbs.ledger.types.assets.AssetType;
 import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
+import jbs.ledger.types.assets.synthetic.StackableNote;
+import jbs.ledger.types.assets.synthetic.UniqueNote;
 import jbs.ledger.types.config.LedgerConfig;
 
 import javax.annotation.Nullable;
@@ -618,6 +623,146 @@ public final class LedgerState {
 
         return null;
     }
+
+    // Valuation
+
+    /**
+     * Gets the fair exchange rate of a listed currency. Will return 0 if unlisted.
+     * Uses weighted average by volume of all exchanges the pair is traded in.
+     * @param base Base currency
+     * @param quote Quote currency
+     * @return Exchange rate
+     */
+    public double getRate(String base, String quote) {
+        if (base.equalsIgnoreCase(quote)) return 1;
+
+        double p = 0d;
+        long q = 0L;
+        int count = 0;
+
+        for (ForeignExchange fx : getForeignExchanges()) {
+            for (Market<Cash> market : fx.getForexMarkets()) {
+                if (market.getUnitAsset().getSymbol().equals(base) || market.getCurrency().equals(quote)) {
+                    p += market.getPrice();
+                    q += market.getVolume();
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0) return 0;
+        else if (q == 0L) return p / count;
+        else {
+            return p / q;
+        }
+    }
+
+    /**
+     * Converts a currency into another currency at fair value
+     * @param from From
+     * @param to To
+     * @param amount Amount
+     * @return Converted amount
+     */
+    public double convertCurrency(String from, String to, double amount) {
+        return amount * getRate(from, to);
+    }
+
+    /**
+     * Converts a currency into another currency at fair avalue
+     * @param from From
+     * @param to To
+     * @return Converted cash
+     */
+    public Cash convertCurrency(Cash from, String to) {
+        return new Cash(to, convertCurrency(from.getSymbol(), to, from.getBalance()));
+    }
+
+    /**
+     * Gets the fair value of a listed stock. Will return 0 if unlisted.
+     * @param stock Stock to value
+     * @param denotation Currency to value in
+     * @return Price of stock
+     */
+    public double getPrice(Stock stock, String denotation) {
+        double v = 0d;
+        int count = 0;
+
+        for (SecuritiesExchange se : getSecuritiesExchanges()) {
+            for (Market<Stock> market : se.getStockMarkets()) {
+                if (market.getSymbol().equalsIgnoreCase(stock.getSymbol())) {
+                    v += convertCurrency(market.getCurrency(), denotation, market.getPrice()) * market.getUnitAsset().getQuantity() * market.getVolume();
+                    count++;
+                }
+            }
+        }
+
+        if (count == 0) return 0d;
+        else return v / count;
+    }
+
+    /**
+     * Returns the estimated value of a note.
+     * This discounts the face value by the issuers credit rating.
+     * Returns 0 if the underlying has no fair value
+     * @param note Note to value
+     * @param denotation Currency to value in
+     * @return Estimated value of note
+     */
+    public double getPrice(UniqueNote<?> note, String denotation) {
+        if (note.getDelivery() instanceof Cash) {
+            Cash delivery = (Cash) note.getDelivery();
+            double faceValue = delivery.getBalance();
+            double converted = convertCurrency(delivery.getSymbol(), denotation, faceValue);
+
+            return converted * (1 - note.getDeliverer().getCreditRating().getNoteDiscountRate());
+        } else {
+            Asset delivery = note.getDelivery();
+            if (delivery.getType() == AssetType.STOCK) {
+                Stock stock = (Stock) delivery;
+                double value = getPrice(stock, denotation) * stock.getQuantity();
+                return value * (1 - note.getDeliverer().getCreditRating().getNoteDiscountRate());
+            } else if (delivery.getType() == AssetType.BOND) {
+                StackableNote<Cash> bond = (StackableNote<Cash>) delivery;
+                double value = getPrice(bond, denotation) * bond.getQuantity();
+                return value * (1 - note.getDeliverer().getCreditRating().getNoteDiscountRate());
+            }
+        }
+
+        return 0d;
+    }
+
+    /**
+     * Gets the fair value of a listed note. Will return the discounted face value if unlisted.
+     * @param note Bond to value
+     * @param denotation Currency to value in
+     * @return Price of bond
+     */
+    public double getPrice(StackableNote<?> note, String denotation) {
+        double v = 0d;
+        int count = 0;
+
+        if (note.getType() == AssetType.BOND) {
+            for (SecuritiesExchange se : getSecuritiesExchanges()) {
+                for (Market<StackableNote<Cash>> market : se.getBondMarkets()) {
+                    if (market.getSymbol().equalsIgnoreCase(note.getSymbol())) {
+                        v += convertCurrency(market.getCurrency(), denotation, market.getPrice()) * market.getUnitAsset().getQuantity() * market.getVolume();
+                        count++;
+                    }
+                }
+            }
+        } else if (note.getType() == AssetType.COMMODITY_FUTURES) {
+
+        } else if (note.getType() == AssetType.STOCK_FUTURES) {
+
+        }
+
+        if (count == 0) return 0d;
+        else return v / count;
+    }
+
+
+
 
 
     // IO

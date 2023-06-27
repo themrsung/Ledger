@@ -435,7 +435,7 @@ public final class LedgerPlayerMessenger {
     }
 
     public void marketListEntry(Market<?> m) {
-        s("- "+ m.getSymbol() + " (" + "유형:" + m.getUnitAsset().getType() + " / 거래통화: " + m.getCurrency() + ")")
+        s("- "+ m.getSymbol() + " (" + "유형:" + m.getUnitAsset().getType() + " / 거래통화: " + m.getCurrency() + ")");
     }
 
     public void playerListEntry(Person p) {

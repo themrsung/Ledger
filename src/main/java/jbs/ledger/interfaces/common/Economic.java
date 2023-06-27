@@ -1,10 +1,12 @@
 package jbs.ledger.interfaces.common;
 
 import jbs.ledger.interfaces.assets.Asset;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.assets.synthetic.StackableNote;
+import jbs.ledger.types.credit.CreditRating;
 import jbs.ledger.types.portfolios.basic.CashPortfolio;
 import jbs.ledger.types.portfolios.basic.CommodityPortfolio;
 import jbs.ledger.types.portfolios.basic.StockPortfolio;
@@ -37,16 +39,29 @@ public interface Economic extends Searchable {
     OptionPortfolio<Stock> getStockOptions();
 
     // Asset value
-    // FIXME
-    default double getAssetValue(String denotation) {
-        return 0d;
-    }
-    default double getLiabilityValue(String denotation) {
+
+    /**
+     * Not cached, use with caution
+     * @param state Game state
+     * @param denotation Currency to display in
+     * @return Asset value total
+     */
+    default double getAssetValue(LedgerState state, String denotation) {
         return 0d;
     }
 
-    default double getNetWorth(String denotation) {
-        return getAssetValue(denotation) - getLiabilityValue(denotation);
+    /**
+     * Not cached, use with caution
+     * @param state Game state
+     * @param denotation Currency to display in
+     * @return Liability value total
+     */
+    default double getLiabilityValue(LedgerState state, String denotation) {
+        return 0d;
+    }
+
+    default double getNetWorth(LedgerState state, String denotation) {
+        return getAssetValue(state, denotation) - getLiabilityValue(state, denotation);
     }
 
     // Generic getters
@@ -78,4 +93,13 @@ public interface Economic extends Searchable {
 
         return null;
     }
+
+    // Credit
+    float getCreditScore();
+
+    default CreditRating getCreditRating() {
+        return CreditRating.fromScore(getCreditScore());
+    }
+
+    void setCreditScore(float creditScore);
 }

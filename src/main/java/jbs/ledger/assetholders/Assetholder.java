@@ -238,14 +238,11 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
     // Credit
     private float creditScore;
 
+    @Override
     public float getCreditScore() {
         return creditScore;
     }
-
-    public CreditRating getCreditRating() {
-        return CreditRating.fromScore(getCreditScore());
-    }
-
+    @Override
     public void setCreditScore(float creditScore) {
         this.creditScore = creditScore;
     }

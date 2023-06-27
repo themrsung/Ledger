@@ -51,11 +51,43 @@ public final class ManageCommand extends LedgerPlayerCommand {
                 }
             }
         } else if (getActor() instanceof ForeignExchange) {
-            // FIXME
+            // FIXME TODO FIXME TODO FIXME TODO
+            if (LedgerCommandKeywords.LIST_ASSET.contains(action)) {
+
+            } else if (LedgerCommandKeywords.DELIST_ASSET.contains(action)) {
+
+            } else if (LedgerCommandKeywords.LISTED_ASSETS.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_BUYER_FEE_RATE.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_SELLER_FEE_RATE.contains(action)) {
+
+            }
         } else if (getActor() instanceof FuturesExchange) {
+            if (LedgerCommandKeywords.LIST_ASSET.contains(action)) {
+
+            } else if (LedgerCommandKeywords.DELIST_ASSET.contains(action)) {
+
+            } else if (LedgerCommandKeywords.LISTED_ASSETS.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_BUYER_FEE_RATE.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_SELLER_FEE_RATE.contains(action)) {
+
+            }
 
         } else if (getActor() instanceof SecuritiesExchange) {
+            if (LedgerCommandKeywords.LIST_ASSET.contains(action)) {
 
+            } else if (LedgerCommandKeywords.DELIST_ASSET.contains(action)) {
+
+            } else if (LedgerCommandKeywords.LISTED_ASSETS.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_BUYER_FEE_RATE.contains(action)) {
+
+            } else if (LedgerCommandKeywords.SET_SELLER_FEE_RATE.contains(action)) {
+
+            }
         }
     }
 }
