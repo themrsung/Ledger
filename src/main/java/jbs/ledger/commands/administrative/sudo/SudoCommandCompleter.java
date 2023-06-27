@@ -12,9 +12,19 @@ import jbs.ledger.commands.actions.pardon.PardonCommandCompleter;
 import jbs.ledger.commands.actions.punish.PunishCommandCompleter;
 import jbs.ledger.commands.actions.vote.VoteCommandCompleter;
 import jbs.ledger.commands.administrative.manage.ManageCommandCompleter;
+import jbs.ledger.commands.economy.assets.AssetsCommandCompleter;
 import jbs.ledger.commands.economy.balance.BalanceCommandCompleter;
+import jbs.ledger.commands.economy.bank.BankCommandCompleter;
+import jbs.ledger.commands.economy.bonds.BondsCommandCompleter;
+import jbs.ledger.commands.economy.cards.CardsCommandCompleter;
 import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
+import jbs.ledger.commands.economy.forwards.ForwardsCommandCompleter;
+import jbs.ledger.commands.economy.futures.FuturesCommandCompleter;
+import jbs.ledger.commands.economy.liabilities.LiabilitiesCommandCompleter;
+import jbs.ledger.commands.economy.networth.NetWorthCommandCompleter;
+import jbs.ledger.commands.economy.options.OptionsCommandCompleter;
 import jbs.ledger.commands.economy.pay.PayCommandCompleter;
+import jbs.ledger.commands.economy.stocks.StocksCommandCompleter;
 import jbs.ledger.commands.economy.trading.BuyOrSellCommandCompleter;
 import jbs.ledger.commands.economy.trading.PriceCommandCompleter;
 import jbs.ledger.commands.informative.directors.DirectorsCommandCompleter;
@@ -32,7 +42,7 @@ import java.util.List;
  * DO NOT LOOK AT THIS CODE
  * You WILL have an aneurysm.
  */
-public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
+public final class SudoCommandCompleter extends LedgerCommandAutoCompleter {
     public SudoCommandCompleter(Ledger ledger) {
         super(ledger);
     }
@@ -144,10 +154,40 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
                 return lcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.NET_WORTH_LEADERBOARD.contains(action)) {
                 NetWorthLeaderboardCommandCompleter nwlcc = new NetWorthLeaderboardCommandCompleter(this);
-                nwlcc.onSudoComplete(args, getActor());
+                return nwlcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.MANAGE.contains(action)) {
                 ManageCommandCompleter mcc = new ManageCommandCompleter(this);
-                mcc.onSudoComplete(args, getActor());
+                return mcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.ASSETS.contains(action)) {
+                AssetsCommandCompleter acc = new AssetsCommandCompleter(this);
+                return acc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.LIABILITIES.contains(action)) {
+                LiabilitiesCommandCompleter lcc = new LiabilitiesCommandCompleter(this);
+                return lcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.NET_WORTH.contains(action)) {
+                NetWorthCommandCompleter nwcc = new NetWorthCommandCompleter(this);
+                return nwcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.BANK.contains(action)) {
+                BankCommandCompleter bcc = new BankCommandCompleter(this);
+                return bcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.BONDS.contains(action)) {
+                BondsCommandCompleter bcc = new BondsCommandCompleter(this);
+                return bcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.CARDS.contains(action)) {
+                CardsCommandCompleter ccc = new CardsCommandCompleter(this);
+                return ccc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.FORWARDS.contains(action)) {
+                ForwardsCommandCompleter fcc = new ForwardsCommandCompleter(this);
+                return fcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.FUTURES.contains(action)) {
+                FuturesCommandCompleter fcc = new FuturesCommandCompleter(this);
+                return fcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.OPTIONS.contains(action)) {
+                OptionsCommandCompleter occ = new OptionsCommandCompleter(this);
+                return occ.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.STOCKS.contains(action)) {
+                StocksCommandCompleter scc = new StocksCommandCompleter(this);
+                return scc.onSudoComplete(args, getActor());
             }
         }
 

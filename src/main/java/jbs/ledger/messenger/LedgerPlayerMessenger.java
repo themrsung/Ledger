@@ -12,6 +12,7 @@ import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
+import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.markets.MarketTickData;
 import org.bukkit.entity.Player;
@@ -401,11 +402,11 @@ public final class LedgerPlayerMessenger {
         s("- " + a.getName());
     }
 
-    public void netWorthLeaderboard(ArrayList<Assetholder> sortedList, String currency, int cutoff) {
+    public void netWorthLeaderboard(ArrayList<Assetholder> sortedList, String currency, int cutoff, LedgerState state) {
         s("순자산 상위 목록 (표시통화: " + currency + ")");
         for (int i = 0; i < cutoff; i++) {
             Assetholder a = sortedList.get(i);
-            double netWorth = a.getNetWorth(currency);
+            double netWorth = a.getNetWorth(state, currency);
 
             s(NumberFormat.getIntegerInstance().format(i + 1) + ". " + a.getName() + ": " + NumberFormat.getInstance().format(netWorth));
         }
@@ -470,5 +471,29 @@ public final class LedgerPlayerMessenger {
 
     public void assetholderPropertySet() {
         s("설정이 완료되었습니다.");
+    }
+
+    public void assetList(Assetholder h, String denotation, LedgerState state) {
+        s(h.getName() + "의 자산 (표시통화: " + denotation + ")");
+        s("신용등급: " + h.getCreditRating().toString());
+        s("자산총계: " + NumberFormat.getInstance().format(h.getAssetValue(state, denotation)));
+    }
+
+    public void liabilitiesList(Assetholder h, String denotation, LedgerState state) {
+        s(h.getName() + "의 부채 (표시통화: " + denotation + ")");
+        s("신용등급: " + h.getCreditRating().toString());
+        s("부채총계: " + NumberFormat.getInstance().format(h.getLiabilityValue(state, denotation)));
+    }
+
+    public void netWorthList(Assetholder h, String denotation, LedgerState state) {
+        s(h.getName() + "의 재무상태 (표시통화: " + denotation + ")");
+        s("신용등급: " + h.getCreditRating().toString());
+        s("자산총계: " + NumberFormat.getInstance().format(h.getAssetValue(state, denotation)));
+        s("부채총계: " + NumberFormat.getInstance().format(h.getLiabilityValue(state, denotation)));
+        s("자본총계: " + NumberFormat.getInstance().format(h.getNetWorth(state, denotation)));
+    }
+
+    public void featureUnderDevelopment() {
+        s("현재 개발중인 기능입니다.");
     }
 }

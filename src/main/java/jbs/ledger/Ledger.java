@@ -3,7 +3,26 @@ package jbs.ledger;
 import jbs.ledger.classes.messages.DirectMessageProcessor;
 import jbs.ledger.commands.administrative.manage.ManageCommand;
 import jbs.ledger.commands.administrative.manage.ManageCommandCompleter;
+import jbs.ledger.commands.economy.assets.AssetsCommand;
+import jbs.ledger.commands.economy.assets.AssetsCommandCompleter;
+import jbs.ledger.commands.economy.bank.BankCommand;
+import jbs.ledger.commands.economy.bank.BankCommandCompleter;
+import jbs.ledger.commands.economy.cards.CardsCommand;
+import jbs.ledger.commands.economy.cards.CardsCommandCompleter;
+import jbs.ledger.commands.economy.forwards.ForwardsCommand;
+import jbs.ledger.commands.economy.forwards.ForwardsCommandCompleter;
+import jbs.ledger.commands.economy.futures.FuturesCommand;
+import jbs.ledger.commands.economy.futures.FuturesCommandCompleter;
+import jbs.ledger.commands.economy.liabilities.LiabilitiesCommand;
+import jbs.ledger.commands.economy.liabilities.LiabilitiesCommandCompleter;
+import jbs.ledger.commands.economy.networth.NetWorthCommand;
+import jbs.ledger.commands.economy.networth.NetWorthCommandCompleter;
+import jbs.ledger.commands.economy.options.OptionsCommand;
+import jbs.ledger.commands.economy.options.OptionsCommandCompleter;
+import jbs.ledger.commands.economy.stocks.StocksCommand;
+import jbs.ledger.commands.economy.stocks.StocksCommandCompleter;
 import jbs.ledger.commands.informative.directors.DirectorsCommandCompleter;
+import jbs.ledger.commands.informative.information.InformationCommandCompleter;
 import jbs.ledger.commands.informative.list.ListCommandCompleter;
 import jbs.ledger.commands.informative.members.MembersCommand;
 import jbs.ledger.commands.informative.directors.DirectorsCommand;
@@ -48,8 +67,7 @@ import jbs.ledger.commands.economy.trading.*;
 import jbs.ledger.commands.informative.members.MembersCommandCompleter;
 import jbs.ledger.commands.informative.networthleaderboard.NetWorthLeaderboardCommandCompleter;
 import jbs.ledger.commands.informative.premium.PremiumCommandCompleter;
-import jbs.ledger.commands.server.SetSpawnCommand;
-import jbs.ledger.commands.economy.*;
+import jbs.ledger.commands.actions.teleportation.SetSpawnCommand;
 import jbs.ledger.commands.informative.information.InformationCommand;
 import jbs.ledger.commands.informative.list.ListCommand;
 import jbs.ledger.commands.informative.networthleaderboard.NetWorthLeaderboardCommand;
@@ -139,7 +157,6 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
         Objects.requireNonNull(getCommand("directors")).setTabCompleter(new DirectorsCommandCompleter(this));
 
-
         Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
         Objects.requireNonNull(getCommand("punish")).setTabCompleter(new PunishCommandCompleter(this));
 
@@ -183,22 +200,44 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("price")).setExecutor(new PriceCommand(this));
         Objects.requireNonNull(getCommand("price")).setTabCompleter(new PriceCommandCompleter(this));
 
+        Objects.requireNonNull(getCommand("networth")).setExecutor(new NetWorthCommand(this));
+        Objects.requireNonNull(getCommand("networth")).setTabCompleter(new NetWorthCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("assets")).setExecutor(new AssetsCommand(this));
+        Objects.requireNonNull(getCommand("assets")).setTabCompleter(new AssetsCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("liabilities")).setExecutor(new LiabilitiesCommand(this));
+        Objects.requireNonNull(getCommand("liabilities")).setTabCompleter(new LiabilitiesCommandCompleter(this));
+
+        Objects.requireNonNull(getCommand("bank")).setExecutor(new BankCommand(this));
+        Objects.requireNonNull(getCommand("bank")).setTabCompleter(new BankCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("cards")).setExecutor(new CardsCommand(this));
+        Objects.requireNonNull(getCommand("cards")).setTabCompleter(new CardsCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("forwards")).setExecutor(new ForwardsCommand(this));
+        Objects.requireNonNull(getCommand("forwards")).setTabCompleter(new ForwardsCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("futures")).setExecutor(new FuturesCommand(this));
-        Objects.requireNonNull(getCommand("networth")).setExecutor(new NetWorthCommand(this));
+        Objects.requireNonNull(getCommand("futures")).setTabCompleter(new FuturesCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("stocks")).setExecutor(new StocksCommand(this));
+        Objects.requireNonNull(getCommand("stocks")).setTabCompleter(new StocksCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("options")).setExecutor(new OptionsCommand(this));
+        Objects.requireNonNull(getCommand("options")).setTabCompleter(new OptionsCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("pay")).setExecutor(new PayCommand(this));
         Objects.requireNonNull(getCommand("pay")).setTabCompleter(new PayCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("information")).setExecutor(new InformationCommand(this));
+        Objects.requireNonNull(getCommand("information")).setTabCompleter(new InformationCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("list")).setExecutor(new ListCommand(this));
+        Objects.requireNonNull(getCommand("list")).setTabCompleter(new ListCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("networthleaderboard")).setExecutor(new NetWorthLeaderboardCommand(this));
+        Objects.requireNonNull(getCommand("networthleaderboard")).setTabCompleter(new NetWorthLeaderboardCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("premium")).setExecutor(new PremiumCommand(this));
         Objects.requireNonNull(getCommand("premium")).setTabCompleter(new PremiumCommandCompleter(this));

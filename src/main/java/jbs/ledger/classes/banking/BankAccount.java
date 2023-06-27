@@ -8,7 +8,7 @@ import jbs.ledger.types.assets.basic.Cash;
 
 import java.util.UUID;
 
-public class BankAccount implements Account<Cash> {
+public final class BankAccount implements Account<Cash> {
     public BankAccount(
             UUID uniqueId,
             Economic owner,

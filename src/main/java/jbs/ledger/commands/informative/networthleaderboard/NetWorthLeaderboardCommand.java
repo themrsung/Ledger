@@ -3,11 +3,9 @@ package jbs.ledger.commands.informative.networthleaderboard;
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerPlayerCommand;
-import jbs.ledger.interfaces.common.Economic;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 
 public final class NetWorthLeaderboardCommand extends LedgerPlayerCommand {
@@ -23,17 +21,17 @@ public final class NetWorthLeaderboardCommand extends LedgerPlayerCommand {
         ArrayList<Assetholder> assetholders = getState().getAssetholders();
         String denotation;
 
-        if (mainArg != null && getState().currencyExists(mainArg)) {
+        if (mainArg != null && getState().isCurrency(mainArg)) {
             denotation = mainArg.toUpperCase();
         } else {
             denotation = getState().getConfig().defaultCurrency;
         }
 
         // Sort
-        assetholders.sort((a1, a2) -> Double.compare(a2.getNetWorth(denotation), a1.getNetWorth(denotation)));
+        assetholders.sort((a1, a2) -> Double.compare(a2.getNetWorth(getState(), denotation), a1.getNetWorth(getState(), denotation)));
         int rankIndex = assetholders.indexOf(getActor());
 
-        getMessenger().netWorthLeaderboard(assetholders, denotation, 15);
+        getMessenger().netWorthLeaderboard(assetholders, denotation, 15, getState());
         getMessenger().netWorthMyRank(rankIndex);
     }
 }

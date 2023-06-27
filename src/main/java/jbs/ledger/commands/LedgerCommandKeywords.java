@@ -169,8 +169,17 @@ public abstract class LedgerCommandKeywords {
     public static List<String> LIST_ASSET = Arrays.asList("list", "상장");
     public static List<String> LISTED_ASSETS = Arrays.asList("listed", "상장종목");
     public static List<String> DELIST_ASSET = Arrays.asList("delist", "상장폐지", "상폐");
-    public static List<String> SET_INTEREST_RATE = Arrays.asList("delist", "상장폐지", "상폐");
-    public static List<String> SET_BUYER_FEE_RATE = Arrays.asList("delist", "상장폐지", "상폐");
-    public static List<String> SET_SELLER_FEE_RATE = Arrays.asList("delist", "상장폐지", "상폐");
+    public static List<String> SET_INTEREST_RATE = Arrays.asList("sir", "interest", "interestrate", "setinterestrate", "이자율", "이율", "금리", "이자율설정", "이율설정", "금리설정");
+    public static List<String> SET_BUYER_FEE_RATE = Arrays.asList("bfr", "bfrate", "buyerfeerate", "매수수수료");
+    public static List<String> SET_SELLER_FEE_RATE = Arrays.asList("sfr", "sfrate", "sellerfeerate", "매도수수료");
+
+    // BANK
+    public static List<String> DEPOSIT = Arrays.asList("d", "dp", "dep", "depo", "deposit", "입금");
+    public static List<String> WITHDRAW = Arrays.asList("w", "wd", "wdraw", "withdraw", "withdrawal", "출금");
+
+    // OTHER ASSETS
+    public static List<String> ISSUE = Arrays.asList("i", "is", "iss", "issue", "발행");
+
+
 
 }

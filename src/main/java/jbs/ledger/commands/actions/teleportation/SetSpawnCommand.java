@@ -1,4 +1,4 @@
-package jbs.ledger.commands.server;
+package jbs.ledger.commands.actions.teleportation;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;

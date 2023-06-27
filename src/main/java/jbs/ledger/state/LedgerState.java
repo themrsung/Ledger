@@ -16,7 +16,6 @@ import jbs.ledger.assetholders.sovereignties.nations.Principality;
 import jbs.ledger.assetholders.trusts.InvestmentTrust;
 import jbs.ledger.assetholders.trusts.RealEstateTrust;
 import jbs.ledger.assetholders.trusts.Trust;
-import jbs.ledger.classes.markets.basic.StockMarket;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.assets.Asset;
@@ -46,7 +45,6 @@ import jbs.ledger.io.types.assetholders.trusts.InvestmentTrustData;
 import jbs.ledger.io.types.assetholders.trusts.RealEstateTrustData;
 import jbs.ledger.types.assets.AssetType;
 import jbs.ledger.types.assets.basic.Cash;
-import jbs.ledger.types.assets.basic.Commodity;
 import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.assets.synthetic.StackableNote;
 import jbs.ledger.types.assets.synthetic.UniqueNote;
@@ -318,6 +316,30 @@ public final class LedgerState {
         return forexes;
     }
 
+    // Banks
+    public ArrayList<Bank> getBanks() {
+        ArrayList<Bank> banks = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Bank) {
+                banks.add((Bank) a);
+            }
+        }
+
+        return banks;
+    }
+
+    @Nullable
+    public Bank getBank(String symbol) {
+        for (Bank b : getBanks()) {
+            if (b.getSymbol().equalsIgnoreCase(symbol)) {
+                return b;
+            }
+        }
+
+        return null;
+    }
+
     // Corporations
     public ArrayList<Corporate> getCorporates() {
         ArrayList<Corporate> corporates = new ArrayList<>();
@@ -497,7 +519,7 @@ public final class LedgerState {
         return currencies;
     }
 
-    public boolean currencyExists(String currency) {
+    public boolean isCurrency(String currency) {
         for (String c : getCurrencies()) {
             if (c.equalsIgnoreCase(currency)) {
                 return true;

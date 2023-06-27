@@ -1,4 +1,4 @@
-package jbs.ledger.commands.economy;
+package jbs.ledger.commands.economy.cards;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
@@ -8,11 +8,11 @@ import jbs.ledger.interfaces.common.Economic;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class LiabilitiesCommand extends LedgerPlayerCommand {
-    public LiabilitiesCommand(Ledger ledger) {
+public final class CardsCommand extends LedgerPlayerCommand {
+    public CardsCommand(Ledger ledger) {
         super(ledger);
     }
-    public LiabilitiesCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
+    public CardsCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 

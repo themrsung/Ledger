@@ -1,18 +1,17 @@
-package jbs.ledger.commands.economy;
+package jbs.ledger.commands.economy.options;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.commands.LedgerPlayerCommand;
-import jbs.ledger.interfaces.common.Economic;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public final class NetWorthCommand extends LedgerPlayerCommand {
-    public NetWorthCommand(Ledger ledger) {
+public final class OptionsCommand extends LedgerPlayerCommand {
+    public OptionsCommand(Ledger ledger) {
         super(ledger);
     }
-    public NetWorthCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
+    public OptionsCommand(LedgerPlayerCommand originalCommand, Assetholder actor) {
         super(originalCommand, actor);
     }
 
