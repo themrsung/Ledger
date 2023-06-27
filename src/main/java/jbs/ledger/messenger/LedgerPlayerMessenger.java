@@ -1,10 +1,17 @@
 package jbs.ledger.messenger;
 
 import jbs.ledger.assetholders.Assetholder;
+import jbs.ledger.assetholders.corporations.Corporation;
+import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
+import jbs.ledger.assetholders.sovereignties.nations.Nation;
+import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.navigation.GpsEntry;
 import jbs.ledger.classes.orders.OrderType;
+import jbs.ledger.interfaces.common.Symbolic;
+import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.markets.MarketTickData;
 import org.bukkit.entity.Player;
@@ -226,6 +233,7 @@ public final class LedgerPlayerMessenger {
     }
 
     public void premiumInformation(Person p) {
+        s(p.isPremium() + "의 프리미엄 정보");
         s("프리미엄 여부: " + p.isPremium());
         s("프리미엄 만기일:" + (p.getPremiumExpiration() != null ? DateFormat.getDateInstance().format(p.getPremiumExpiration()) : "무기한"));
     }
@@ -240,6 +248,10 @@ public final class LedgerPlayerMessenger {
 
     public void premiumDaysRemoved(Person p) {
         s(p.getName() + "의 프리미엄 기간을 제거했습니다.");
+    }
+
+    public void premiumUnset(Person p) {
+        s(p.getName() + "의 프리미엄 상태를 박탈했습니다.");
     }
 
     public void marketPriceInformation(Market<?> m) {
@@ -363,5 +375,100 @@ public final class LedgerPlayerMessenger {
 
     public void meetingProposed() {
         s("안건이 상정되었습니다.");
+    }
+
+    public void actorNotDirectorship() {
+        s("이사회가 없는 조직입니다.");
+    }
+
+    public void directorsListHeader() {
+        s("이사회 구성원");
+    }
+
+    public void directorsListEntry(Person p) {
+        s("- " + p.getName());
+    }
+
+    public void actorNotOrganization() {
+        s("회원이 없는 조직입니다.");
+    }
+
+    public void membersListHeader() {
+        s("회원 목록");
+    }
+
+    public void membersListEntry(Assetholder a) {
+        s("- " + a.getName());
+    }
+
+    public void netWorthLeaderboard(ArrayList<Assetholder> sortedList, String currency, int cutoff) {
+        s("순자산 상위 목록 (표시통화: " + currency + ")");
+        for (int i = 0; i < cutoff; i++) {
+            Assetholder a = sortedList.get(i);
+            double netWorth = a.getNetWorth(currency);
+
+            s(NumberFormat.getIntegerInstance().format(i + 1) + ". " + a.getName() + ": " + NumberFormat.getInstance().format(netWorth));
+        }
+    }
+    public void netWorthMyRank(int rankIndex) {
+        String rankString;
+
+        if (rankIndex != -1) {
+            rankString = NumberFormat.getIntegerInstance().format(rankIndex + 1) + "위";
+        } else {
+            rankString = "없음";
+        }
+
+        s("내 순위: " + rankString);
+    }
+
+    public void listHeader() {
+        s("조회를 시작힙니다.");
+    }
+
+    public void assetholderListEntry(Assetholder a) {
+        if (a instanceof Symbolic) {
+            s("- " + a.getName() + " (" + ((Symbolic) a).getSymbol() + ")");
+        } else {
+            s("- " + a.getName());
+        }
+    }
+
+    public void marketListEntry(Market<?> m) {
+        s("- "+ m.getSymbol() + " (" + "유형:" + m.getUnitAsset().getType() + " / 거래통화: " + m.getCurrency() + ")")
+    }
+
+    public void playerListEntry(Person p) {
+        s("- " + p.getName());
+    }
+
+    public void corporateListEntry(Corporate c) {
+        if (c instanceof Corporation) {
+            s("- " + ((Corporation) c).getName() + " (" + c.getSymbol() + ")");
+        } else {
+            s("- " + c.getSymbol());
+        }
+    }
+
+    public void foundationListEntry(Foundation f) {
+        s("- " + f.getName() + "( " + f.getSymbol() + ")");
+    }
+
+    public void sovereignListEntry(Sovereign s) {
+        if (s instanceof Nation) {
+            s("- " + ((Nation) s).getName() + " (" + s.getSymbol() + ")");
+        } else if (s instanceof Corporation) {
+            s("- " + ((Corporation) s).getName() + " (" + s.getSymbol() + ")");
+        } else {
+            s("- " + s.getSymbol());
+        }
+    }
+
+    public void trustListEntry(Trust t) {
+        s("- " + t.getName() + "( " + t.getSymbol() + ")");
+    }
+
+    public void assetholderPropertySet() {
+        s("설정이 완료되었습니다.");
     }
 }

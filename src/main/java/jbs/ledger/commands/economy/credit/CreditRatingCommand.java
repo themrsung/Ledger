@@ -11,7 +11,6 @@ public final class CreditRatingCommand extends LedgerPlayerCommand {
     public CreditRatingCommand(Ledger ledger) {
         super(ledger);
     }
-
     public CreditRatingCommand(LedgerPlayerCommand command, Assetholder actor) {
         super(command, actor);
     }

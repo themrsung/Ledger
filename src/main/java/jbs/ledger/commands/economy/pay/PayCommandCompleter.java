@@ -12,6 +12,9 @@ public final class PayCommandCompleter extends LedgerCommandAutoCompleter {
     public PayCommandCompleter(Ledger ledger) {
         super(ledger);
     }
+    public PayCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
 
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {

@@ -18,9 +18,13 @@ public final class PremiumExpirationHandler implements Runnable {
             Date now = new Date();
             Date expiry = p.getPremiumExpiration();
 
-            if (expiry != null && expiry.before(now)) {
-                p.setPremium(false);
-                p.setPremiumExpiration(null);
+            if (expiry != null) {
+                if (expiry.before(now)) {
+                    p.setPremium(false);
+                    p.setPremiumExpiration(null);
+                } else {
+                    p.setPremium(true);
+                }
             }
         }
     }

@@ -51,7 +51,7 @@ public final class Board extends AbstractOrganization<Person> implements Elector
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+    public boolean removeOpenMeeting(Meeting<?> meeting) {
         return openMeetings.remove(meeting);
     }
 

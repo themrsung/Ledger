@@ -51,8 +51,16 @@ public final class CreateCommand extends LedgerPlayerCommand {
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
 
-        if (onCreateAssetholder(mainArg, argsAfterMain)) return;
-        if (onCreateVote(mainArg, argsAfterMain)) return;
+        if (mainArg == null) {
+            getMessenger().insufficientArgs();
+            return;
+        }
+
+        if (LedgerCommandKeywords.VOTE.contains(mainArg)) {
+            if (onCreateVote(mainArg, argsAfterMain)) return;
+        } else {
+            if (onCreateAssetholder(mainArg, argsAfterMain)) return;
+        }
 
         getMessenger().unknownError();
         return;
@@ -641,7 +649,7 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 Corporate corp = (Corporate) electorate;
                 Board board = corp.getBoard();
 
-                if (!isSelf()) {
+                if (notSelf()) {
                     getMessenger().noRightsToProposeMeeting();
                     return false;
                 }
@@ -765,7 +773,7 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 ParliamentaryRepublic corp = (ParliamentaryRepublic) electorate;
                 Legislature parliament = corp.getLegislature();
 
-                if (!isSelf()) {
+                if (notSelf()) {
                     getMessenger().noRightsToProposeMeeting();
                     return false;
                 }
@@ -785,7 +793,7 @@ public final class CreateCommand extends LedgerPlayerCommand {
                 PresidentialRepublic corp = (PresidentialRepublic) electorate;
                 Legislature senate = corp.getLegislature();
 
-                if (!isSelf()) {
+                if (notSelf()) {
                     getMessenger().noRightsToProposeMeeting();
                     return false;
                 }

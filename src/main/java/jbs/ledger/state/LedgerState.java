@@ -22,6 +22,7 @@ import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.markets.Market;
+import jbs.ledger.interfaces.organization.Directorship;
 import jbs.ledger.interfaces.organization.Electorate;
 import jbs.ledger.interfaces.organization.Meeting;
 import jbs.ledger.interfaces.sovereignty.NationMember;
@@ -501,6 +502,19 @@ public final class LedgerState {
         return false;
     }
 
+    // Trusts
+    public ArrayList<Trust> getTrusts() {
+        ArrayList<Trust> list = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Trust) {
+                list.add((Trust) a);
+            }
+        }
+
+        return list;
+    }
+
     // Electorates
     public ArrayList<Electorate<?>> getElectorates() {
         ArrayList<Electorate<?>> electorates = new ArrayList<>();
@@ -544,9 +558,46 @@ public final class LedgerState {
             }
         }
 
+        for (Meeting<?> m : getMeetings()) {
+            if (m.getSymbol().toLowerCase().contains(symbol.toLowerCase())) {
+                return m;
+            }
+        }
+
         return null;
     }
 
+    // Directorships
+    public ArrayList<Directorship> getDirectorships() {
+        ArrayList<Directorship> list = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof Directorship) {
+                list.add((Directorship) a);
+            }
+        }
+
+        return list;
+    }
+
+    @Nullable
+    public Directorship getDirectorship(String symbol) {
+        for (Directorship d : getDirectorships()) {
+            if (d.getSymbol().equalsIgnoreCase(symbol)) {
+                return d;
+            }
+        }
+
+        for (Directorship d : getDirectorships()) {
+            if (d.getSymbol().toLowerCase().contains(symbol.toLowerCase())) {
+                return d;
+            }
+        }
+
+        return null;
+    }
+
+    // Representable
     @Nullable
     public Person getRepresentative(Assetholder holder) {
         if (holder instanceof Person) {

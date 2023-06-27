@@ -5,8 +5,8 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.classes.meetings.shareholder.ShareholderMeeting;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.organization.Meeting;
-import jbs.ledger.interfaces.organization.Organization;
 import jbs.ledger.io.types.assetholders.corporations.CorporationData;
+import jbs.ledger.io.types.meetings.MeetingData;
 import jbs.ledger.organizations.corporate.Board;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
@@ -138,7 +138,7 @@ public abstract class Corporation extends Assetholder implements Corporate  {
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Assetholder> meeting) {
+    public boolean removeOpenMeeting(Meeting<?> meeting) {
         return openMeetings.remove(meeting);
     }
 
@@ -171,6 +171,10 @@ public abstract class Corporation extends Assetholder implements Corporate  {
             data.members.add(m.getUniqueId());
         }
 
+        for (Meeting<Assetholder> m : openMeetings) {
+            data.openMeetings.add(((ShareholderMeeting) m).toData());
+        }
+
         return data;
     }
 
@@ -189,6 +193,12 @@ public abstract class Corporation extends Assetholder implements Corporate  {
 
         for (UUID m : data.members) {
             this.members.add(state.getPerson(m));
+        }
+
+        this.openMeetings.clear();
+
+        for (MeetingData md : data.openMeetings) {
+            this.openMeetings.add((Meeting<Assetholder>) ShareholderMeeting.fromData(md, state));
         }
     }
 }

@@ -12,7 +12,9 @@ public final class HandleOffersCommandCompleter extends LedgerCommandAutoComplet
     public HandleOffersCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public HandleOffersCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> results = new ArrayList<>();

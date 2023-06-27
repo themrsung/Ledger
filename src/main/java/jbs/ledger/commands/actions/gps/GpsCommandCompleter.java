@@ -1,6 +1,7 @@
 package jbs.ledger.commands.actions.gps;
 
 import jbs.ledger.Ledger;
+import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.classes.navigation.GpsEntry;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
 import jbs.ledger.commands.LedgerCommandKeywords;
@@ -12,6 +13,11 @@ import java.util.List;
 public final class GpsCommandCompleter extends LedgerCommandAutoCompleter {
     public GpsCommandCompleter(Ledger ledger) {
         super(ledger);
+    }
+
+
+    public GpsCommandCompleter(LedgerCommandAutoCompleter original, Assetholder actor) {
+        super(original);
     }
 
     @Override

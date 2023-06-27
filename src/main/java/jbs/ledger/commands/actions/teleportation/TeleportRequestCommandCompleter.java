@@ -12,7 +12,9 @@ public final class TeleportRequestCommandCompleter extends LedgerCommandAutoComp
     public TeleportRequestCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public TeleportRequestCommandCompleter(LedgerCommandAutoCompleter original, Assetholder actor) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();

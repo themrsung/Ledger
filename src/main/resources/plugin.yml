@@ -114,7 +114,7 @@ commands:
   networthleaderboard:
     description: 순자산 상위 목록을 조회합니다.
     usage: /networthleaderboard
-    aliases: [nwl, baltop, bt, balancetop, btop, networthleaderboards, rank, ranking, 순자산상위, 순자산상위목록, 순자산순위]
+    aliases: [nwl, baltop, bt, balancetop, btop, nwleaderboard, nwleaderboards, networthleaderboards, rank, ranking, 랭킴, 순위, 순자산랭킹, 순자산상위, 순자산상위목록, 순자산순위]
   premium:
     description: 프리미엄 상태를 확인합니다.
     usage: /premium

@@ -6,7 +6,6 @@ import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.classes.meetings.MeetingType;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
 import jbs.ledger.commands.LedgerCommandKeywords;
-import jbs.ledger.interfaces.organization.Electorate;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -15,6 +14,10 @@ import java.util.List;
 public final class CreateCommandCompleter extends LedgerCommandAutoCompleter {
     public CreateCommandCompleter(Ledger ledger) {
         super(ledger);
+    }
+
+    public CreateCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
     }
 
     @Override
@@ -44,7 +47,7 @@ public final class CreateCommandCompleter extends LedgerCommandAutoCompleter {
             results.addAll(LedgerCommandKeywords.REAL_ESTATE_TRUST);
             results.addAll(LedgerCommandKeywords.VOTE);
         } else if (args.length < 3) {
-            String action = args[1].toLowerCase();
+            String action = args[0].toLowerCase();
             if (LedgerCommandKeywords.VOTE.contains(action)) {
                 for (Assetholder a : getState().getAssetholders()) {
                     results.add(a.getSearchTag());
@@ -53,9 +56,9 @@ public final class CreateCommandCompleter extends LedgerCommandAutoCompleter {
                 results.add("조직의 고유 코드를 입력해주세요. (알파벳 3글자 이하, 대소문자 구분 없음");
             }
         } else if (args.length < 4) {
-            String action = args[1].toLowerCase();
+            String action = args[0].toLowerCase();
             if (LedgerCommandKeywords.VOTE.contains(action)) {
-                Assetholder a = getState().getAssetholder(args[2], true, true);
+                Assetholder a = getState().getAssetholder(args[1], true, true);
                 if (a == null) {
                     results.add("조직을 찾을 수 없습니다.");
                 } else {
@@ -98,29 +101,41 @@ public final class CreateCommandCompleter extends LedgerCommandAutoCompleter {
                 results.add("조직의 이름을 입력해주세요. 띄어쓰기는 불가능합니다.");
             }
         } else if (args.length < 5) {
-            results.add("조직의 자본금을 입력해주세요. 예: CR300만 -> 3,000,000 크레딧");
+            String action = args[0].toLowerCase();
+            if (!LedgerCommandKeywords.VOTE.contains(action)) {
+                results.add("조직의 자본금을 입력해주세요. 예: CR300만 -> 3,000,000 크레딧");
+            }
         } else if (args.length < 6) {
-            String type = args[0].toLowerCase();
-            if (LedgerCommandKeywords.CORPORATIONS().contains(type)) {
-                results.add("발행할 주식수를 입력해주세요. 1주 이상이어야 합니다.");
-            } else if (LedgerCommandKeywords.FOUNDATIONS().contains(type) || LedgerCommandKeywords.NATIONS().contains(type)) {
-                results.add("필요한 항목을 전부 입력했습니다.");
-            } else if (LedgerCommandKeywords.TRUSTS().contains(type)) {
-                results.add("수탁자를 입력해주세요. 수탁자는 신탁의 재산을 관리할 수 있습니다.");
+            String action = args[0].toLowerCase();
+            if (!LedgerCommandKeywords.VOTE.contains(action)) {
+                String type = args[0].toLowerCase();
+                if (LedgerCommandKeywords.CORPORATIONS().contains(type)) {
+                    results.add("발행할 주식수를 입력해주세요. 1주 이상이어야 합니다.");
+                } else if (LedgerCommandKeywords.FOUNDATIONS().contains(type) || LedgerCommandKeywords.NATIONS().contains(type)) {
+                    results.add("필요한 항목을 전부 입력했습니다.");
+                } else if (LedgerCommandKeywords.TRUSTS().contains(type)) {
+                    results.add("수탁자를 입력해주세요. 수탁자는 신탁의 재산을 관리할 수 있습니다.");
+                }
             }
         } else if (args.length < 7) {
-            String type = args[0].toLowerCase();
+            String action = args[0].toLowerCase();
+            if (!LedgerCommandKeywords.VOTE.contains(action)) {
+                String type = args[0].toLowerCase();
 
-            if (LedgerCommandKeywords.CORPORATIONS().contains(type)) {
-                results.add("필요한 항목을 전부 입력했습니다.");
-            } else if (LedgerCommandKeywords.TRUSTS().contains(type)) {
-                results.add("수익자를 입력해주세요. 수익자는 신탁의 이익금을 배당받습니다.");
+                if (LedgerCommandKeywords.CORPORATIONS().contains(type)) {
+                    results.add("필요한 항목을 전부 입력했습니다.");
+                } else if (LedgerCommandKeywords.TRUSTS().contains(type)) {
+                    results.add("수익자를 입력해주세요. 수익자는 신탁의 이익금을 배당받습니다.");
+                }
             }
         } else if (args.length < 8) {
-            String type = args[0].toLowerCase();
+            String action = args[0].toLowerCase();
+            if (!LedgerCommandKeywords.VOTE.contains(action)) {
+                String type = args[0].toLowerCase();
 
-            if (LedgerCommandKeywords.TRUSTS().contains(type)) {
-                results.add("필요한 항목을 전부 입력했습니다.");
+                if (LedgerCommandKeywords.TRUSTS().contains(type)) {
+                    results.add("필요한 항목을 전부 입력했습니다.");
+                }
             }
         }
 

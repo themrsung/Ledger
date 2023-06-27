@@ -43,7 +43,7 @@ public final class HandleOffersCommand extends LedgerPlayerCommand {
     private void acceptOrDeny(LedgerCommandKeywords.AcceptableAction action, @Nullable Assetholder sender) {
         switch (action) {
             case TELEPORT:
-                if (!isSelf()) {
+                if (notSelf()) {
                     getMessenger().commandOnlyExecutableByOneself();
                     return;
                 }

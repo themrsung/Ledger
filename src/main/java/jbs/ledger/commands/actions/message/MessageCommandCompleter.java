@@ -13,6 +13,10 @@ public final class MessageCommandCompleter extends LedgerCommandAutoCompleter {
         super(ledger);
     }
 
+    public MessageCommandCompleter(LedgerCommandAutoCompleter original, Assetholder actor) {
+        super(original);
+    }
+
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> resutls = new ArrayList<>();

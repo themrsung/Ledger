@@ -116,7 +116,7 @@ public final class PresidentialRepublic extends Nation implements Tripartite, El
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+    public boolean removeOpenMeeting(Meeting<?> meeting) {
         return openMeetings.remove(meeting);
     }
 

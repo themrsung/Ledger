@@ -14,7 +14,9 @@ public final class VoteCommandCompleter extends LedgerCommandAutoCompleter {
     public VoteCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public VoteCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();

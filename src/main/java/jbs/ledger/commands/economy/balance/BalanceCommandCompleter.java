@@ -11,7 +11,9 @@ public final class BalanceCommandCompleter extends LedgerCommandAutoCompleter {
     public BalanceCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public BalanceCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         if (args.length < 2) {

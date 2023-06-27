@@ -14,7 +14,9 @@ public final class PardonCommandCompleter extends LedgerCommandAutoCompleter {
     public PardonCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public PardonCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();

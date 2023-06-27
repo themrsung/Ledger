@@ -3,7 +3,6 @@ package jbs.ledger.organizations.sovereign;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.classes.meetings.AbstractMeeting;
-import jbs.ledger.classes.meetings.board.BoardMeeting;
 import jbs.ledger.classes.meetings.supremecourt.SupremeCourtBill;
 import jbs.ledger.interfaces.organization.Electorate;
 import jbs.ledger.interfaces.organization.Meeting;
@@ -59,7 +58,7 @@ public final class Judiciary extends AbstractOrganization<Person> implements Ele
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+    public boolean removeOpenMeeting(Meeting<?> meeting) {
         return openMeetings.remove(meeting);
     }
 

@@ -12,6 +12,9 @@ public final class BuyOrSellCommandCompleter extends LedgerCommandAutoCompleter 
     public BuyOrSellCommandCompleter(Ledger ledger) {
         super(ledger);
     }
+    public BuyOrSellCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
 
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {

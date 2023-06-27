@@ -9,7 +9,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 /**
- * An even better command executor for player-only commands.
+ * Please don't look at this code
+ * This should really be inlined
  */
 public abstract class LedgerPlayerCommand extends LedgerCommand {
     public LedgerPlayerCommand(Ledger ledger) {

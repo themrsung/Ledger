@@ -36,6 +36,19 @@ public interface Economic extends Searchable {
     OptionPortfolio<Cash> getCashOptions();
     OptionPortfolio<Stock> getStockOptions();
 
+    // Asset value
+    // FIXME
+    default double getAssetValue(String denotation) {
+        return 0d;
+    }
+    default double getLiabilityValue(String denotation) {
+        return 0d;
+    }
+
+    default double getNetWorth(String denotation) {
+        return getAssetValue(denotation) - getLiabilityValue(denotation);
+    }
+
     // Generic getters
     default ArrayList<Asset> getAssets() {
         ArrayList<Asset> assets = new ArrayList<>();

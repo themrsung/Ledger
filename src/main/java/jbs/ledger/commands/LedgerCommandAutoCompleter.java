@@ -14,11 +14,19 @@ import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
+/**
+ * Please don't look at this code
+ * This should really be inlined
+ */
 public abstract class LedgerCommandAutoCompleter implements TabCompleter {
     public LedgerCommandAutoCompleter(Ledger ledger) {
         this.ledger = ledger;
+    }
+    protected LedgerCommandAutoCompleter(LedgerCommandAutoCompleter original) {
+        this.ledger = original.ledger;
+        this.sender = original.sender;
+        this.actor = original.actor;
     }
     private final Ledger ledger;
     protected Ledger getLedger() {
@@ -40,9 +48,14 @@ public abstract class LedgerCommandAutoCompleter implements TabCompleter {
         return (Player) sender;
     }
 
+    private Assetholder actor;
     @Nonnull
     protected Assetholder getActor() {
-        return Objects.requireNonNull(getState().getAssetholder(getPlayer().getUniqueId()));
+        return actor;
+    }
+
+    protected void setActor(Assetholder actor) {
+        this.actor = actor;
     }
 
     @Nonnull
@@ -59,14 +72,18 @@ public abstract class LedgerCommandAutoCompleter implements TabCompleter {
         String cmd = command.getName().toLowerCase();
         this.sender = sender;
 
+        this.actor = getState().getPerson(getPlayer().getUniqueId());
+
         if (isConsole()) return new ArrayList<>();
 
         return onLedgerTabComplete(cmd, args);
     }
 
-    public final List<String> onSudoComplete(@Nonnull String[] originalArgs) {
+    public final List<String> onSudoComplete(@Nonnull String[] originalArgs, Assetholder actor) {
         String command = originalArgs.length > 3 ? originalArgs[2] : "";
         String[] args = originalArgs.length > 3 ? Arrays.copyOfRange(originalArgs, 2, originalArgs.length) : new String[] {};
+
+        this.actor = actor;
 
         return onLedgerTabComplete(command, args);
     }

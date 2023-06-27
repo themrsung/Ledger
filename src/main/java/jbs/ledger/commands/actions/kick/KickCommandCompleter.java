@@ -18,6 +18,10 @@ public final class KickCommandCompleter extends LedgerCommandAutoCompleter {
         super(ledger);
     }
 
+    public KickCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
+
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();

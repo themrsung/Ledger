@@ -8,7 +8,7 @@ import jbs.ledger.interfaces.sovereignty.Sovereign;
 
 import java.util.Date;
 
-public class OfficeTermKeeper implements Runnable {
+public final class OfficeTermKeeper implements Runnable {
     public OfficeTermKeeper(Ledger ledger) {
         this.ledger = ledger;
     }

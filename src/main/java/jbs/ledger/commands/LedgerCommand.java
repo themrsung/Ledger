@@ -18,7 +18,8 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 
 /**
- * A better command executor
+ * Please don't look at this code
+ * This should really be inlined
  */
 public abstract class LedgerCommand implements CommandExecutor {
     public LedgerCommand(Ledger ledger) {
@@ -88,10 +89,10 @@ public abstract class LedgerCommand implements CommandExecutor {
         Bukkit.getLogger().info(msg);
     }
 
-    protected boolean isSelf() {
-        if (getActor() == null) return false;
+    protected boolean notSelf() {
+        if (getActor() == null) return true;
 
-        return getActor().equals(getPerson());
+        return !getActor().equals(getPerson());
     }
 
     @Override

@@ -19,6 +19,10 @@ public final class InviteCommandCompleter extends LedgerCommandAutoCompleter {
         super(ledger);
     }
 
+    public InviteCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
+
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();
@@ -69,15 +73,15 @@ public final class InviteCommandCompleter extends LedgerCommandAutoCompleter {
             }
         } else if (args.length < 3) {
             if (getActor() instanceof Corporation) {
-                list.add(args[1] + "을 직원으로 초대합니다.");
+                list.add(args[0] + "을 직원으로 초대합니다.");
             } else if (getActor() instanceof Foundation) {
-                list.add(args[1] + "을 이사회에 초대합니다.");
+                list.add(args[0] + "을 이사회에 초대합니다.");
             } else if (getActor() instanceof Nation) {
-                list.add(args[1] + "을 국가 구성원으로 초대합니다.");
+                list.add(args[0] + "을 국가 구성원으로 초대합니다.");
             } else if (getActor() instanceof Trust) {
-                list.add("신탁의 수탁자로 지정합니다.");
+                list.add(args[0] + "을 신탁의 수탁자로 지정합니다.");
             } else if (getActor() instanceof Federation) {
-                list.add(args[1] + "을 연방에 초대합니다.");
+                list.add(args[0] + "을 연방에 초대합니다.");
             }
         }
 

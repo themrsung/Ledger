@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Please don't look at this code
+ * This should really be inlined
+ */
 public abstract class LedgerCommandKeywords {
     public static List<String> PAY = Arrays.asList("pay", "송금", "이체");
     public static  List<String> CREATE = Arrays.asList("new", "create", "신규", "추가", "생성");
@@ -39,6 +43,9 @@ public abstract class LedgerCommandKeywords {
     public static List<String> SELL = Arrays.asList("sell", "short", "dump", "매도", "판매", "숏");
     public static List<String> PRICE = Arrays.asList("p", "pr", "price", "가격", "가치", "공정가치", "시장가치", "시장가격", "시장가");
     public static List<String> PARDON = Arrays.asList("pardon", "사면", "pr", "prd");
+    public static List<String> PREMIUM = Arrays.asList("prm", "prem", "premium", "plus", "프리미엄");
+    public static List<String> NET_WORTH_LEADERBOARD = Arrays.asList("nwl", "nwleadarboard", "nwleadarboards", "networthleaderboards", "bt", "baltop", "balancetop", "btop", "ranking", "랭킹", "순자산행킹", "순위", "순자산순위", "순자산상위", "순자산상위목록");
+
 
     // ADD | DELETE
     public static List<String> ADD = Arrays.asList("a", "add", "s", "set", "추가", "지정", "설정", "신규");
@@ -147,6 +154,23 @@ public abstract class LedgerCommandKeywords {
     public static List<String> BAN = Arrays.asList("b", "bn", "ban", "밴");
     public static List<String> UNBAN = Arrays.asList("ub", "unban", "언밴", "밴해제");
     public static List<String> MUTE = Arrays.asList("m", "mt", "mte", "mute", "뮤트", "음소거");
-    public static List<String> UN_MUTE = Arrays.asList("um", "umt", "umte", "unmute", "언뮤트", "음소거해제", "살려주세요 하루 종일 코딩만 해서 죽을 거 같아요");
+    public static List<String> UN_MUTE = Arrays.asList("um", "umt", "umte", "unmute", "언뮤트", "음소거해제");
+
+    // LIST
+    public static List<String> MARKETS = Arrays.asList("m", "mk", "mrk", "mrkt", "market", "markets", "시장");
+    public static List<String> EXCHANGES = Arrays.asList("e", "ex", "exc", "exchge", "exchange", "거래소");
+    public static List<String> PLAYERS = Arrays.asList("p", "pr", "pl", "person", "people", "persons", "player", "players", "유저", "플레이어");
+    public static List<String> CORPORATES = Arrays.asList("c", "co", "corp", "corporation", "corporations", "company", "companies", "회사", "기업");
+    public static List<String> FOUNDATIONS_GENERIC = Arrays.asList("f", "fnd", "fndt", "foundation", "foundations", "재단");
+    public static List<String> SOVEREIGNS = Arrays.asList("s", "sov", "sovereign", "sovereignties", "n", "nat", "nation", "nations", "country", "countries", "state", "states", "국가");
+    public static List<String> TRUSTS_GENERIC = Arrays.asList("t", "tr", "trst", "trust", "trusts", "신탁");
+
+    // MANAGE
+    public static List<String> LIST_ASSET = Arrays.asList("list", "상장");
+    public static List<String> LISTED_ASSETS = Arrays.asList("listed", "상장종목");
+    public static List<String> DELIST_ASSET = Arrays.asList("delist", "상장폐지", "상폐");
+    public static List<String> SET_INTEREST_RATE = Arrays.asList("delist", "상장폐지", "상폐");
+    public static List<String> SET_BUYER_FEE_RATE = Arrays.asList("delist", "상장폐지", "상폐");
+    public static List<String> SET_SELLER_FEE_RATE = Arrays.asList("delist", "상장폐지", "상폐");
 
 }

@@ -4,7 +4,6 @@ import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.classes.meetings.AbstractMeeting;
 import jbs.ledger.classes.meetings.LegislatureBill;
-import jbs.ledger.classes.meetings.supremecourt.SupremeCourtBill;
 import jbs.ledger.interfaces.organization.Electorate;
 import jbs.ledger.interfaces.organization.Meeting;
 import jbs.ledger.io.types.meetings.MeetingData;
@@ -59,7 +58,7 @@ public final class Legislature extends AbstractOrganization<Person> implements E
     }
 
     @Override
-    public boolean removeOpenMeeting(Meeting<Person> meeting) {
+    public boolean removeOpenMeeting(Meeting<?> meeting) {
         return openMeetings.remove(meeting);
     }
 

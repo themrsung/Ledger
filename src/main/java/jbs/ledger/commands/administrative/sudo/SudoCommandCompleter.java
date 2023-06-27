@@ -10,21 +10,35 @@ import jbs.ledger.commands.actions.kick.KickCommandCompleter;
 import jbs.ledger.commands.actions.offers.HandleOffersCommandCompleter;
 import jbs.ledger.commands.actions.pardon.PardonCommandCompleter;
 import jbs.ledger.commands.actions.punish.PunishCommandCompleter;
+import jbs.ledger.commands.actions.vote.VoteCommandCompleter;
+import jbs.ledger.commands.administrative.manage.ManageCommandCompleter;
 import jbs.ledger.commands.economy.balance.BalanceCommandCompleter;
 import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
 import jbs.ledger.commands.economy.pay.PayCommandCompleter;
 import jbs.ledger.commands.economy.trading.BuyOrSellCommandCompleter;
 import jbs.ledger.commands.economy.trading.PriceCommandCompleter;
+import jbs.ledger.commands.informative.directors.DirectorsCommandCompleter;
+import jbs.ledger.commands.informative.list.ListCommandCompleter;
+import jbs.ledger.commands.informative.members.MembersCommandCompleter;
+import jbs.ledger.commands.informative.networthleaderboard.NetWorthLeaderboardCommandCompleter;
+import jbs.ledger.commands.informative.premium.PremiumCommandCompleter;
+import org.bukkit.Bukkit;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DO NOT LOOK AT THIS CODE
+ * You WILL have an aneurysm.
+ */
 public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
     public SudoCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public SudoCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> results = new ArrayList<>();
@@ -66,44 +80,74 @@ public class SudoCommandCompleter extends LedgerCommandAutoCompleter {
             results.addAll(LedgerCommandKeywords.SELL);
             results.addAll(LedgerCommandKeywords.PRICE);
             results.addAll(LedgerCommandKeywords.PARDON);
-        } else  {
+        } else {
+            Assetholder actor = getState().getAssetholder(args[0], true, true);
+            if (actor != null) {
+                this.setActor(actor);
+            }
+
             String action = args[1].toLowerCase();
+
+            // switch not used due to namespacing issues (I don't want to be typing in long semantic names for one-time use variables)
             if (LedgerCommandKeywords.CREATE.contains(action)) {
-                CreateCommandCompleter ccc = new CreateCommandCompleter(getLedger());
-                return ccc.onSudoComplete(args);
-            } else if (LedgerCommandKeywords.SUDO.contains(action)){
-                SudoCommandCompleter scc = new SudoCommandCompleter(getLedger());
-                return scc.onSudoComplete(args);
+                CreateCommandCompleter ccc = new CreateCommandCompleter(this);
+                return ccc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.SUDO.contains(action)) {
+                // Yes, this is a thing
+                // A sudoing B sudoing C sudoing D is possible (as long as the permission chain is intact)
+                SudoCommandCompleter scc = new SudoCommandCompleter(this);
+                return scc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.PAY.contains(action)) {
-                PayCommandCompleter pcc = new PayCommandCompleter(getLedger());
-                return pcc.onSudoComplete(args);
+                PayCommandCompleter pcc = new PayCommandCompleter(this);
+                return pcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.BUY.contains(action) || LedgerCommandKeywords.SELL.contains(action)) {
-                BuyOrSellCommandCompleter bos = new BuyOrSellCommandCompleter(getLedger());
-                return bos.onSudoComplete(args);
+                BuyOrSellCommandCompleter bos = new BuyOrSellCommandCompleter(this);
+                return bos.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.ACCEPT.contains(action) || LedgerCommandKeywords.DENY.contains(action) || LedgerCommandKeywords.CANCEL.contains(action)) {
-                HandleOffersCommandCompleter hocc = new HandleOffersCommandCompleter(getLedger());
-                return hocc.onSudoComplete(args);
+                HandleOffersCommandCompleter hocc = new HandleOffersCommandCompleter(this);
+                return hocc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.INVITE.contains(action)) {
-                InviteCommandCompleter icc = new InviteCommandCompleter(getLedger());
-                return icc.onSudoComplete(args);
+                InviteCommandCompleter icc = new InviteCommandCompleter(this);
+                return icc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.BALANCE.contains(action)) {
-                BalanceCommandCompleter bcc = new BalanceCommandCompleter(getLedger());
-                return bcc.onSudoComplete(args);
+                BalanceCommandCompleter bcc = new BalanceCommandCompleter(this);
+                return bcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.CREDIT_RATING.contains(action)) {
-                CreditRatingCommandCompleter crcc = new CreditRatingCommandCompleter(getLedger());
-                return crcc.onSudoComplete(args);
+                CreditRatingCommandCompleter crcc = new CreditRatingCommandCompleter(this);
+                return crcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.KICK.contains(action)) {
-                KickCommandCompleter kcc = new KickCommandCompleter(getLedger());
-                return kcc.onSudoComplete(args);
+                KickCommandCompleter kcc = new KickCommandCompleter(this);
+                return kcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.PRICE.contains(action)) {
-                PriceCommandCompleter pcc = new PriceCommandCompleter(getLedger());
-                return pcc.onSudoComplete(args);
+                PriceCommandCompleter pcc = new PriceCommandCompleter(this);
+                return pcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.PARDON.contains(action)) {
-                PardonCommandCompleter pcc = new PardonCommandCompleter(getLedger());
-                return pcc.onSudoComplete(args);
+                PardonCommandCompleter pcc = new PardonCommandCompleter(this);
+                return pcc.onSudoComplete(args, getActor());
             } else if (LedgerCommandKeywords.PUNISH.contains(action)) {
-                PunishCommandCompleter pcc = new PunishCommandCompleter(getLedger());
-                return pcc.onSudoComplete(args);
+                PunishCommandCompleter pcc = new PunishCommandCompleter(this);
+                return pcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.VOTE.contains(action)) {
+                VoteCommandCompleter vcc = new VoteCommandCompleter(this);
+                return vcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.PREMIUM.contains(action)) {
+                PremiumCommandCompleter pcc = new PremiumCommandCompleter(this);
+                return pcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.DIRECTORS.contains(action)) {
+                DirectorsCommandCompleter dcc = new DirectorsCommandCompleter(this);
+                return dcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.MEMBERS.contains(action)) {
+                MembersCommandCompleter mcc = new MembersCommandCompleter(this);
+                return mcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.LIST.contains(action)) {
+                ListCommandCompleter lcc = new ListCommandCompleter(this);
+                return lcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.NET_WORTH_LEADERBOARD.contains(action)) {
+                NetWorthLeaderboardCommandCompleter nwlcc = new NetWorthLeaderboardCommandCompleter(this);
+                nwlcc.onSudoComplete(args, getActor());
+            } else if (LedgerCommandKeywords.MANAGE.contains(action)) {
+                ManageCommandCompleter mcc = new ManageCommandCompleter(this);
+                mcc.onSudoComplete(args, getActor());
             }
         }
 

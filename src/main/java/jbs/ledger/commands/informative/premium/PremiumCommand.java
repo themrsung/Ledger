@@ -22,6 +22,11 @@ public final class PremiumCommand extends LedgerPlayerCommand {
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
+        if (!(getActor() instanceof Person)) {
+            getMessenger().commandOnlyExecutableByPlayer();
+            return;
+        }
+
         if (mainArg != null) {
             if (LedgerCommandKeywords.ADD.contains(mainArg)) {
                 if (!getPlayer().isOp()) {
@@ -92,10 +97,21 @@ public final class PremiumCommand extends LedgerPlayerCommand {
                         getMessenger().invalidNumber();
                         return;
                     }
+                } else {
+                    Person p = getState().getPerson(argsAfterMain[0]);
+                    if (p == null) {
+                        getMessenger().assetholderNotFound();;
+                        return;
+                    }
+
+                    p.setPremium(false);
+                    p.setPremiumExpiration(null);
+                    getMessenger().premiumUnset(p);
+                    return;
                 }
             }
         }
 
-        getMessenger().premiumInformation(getPerson());
+        getMessenger().premiumInformation((Person) getActor());
     }
 }

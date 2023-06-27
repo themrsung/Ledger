@@ -200,6 +200,8 @@ public abstract class Assetholder implements Economic, Headquartered, Searchable
         return stockOptions;
     }
 
+
+
     // Address
     @Nullable
     private Location address;

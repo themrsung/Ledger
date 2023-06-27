@@ -12,7 +12,9 @@ public class CreditRatingCommandCompleter extends LedgerCommandAutoCompleter {
     public CreditRatingCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-
+    public CreditRatingCommandCompleter(LedgerCommandAutoCompleter original) {
+        super(original);
+    }
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> results = new ArrayList<>();

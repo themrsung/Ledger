@@ -1,18 +1,18 @@
-package jbs.ledger.commands.economy.trading;
+package jbs.ledger.commands.informative.networthleaderboard;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
-import jbs.ledger.interfaces.markets.Market;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class PriceCommandCompleter extends LedgerCommandAutoCompleter {
-    public PriceCommandCompleter(Ledger ledger) {
+public class NetWorthLeaderboardCommandCompleter extends LedgerCommandAutoCompleter {
+    public NetWorthLeaderboardCommandCompleter(Ledger ledger) {
         super(ledger);
     }
-    public PriceCommandCompleter(LedgerCommandAutoCompleter original) {
+
+    public NetWorthLeaderboardCommandCompleter(LedgerCommandAutoCompleter original) {
         super(original);
     }
 
@@ -21,10 +21,7 @@ public final class PriceCommandCompleter extends LedgerCommandAutoCompleter {
         List<String> list = new ArrayList<>();
 
         if (args.length < 2) {
-            ArrayList<Market<?>> markets = getState().getMarkets();
-            for (Market<?> m : markets) {
-                list.add(m.getSymbol());
-            }
+            list.addAll(getState().getCurrencies());
         }
 
         return list;

@@ -1,6 +1,12 @@
 package jbs.ledger;
 
 import jbs.ledger.classes.messages.DirectMessageProcessor;
+import jbs.ledger.commands.administrative.manage.ManageCommand;
+import jbs.ledger.commands.administrative.manage.ManageCommandCompleter;
+import jbs.ledger.commands.informative.directors.DirectorsCommandCompleter;
+import jbs.ledger.commands.informative.list.ListCommandCompleter;
+import jbs.ledger.commands.informative.members.MembersCommand;
+import jbs.ledger.commands.informative.directors.DirectorsCommand;
 import jbs.ledger.commands.actions.invite.InviteCommand;
 import jbs.ledger.commands.actions.invite.InviteCommandCompleter;
 import jbs.ledger.commands.actions.kick.KickCommand;
@@ -30,7 +36,6 @@ import jbs.ledger.commands.actions.teleportation.TeleportRequestCommand;
 import jbs.ledger.commands.actions.teleportation.TeleportRequestCommandCompleter;
 import jbs.ledger.commands.actions.vote.VoteCommand;
 import jbs.ledger.commands.actions.vote.VoteCommandCompleter;
-import jbs.ledger.commands.administrative.*;
 import jbs.ledger.commands.administrative.sudo.SudoCommand;
 import jbs.ledger.commands.administrative.sudo.SudoCommandCompleter;
 import jbs.ledger.commands.economy.balance.BalanceCommand;
@@ -40,11 +45,14 @@ import jbs.ledger.commands.economy.credit.CreditRatingCommandCompleter;
 import jbs.ledger.commands.economy.pay.PayCommand;
 import jbs.ledger.commands.economy.pay.PayCommandCompleter;
 import jbs.ledger.commands.economy.trading.*;
+import jbs.ledger.commands.informative.members.MembersCommandCompleter;
+import jbs.ledger.commands.informative.networthleaderboard.NetWorthLeaderboardCommandCompleter;
+import jbs.ledger.commands.informative.premium.PremiumCommandCompleter;
 import jbs.ledger.commands.server.SetSpawnCommand;
 import jbs.ledger.commands.economy.*;
-import jbs.ledger.commands.informative.InformationCommand;
-import jbs.ledger.commands.informative.ListCommand;
-import jbs.ledger.commands.informative.NetWorthLeaderboardCommand;
+import jbs.ledger.commands.informative.information.InformationCommand;
+import jbs.ledger.commands.informative.list.ListCommand;
+import jbs.ledger.commands.informative.networthleaderboard.NetWorthLeaderboardCommand;
 import jbs.ledger.commands.informative.premium.PremiumCommand;
 import jbs.ledger.io.LedgerSaveState;
 import jbs.ledger.listeners.player.PlayerRespawnHandler;
@@ -54,6 +62,7 @@ import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.timers.economy.MarketTicker;
+import jbs.ledger.timers.governance.MeetingChecker;
 import jbs.ledger.timers.governance.OfficeTermKeeper;
 import jbs.ledger.timers.io.LedgerAutoSaver;
 import jbs.ledger.timers.economy.NoteExpirationHandler;
@@ -122,8 +131,14 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("kick")).setTabCompleter(new KickCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("manage")).setExecutor(new ManageCommand(this));
+        Objects.requireNonNull(getCommand("manage")).setTabCompleter(new ManageCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("members")).setExecutor(new MembersCommand(this));
+        Objects.requireNonNull(getCommand("members")).setTabCompleter(new MembersCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("directors")).setExecutor(new DirectorsCommand(this));
+        Objects.requireNonNull(getCommand("directors")).setTabCompleter(new DirectorsCommandCompleter(this));
+
 
         Objects.requireNonNull(getCommand("punish")).setExecutor(new PunishCommand(this));
         Objects.requireNonNull(getCommand("punish")).setTabCompleter(new PunishCommandCompleter(this));
@@ -145,13 +160,16 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("teleportrequest")).setExecutor(new TeleportRequestCommand(this));
         Objects.requireNonNull(getCommand("teleportrequest")).setTabCompleter(new TeleportRequestCommandCompleter(this));
 
-
         Objects.requireNonNull(getCommand("gps")).setExecutor(new GpsCommand(this));
         Objects.requireNonNull(getCommand("gps")).setTabCompleter(new GpsCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("information")).setExecutor(new InformationCommand(this));
+
         Objects.requireNonNull(getCommand("list")).setExecutor(new ListCommand(this));
+        Objects.requireNonNull(getCommand("list")).setTabCompleter(new ListCommandCompleter(this));
+
         Objects.requireNonNull(getCommand("networthleaderboard")).setExecutor(new NetWorthLeaderboardCommand(this));
+        Objects.requireNonNull(getCommand("networthleaderboard")).setTabCompleter(new NetWorthLeaderboardCommandCompleter(this));
 
         Objects.requireNonNull(getCommand("balance")).setExecutor(new BalanceCommand(this));
         Objects.requireNonNull(getCommand("balance")).setTabCompleter(new BalanceCommandCompleter(this));
@@ -183,6 +201,7 @@ public final class Ledger extends JavaPlugin {
         Objects.requireNonNull(getCommand("networthleaderboard")).setExecutor(new NetWorthLeaderboardCommand(this));
 
         Objects.requireNonNull(getCommand("premium")).setExecutor(new PremiumCommand(this));
+        Objects.requireNonNull(getCommand("premium")).setTabCompleter(new PremiumCommandCompleter(this));
     }
 
     private void registerEventListeners() {
@@ -205,6 +224,7 @@ public final class Ledger extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MarketTicker(this), 20, 5);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new OfficeTermKeeper(this), 0, 60 * 60 * 20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MeetingChecker(this), 0, 10 * 20);
     }
 
     private LedgerState state = null;

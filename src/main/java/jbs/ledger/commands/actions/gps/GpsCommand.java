@@ -28,7 +28,12 @@ public final class GpsCommand extends LedgerPlayerCommand {
             return;
         }
 
-        if (mainArg != null && LedgerCommandKeywords.ADD.contains(mainArg)) {
+        if (mainArg == null) {
+            getMessenger().insufficientCash();
+            return;
+        }
+
+        if (LedgerCommandKeywords.ADD.contains(mainArg)) {
             Location here = getPlayer().getLocation();
             String name = argsAfterMain.length >= 1 ? argsAfterMain[0] : Integer.toString(getPerson().getGpsEntries().size());
 
@@ -39,7 +44,7 @@ public final class GpsCommand extends LedgerPlayerCommand {
 
             getPerson().addGpsEntry(entry);
             getMessenger().gpsEntryAdded();
-        } else if (mainArg != null && LedgerCommandKeywords.DELETE.contains(mainArg)) {
+        } else if (LedgerCommandKeywords.DELETE.contains(mainArg)) {
             if (argsAfterMain.length < 1) {
                 getMessenger().insufficientArgs();
                 return;
@@ -53,11 +58,29 @@ public final class GpsCommand extends LedgerPlayerCommand {
 
             getPerson().removeGpsEntry(entry);
             getMessenger().gpsEntryRemoved();
-        } else {
+        } else if (LedgerCommandKeywords.LIST.contains(mainArg)) {
             getMessenger().gpsEntryListHeader();
             for (GpsEntry ge : getPerson().getGpsEntries()) {
                 getMessenger().gpsEntryInformation(ge);
             }
+        } else {
+            for (GpsEntry entry : getPerson().getGpsEntries()) {
+                if (entry.getName().contains(mainArg)) {
+                    getPlayer().teleport(entry.getAddress());
+                    getMessenger().teleportSucceeded();
+                    return;
+                }
+            }
+
+            for (GpsEntry entry : getPerson().getGpsEntries()) {
+                if (entry.getName().toLowerCase().contains(mainArg.toLowerCase())) {
+                    getPlayer().teleport(entry.getAddress());
+                    getMessenger().teleportSucceeded();
+                    return;
+                }
+            }
+
+            getMessenger().invalidTeleportDestination();
         }
     }
 }

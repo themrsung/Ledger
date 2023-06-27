@@ -9,6 +9,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -61,7 +62,8 @@ public final class PropertyProtector extends LedgerListener {
             EntityType.SPIDER,
             EntityType.CAVE_SPIDER,
             EntityType.WITCH,
-            EntityType.PILLAGER
+            EntityType.PILLAGER,
+            EntityType.ENDERMAN
     );
 
 
@@ -131,6 +133,15 @@ public final class PropertyProtector extends LedgerListener {
             Person person = getState().getPerson(player.getUniqueId());
 
             if (hasAccess(person, location)) return;
+        } else if (e.getDamager() instanceof Projectile) {
+            Projectile projectile = (Projectile) e.getDamager();
+            if (projectile.getShooter() instanceof Player) {
+                Player shooter = (Player) projectile.getShooter();
+                Person p = getState().getPerson(shooter.getUniqueId());
+                if (p != null) {
+                    if (hasAccess(p, location)) return;
+                }
+            }
         }
 
         e.setCancelled(true);
