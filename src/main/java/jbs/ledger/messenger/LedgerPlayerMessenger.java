@@ -2,12 +2,14 @@ package jbs.ledger.messenger;
 
 import jbs.ledger.assetholders.Assetholder;
 import jbs.ledger.assetholders.corporations.Corporation;
+import jbs.ledger.assetholders.corporations.finance.Bank;
 import jbs.ledger.assetholders.foundations.Foundation;
 import jbs.ledger.assetholders.person.Person;
 import jbs.ledger.assetholders.sovereignties.nations.Nation;
 import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.navigation.GpsEntry;
 import jbs.ledger.classes.orders.OrderType;
+import jbs.ledger.interfaces.banking.Account;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.markets.Market;
@@ -495,5 +497,20 @@ public final class LedgerPlayerMessenger {
 
     public void featureUnderDevelopment() {
         s("현재 개발중인 기능입니다.");
+    }
+
+    public void bankDepositSuccessful() {
+        s("입금이 처리되었습니다.");
+    }
+    public void bankWithdrawalSuccessful() {
+        s("출금이 처리되었습니다.");
+    }
+
+    public void bankBalanceListHeader() {
+        s("은행 잔고를 조회합니다.");
+    }
+
+    public void bankBalanceInformation(Bank bank, Account<Cash> account) {
+        s(bank.getName() + "에 예탁된 잔고: " + account.getContent().format());
     }
 }

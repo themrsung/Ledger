@@ -7,6 +7,7 @@ import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.banking.Account;
 import jbs.ledger.interfaces.banking.Banking;
+import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.io.types.assetholders.corporations.finance.BankData;
 import jbs.ledger.io.types.banking.BankAccountData;
 import jbs.ledger.state.LedgerState;
@@ -46,6 +47,56 @@ public final class Bank extends Corporation implements Banking<Cash> {
 
     private final ArrayList<Account<Cash>> accounts;
     private float interestRate;
+
+    public void deposit(Economic client, Cash amount) {
+        for (Account<Cash> account : getAccounts(client)) {
+            if (account.getContent().getSymbol().equalsIgnoreCase(amount.getSymbol())) {
+                account.getContent().addBalance(amount.getBalance());
+                return;
+            }
+        }
+
+        addAccount(new BankAccount(UUID.randomUUID(), client, amount));
+        Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                this,
+                client,
+                amount,
+                AssetTransferCause.BANK_WITHDRAWAL
+        ));
+    }
+
+    public void withdraw(Economic client, Cash amount) {
+        for (Account<Cash> account : getAccounts(client)) {
+            if (account.getContent().getSymbol().equalsIgnoreCase(amount.getSymbol())) {
+                account.getContent().removeBalance(amount.getBalance());
+                return;
+            }
+        }
+
+        addAccount(new BankAccount(UUID.randomUUID(), client, amount.negate()));
+        Bukkit.getPluginManager().callEvent(new CashTransferredEvent(
+                this,
+                client,
+                amount,
+                AssetTransferCause.BANK_WITHDRAWAL
+        ));
+    }
+
+    public double getWithdrawableBalance(Economic client, String currency) {
+        double bal = 0d;
+
+        for (Account<Cash> account : getAccounts(client)) {
+            if (account.getContent().getSymbol().equalsIgnoreCase(currency)) {
+                bal += account.getContent().getBalance();
+            }
+        }
+
+        return bal;
+    }
+
+    public boolean canWithdraw(Economic client, Cash amount) {
+        return getWithdrawableBalance(client, amount.getSymbol()) >= amount.getBalance();
+    }
 
     @Override
     public ArrayList<Account<Cash>> getAccounts() {
