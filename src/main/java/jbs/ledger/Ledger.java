@@ -79,6 +79,7 @@ import jbs.ledger.listeners.transfers.AssetTransferHandler;
 import jbs.ledger.listeners.player.PlayerPreviousLocationSetter;
 import jbs.ledger.listeners.player.PlayerProfileUpdater;
 import jbs.ledger.state.LedgerState;
+import jbs.ledger.timers.economy.CardExpirationChecker;
 import jbs.ledger.timers.economy.MarketTicker;
 import jbs.ledger.timers.governance.MeetingChecker;
 import jbs.ledger.timers.governance.OfficeTermKeeper;
@@ -264,6 +265,8 @@ public final class Ledger extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new OfficeTermKeeper(this), 0, 60 * 60 * 20);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MeetingChecker(this), 0, 10 * 20);
+
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new CardExpirationChecker(this), 0, 60 * 60 * 20);
     }
 
     private LedgerState state = null;

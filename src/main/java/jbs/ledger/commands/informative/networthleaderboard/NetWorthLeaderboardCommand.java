@@ -24,7 +24,7 @@ public final class NetWorthLeaderboardCommand extends LedgerPlayerCommand {
         if (mainArg != null && getState().isCurrency(mainArg)) {
             denotation = mainArg.toUpperCase();
         } else {
-            denotation = getState().getConfig().defaultCurrency;
+            denotation = getState().getConfig().DEFAULT_CURRENCY;
         }
 
         // Sort

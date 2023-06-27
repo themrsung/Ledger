@@ -15,7 +15,7 @@ public final class PlayerRespawnHandler extends LedgerListener {
 
     @EventHandler
     public void onRespawn(PlayerRespawnEvent e) {
-        Address spawn = getState().getConfig().serverSpawn;
+        Address spawn = getState().getConfig().SERVER_SPAWN;
         if (spawn == null) return;
 
         Location location = TypeUtils.addressToLocation(spawn);

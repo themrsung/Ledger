@@ -179,6 +179,7 @@ public abstract class LedgerCommandKeywords {
 
     // OTHER ASSETS
     public static List<String> ISSUE = Arrays.asList("i", "is", "iss", "issue", "발행");
+    public static List<String> ACTIVATE = Arrays.asList("a", "ac", "active", "activate", "활성화", "수령확인");
 
 
 

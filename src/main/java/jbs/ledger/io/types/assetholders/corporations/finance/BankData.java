@@ -2,6 +2,7 @@ package jbs.ledger.io.types.assetholders.corporations.finance;
 
 import jbs.ledger.io.types.assetholders.corporations.CorporationData;
 import jbs.ledger.io.types.banking.BankAccountData;
+import jbs.ledger.io.types.cards.DebitCardData;
 
 import java.util.ArrayList;
 
@@ -15,6 +16,7 @@ public final class BankData extends CorporationData {
 
         this.accounts = copy.accounts;
         this.interestRate = copy.interestRate;
+        this.issuedCards = copy.issuedCards;
     }
 
     public BankData() {
@@ -23,4 +25,6 @@ public final class BankData extends CorporationData {
 
     public ArrayList<BankAccountData> accounts = new ArrayList<>();
     public float interestRate;
+
+    public ArrayList<DebitCardData> issuedCards = new ArrayList<>();
 }

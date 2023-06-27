@@ -3,13 +3,17 @@ package jbs.ledger.assetholders.corporations.finance;
 import jbs.ledger.assetholders.AssetholderType;
 import jbs.ledger.assetholders.corporations.Corporation;
 import jbs.ledger.classes.banking.BankAccount;
+import jbs.ledger.classes.cards.DebitCard;
 import jbs.ledger.events.transfers.AssetTransferCause;
 import jbs.ledger.events.transfers.basic.CashTransferredEvent;
 import jbs.ledger.interfaces.banking.Account;
 import jbs.ledger.interfaces.banking.Banking;
+import jbs.ledger.interfaces.cards.Card;
+import jbs.ledger.interfaces.cards.CardIssuer;
 import jbs.ledger.interfaces.common.Economic;
 import jbs.ledger.io.types.assetholders.corporations.finance.BankData;
 import jbs.ledger.io.types.banking.BankAccountData;
+import jbs.ledger.io.types.cards.DebitCardData;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import org.bukkit.Bukkit;
@@ -23,7 +27,7 @@ import java.util.UUID;
  * Interest rates can be negative.
  * Line of credit can be offered via negative account balances.
  */
-public final class Bank extends Corporation implements Banking<Cash> {
+public final class Bank extends Corporation implements Banking<Cash>, CardIssuer {
     public Bank(
             UUID uniqueId,
             String name,
@@ -36,6 +40,8 @@ public final class Bank extends Corporation implements Banking<Cash> {
 
         this.accounts = new ArrayList<>();
         this.interestRate = 0f;
+
+        this.issuedCards = new ArrayList<>();
     }
 
     public Bank(Bank copy) {
@@ -43,6 +49,8 @@ public final class Bank extends Corporation implements Banking<Cash> {
 
         this.accounts = copy.accounts;
         this.interestRate = copy.interestRate;
+
+        this.issuedCards = copy.issuedCards;
     }
 
     private final ArrayList<Account<Cash>> accounts;
@@ -145,6 +153,31 @@ public final class Bank extends Corporation implements Banking<Cash> {
         }
     }
 
+    // Cards
+
+    private final ArrayList<DebitCard> issuedCards;
+
+    @Override
+    public ArrayList<Card> getIssuedCards() {
+        return new ArrayList<>(issuedCards);
+    }
+
+    @Override
+    public void addIssuedCard(Card card) {
+        if (card instanceof DebitCard) {
+            issuedCards.add((DebitCard) card);
+        }
+    }
+
+    @Override
+    public boolean removeIssuedCard(Card card) {
+        if (card instanceof DebitCard) {
+            return issuedCards.remove((DebitCard) card);
+        }
+
+        return false;
+    }
+
     @Override
     public AssetholderType getType() {
         return AssetholderType.BANK;
@@ -161,6 +194,10 @@ public final class Bank extends Corporation implements Banking<Cash> {
             data.accounts.add(ba.toData());
         }
 
+        for (DebitCard card : issuedCards) {
+            data.issuedCards.add(card.toData());
+        }
+
         data.interestRate = interestRate;
 
         return data;
@@ -174,6 +211,7 @@ public final class Bank extends Corporation implements Banking<Cash> {
         super(uniqueId);
 
         this.accounts = new ArrayList<>();
+        this.issuedCards = new ArrayList<>();
     }
 
     public void load(BankData data, LedgerState state) {
@@ -186,5 +224,11 @@ public final class Bank extends Corporation implements Banking<Cash> {
         }
 
         this.interestRate = data.interestRate;
+
+        this.issuedCards.clear();
+
+        for (DebitCardData dcd : data.issuedCards) {
+            this.issuedCards.add(DebitCard.fromData(dcd, state));
+        }
     }
 }

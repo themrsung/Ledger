@@ -19,6 +19,8 @@ import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.messages.DirectMessage;
 import jbs.ledger.classes.navigation.TeleportRequest;
 import jbs.ledger.interfaces.assets.Asset;
+import jbs.ledger.interfaces.banking.Account;
+import jbs.ledger.interfaces.cards.CardIssuer;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.currency.CurrencyIssuer;
 import jbs.ledger.interfaces.markets.Market;
@@ -340,6 +342,18 @@ public final class LedgerState {
         return null;
     }
 
+    @Nullable
+    public Account<Cash> getBankAccount(UUID uniqueId) {
+        for (Bank b : getBanks()) {
+            for (Account<Cash> ba : b.getAccounts()) {
+                if (ba.getUniqueId().equals(uniqueId)) {
+                    return ba;
+                }
+            }
+        }
+        return null;
+    }
+
     // Corporations
     public ArrayList<Corporate> getCorporates() {
         ArrayList<Corporate> corporates = new ArrayList<>();
@@ -641,6 +655,30 @@ public final class LedgerState {
         } else if (holder instanceof Trust) {
             Assetholder rep = ((Trust) holder).getTrustee();
             return getRepresentative(rep);
+        }
+
+        return null;
+    }
+
+    // Cards
+    public ArrayList<CardIssuer> getCardIssuers() {
+        ArrayList<CardIssuer> issuers = new ArrayList<>();
+
+        for (Assetholder a : getAssetholders()) {
+            if (a instanceof CardIssuer) {
+                issuers.add((CardIssuer) a);
+            }
+        }
+
+        return issuers;
+    }
+
+    @Nullable
+    public CardIssuer getCardIssuer(UUID uniqueId) {
+        for (CardIssuer ci : getCardIssuers()) {
+            if (ci.getUniqueId().equals(uniqueId)) {
+                return ci;
+            }
         }
 
         return null;

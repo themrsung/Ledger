@@ -10,12 +10,14 @@ import jbs.ledger.assetholders.trusts.Trust;
 import jbs.ledger.classes.navigation.GpsEntry;
 import jbs.ledger.classes.orders.OrderType;
 import jbs.ledger.interfaces.banking.Account;
+import jbs.ledger.interfaces.cards.Card;
 import jbs.ledger.interfaces.common.Symbolic;
 import jbs.ledger.interfaces.corporate.Corporate;
 import jbs.ledger.interfaces.markets.Market;
 import jbs.ledger.interfaces.sovereignty.Sovereign;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
+import jbs.ledger.types.assets.basic.Stock;
 import jbs.ledger.types.markets.MarketTickData;
 import org.bukkit.entity.Player;
 
@@ -513,4 +515,52 @@ public final class LedgerPlayerMessenger {
     public void bankBalanceInformation(Bank bank, Account<Cash> account) {
         s(bank.getName() + "에 예탁된 잔고: " + account.getContent().format());
     }
+
+    public void stockNotFound() {
+        s("주식을 찾을 수 없습니다.");
+    }
+    public void stockPortfolioHeader() {
+        s("보유주식을 조회합니다.");
+    }
+    public void stockInformation(Stock s) {
+        s("- " + s.format());
+    }
+
+    public void cardCancelled() {
+        s("카드가 발급취소되었습니다.");
+    }
+
+    public void cardIssued() {
+        s("카드가 발행되었습니다. 고객에게 전달해주세요.");
+    }
+
+    public void cardActivated() {
+        s("카드가 활성화되었습니다.");
+    }
+
+    public void cardInformation(Card card) {
+        s("카드번호: " + card.getSearchTag());
+        s("명의자: " + card.getHolder().getSearchTag() + " / 카드사: " + card.getIssuer().getSymbol());
+        s("잔여한도: " + new Cash(card.getCurrency(), card.getPayable()).format());
+    }
+    public void executorNotCardIssuer() {
+        s("카드를 발급할 수 없습니다. 카드사나 은행의 명의로 명령어를 실행해주세요.");
+    }
+
+    public void bankAccountNotFound() {
+        s("은행 계좌를 찾지 못했습니다.");
+    }
+
+    public void notHoldingCard() {
+        s("카드를 들고 있지 않습니다.");
+    }
+
+    public void invalidCard() {
+        s("유효한 카드가 아닙니다.");
+    }
+
+    public void cardAlreadyActive() {
+        s("이미 활성화된 카드입니다.");
+    }
+
 }

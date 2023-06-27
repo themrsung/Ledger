@@ -25,7 +25,7 @@ public final class SetSpawnCommand extends LedgerPlayerCommand {
         }
 
         Location location = getPlayer().getLocation();
-        getConfig().serverSpawn = new Address(location);
+        getConfig().SERVER_SPAWN = new Address(location);
         getMessenger().custom("스폰 설정 완료");
     }
 }

@@ -26,7 +26,7 @@ public final class AssetsCommand extends LedgerPlayerCommand {
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
-        String denotation = getConfig().defaultCurrency;
+        String denotation = getConfig().DEFAULT_CURRENCY;
 
         if (mainArg != null && !getState().isCurrency(mainArg)) {
             String action = mainArg.toLowerCase();

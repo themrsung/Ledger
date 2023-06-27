@@ -91,7 +91,7 @@ public final class Cash implements FractionalAsset {
 
     // Input
     public static Cash fromInput(String input, LedgerState state) {
-        String fallbackCurrency = state.getConfig().defaultCurrency;
+        String fallbackCurrency = state.getConfig().DEFAULT_CURRENCY;
 
         // Check for currency input
         String currency = null;

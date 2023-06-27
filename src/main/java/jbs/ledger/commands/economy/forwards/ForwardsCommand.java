@@ -18,6 +18,7 @@ public final class ForwardsCommand extends LedgerPlayerCommand {
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
+        getMessenger().featureUnderDevelopment();
 
     }
 }

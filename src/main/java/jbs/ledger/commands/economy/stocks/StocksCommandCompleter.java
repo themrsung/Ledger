@@ -2,6 +2,7 @@ package jbs.ledger.commands.economy.stocks;
 
 import jbs.ledger.Ledger;
 import jbs.ledger.commands.LedgerCommandAutoCompleter;
+import jbs.ledger.types.assets.basic.Stock;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
@@ -19,6 +20,10 @@ public final class StocksCommandCompleter extends LedgerCommandAutoCompleter {
     @Override
     protected List<String> onLedgerTabComplete(@Nonnull String command, @Nonnull String[] args) {
         List<String> list = new ArrayList<>();
+
+        for (Stock s : getActor().getStocks().get()) {
+            list.add(s.getSymbol());
+        }
 
         return list;
     }

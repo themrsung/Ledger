@@ -23,7 +23,7 @@ public final class PlayerProfileUpdater extends LedgerListener {
             Person profile = new Person(player.getUniqueId(), player.getName());
             getState().addAssetholder(profile);
 
-            Location spawn = TypeUtils.addressToLocation(getState().getConfig().serverSpawn);
+            Location spawn = TypeUtils.addressToLocation(getState().getConfig().SERVER_SPAWN);
             if (spawn != null) {
                 player.teleport(spawn);
             }

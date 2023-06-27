@@ -4,6 +4,8 @@ import jbs.ledger.interfaces.assets.IntegralAsset;
 import jbs.ledger.io.types.assets.basic.StockData;
 import jbs.ledger.types.assets.AssetType;
 
+import java.text.NumberFormat;
+
 /**
  * Stock
  * Has a symbol(string) and quantity(long).
@@ -62,6 +64,10 @@ public final class Stock implements IntegralAsset {
     @Override
     public AssetType getType() {
         return AssetType.STOCK;
+    }
+
+    public String format() {
+        return getSymbol() + " " + NumberFormat.getIntegerInstance().format(getQuantity()) + "주";
     }
 
     // IO

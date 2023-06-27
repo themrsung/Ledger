@@ -20,12 +20,12 @@ public final class SpawnCommand extends LedgerPlayerCommand {
 
     @Override
     protected void onPlayerCommand(@Nullable String mainArg, @Nonnull String[] argsAfterMain) {
-        Address spawnAddress = getConfig().serverSpawn;
+        Address spawnAddress = getConfig().SERVER_SPAWN;
         if (spawnAddress == null) {
             return;
         }
 
-        Location spawn = TypeUtils.addressToLocation(getConfig().serverSpawn);
+        Location spawn = TypeUtils.addressToLocation(getConfig().SERVER_SPAWN);
         if (spawn == null) {
             getMessenger().invalidTeleportDestination();
             return;

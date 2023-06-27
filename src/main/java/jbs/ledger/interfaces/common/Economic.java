@@ -1,6 +1,8 @@
 package jbs.ledger.interfaces.common;
 
 import jbs.ledger.interfaces.assets.Asset;
+import jbs.ledger.interfaces.cards.Card;
+import jbs.ledger.interfaces.cards.CardIssuer;
 import jbs.ledger.state.LedgerState;
 import jbs.ledger.types.assets.basic.Cash;
 import jbs.ledger.types.assets.basic.Commodity;
@@ -102,4 +104,17 @@ public interface Economic extends Searchable {
     }
 
     void setCreditScore(float creditScore);
+
+    // Cards
+    default ArrayList<Card> getCards(LedgerState state) {
+        ArrayList<Card> cards = new ArrayList<>();
+
+        for (CardIssuer ci : state.getCardIssuers()) {
+            for (Card c : ci.getIssuedCards(this)) {
+                cards.add(c);
+            }
+        }
+
+        return cards;
+    }
 }
